@@ -19,21 +19,22 @@ let CONFIG = {
   UI: {
     // panelOrientation: "top",
     defaultWorkZoneOffsets: {
+      //ratio 1.4
       // width: 1754,
       // height: 1240,
-      width: 1400,
-      height: 1000,
+      width: (window.screen.width / 3) * 1.4,
+      height: window.screen.width / 3,
     },
     defaultWorkZoneItemsOffsets: {
-      width: 60,
-      height: 60,
+      width: 50,
+      height: 35,
     },
     defaultWorkZoneItemImageOffsets: {
       width: 30,
       height: 30,
     },
     itemsPanel: {
-      defaultDistanceFromWorkZoneItem: 10, //px
+      defaultDistanceFromWorkZoneItem: 15, //px
       imageSize: {
         width: 16, //px
         height: 16, //px

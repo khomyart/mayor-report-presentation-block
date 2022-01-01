@@ -21,6 +21,17 @@ function fillItemPanelWithItems(itemPanel, objectWithItems) {
 }
 
 /**
+ * @param {event} mouseEvent mouse event
+ * @param {object} movableItem item wich will be moved with mouse cursor
+ * @param {int} itemOffsetX offset wich allows user hold item in place where lmb was pressed on it (x - axes)
+ * @param {int} itemOffsetY offset wich allows user hold item in place where lmb was pressed on it (y - axes)
+ */
+ function moveAt(mouseEvent, movableItem, itemOffsetX, itemOffsetY) {
+    movableItem.style.left = mouseEvent.clientX - itemOffsetX + 'px';
+    movableItem.style.top = mouseEvent.clientY - itemOffsetY + 'px';
+}
+
+/**
  * @param {mouse event} event 
  * @param {element} rootItem basis for new item wich will be created after performing a function
  */
@@ -28,12 +39,26 @@ function createNewItem(event, rootItem) {
     let templates = {
         div: () => {
             let divTemplate = document.createElement('div');
+
             divTemplate.classList.add('div-template');
+            divTemplate.setAttribute('i-name', 'div');
+            divTemplate.setAttribute('widthMultiplier', '20');
+            divTemplate.setAttribute('heightMultiplier', '2');
+            divTemplate.setAttribute('borderWidthMultiplier', '0.15');
+            divTemplate.setAttribute('borderRadiusMultiplier', '50');
+
             return divTemplate;
         },
         p: () => {
             let pTemplate = document.createElement('p');
+
             pTemplate.classList.add('p-template');
+            pTemplate.setAttribute('i-name', 'p');
+            pTemplate.setAttribute('widthMultiplier', '4');
+            pTemplate.setAttribute('heightMultiplier', '2');
+            pTemplate.setAttribute('borderWidthMultiplier', '0.15');
+            pTemplate.setAttribute('borderRadiusMultiplier', '1');
+
             return pTemplate;
         },
     }
@@ -44,26 +69,14 @@ function createNewItem(event, rootItem) {
 
     //append newly created element to work field
     workZone.append(newElementOfSchema)
-
     newElementOfSchema.classList.add('field-item');
-    newElementOfSchema.style.width = `${200 * CONFIG.UI.workZoneCurrentScale}px`;
-    newElementOfSchema.style.height = `${10 * CONFIG.UI.workZoneCurrentScale}px`;
-    newElementOfSchema.style.borderRadius = `${CONFIG.UI.defaultWorkZoneItemBorderRadius * CONFIG.UI.workZoneCurrentScale}px`;
-   
-    //becouse workZone item has a bit different scale, need to recalculate initial shifts
-    if (newElementOfSchema.getAttribute('i-name')=='work_space') {
-        shiftX = (event.pageX - rootItem.getBoundingClientRect().left +
-            CONFIG.UI.workSpace.gapBetweenContainedItems * 2) * CONFIG.UI.workZoneCurrentScale
-        + workZone.getBoundingClientRect().left;
-        shiftY = (event.pageY - rootItem.getBoundingClientRect().top +
-            CONFIG.UI.workSpace.gapBetweenContainedItems * 2) * CONFIG.UI.workZoneCurrentScale
-        + workZone.getBoundingClientRect().top;
-    } else {
-        shiftX = (event.pageX - rootItem.getBoundingClientRect().left) * CONFIG.UI.workZoneCurrentScale
-        + workZone.getBoundingClientRect().left;
-        shiftY = (event.pageY - rootItem.getBoundingClientRect().top) * CONFIG.UI.workZoneCurrentScale
-        + workZone.getBoundingClientRect().top;
-    }
+    newElementOfSchema.style.width = `${calculateItemParams(newElementOfSchema).width}px`;
+    newElementOfSchema.style.height = `${calculateItemParams(newElementOfSchema).height}px`;
+    newElementOfSchema.style.borderWidth = `${calculateItemParams(newElementOfSchema).borderWidth}px`;
+    newElementOfSchema.style.borderRadius = `${calculateItemParams(newElementOfSchema).borderRadius}px`;
+
+    shiftX = workZone.getBoundingClientRect().left + newElementOfSchema.offsetWidth / 2;
+    shiftY = workZone.getBoundingClientRect().top + newElementOfSchema.offsetHeight / 2;
 
     //set newly created item opacity to value wich is mentioned in config as itemOpacityWhileMoving
     newElementOfSchema.style.opacity = CONFIG.logic.itemOpacityWhileMoving;
@@ -71,17 +84,40 @@ function createNewItem(event, rootItem) {
     newElementOfSchema.childNodes.forEach(element => {
         element.ondragstart = () => false;
     });
+
+    //Variable has been assigned in createNewItem function
+    moveAt(event, newElementOfSchema, shiftX, shiftY);
 }
 
 /**
- * @param {event} mouseEvent mouse event
- * @param {object} movableItem item wich will be moved with mouse cursor
- * @param {int} itemOffsetX offset wich allows user hold item in place where lmb was pressed on it (x - axes)
- * @param {int} itemOffsetY offset wich allows user hold item in place where lmb was pressed on it (y - axes)
+ * Method calculates style params for particular item depends on its attributes
+ * 
+ * @param {object} item - html object which we are working on  
+ * @returns {object} - object with item params like: height, width, etc
  */
-function moveAt(mouseEvent, movableItem, itemOffsetX, itemOffsetY) {
-    movableItem.style.left = mouseEvent.clientX - itemOffsetX + 'px';
-    movableItem.style.top = mouseEvent.clientY - itemOffsetY + 'px';
+function calculateItemParams(item) {
+    let widthUnit = workZone.offsetWidth / 100;
+    let widthMultiplier = item.getAttribute('widthMultiplier');
+    let width = `${(widthUnit * widthMultiplier).toFixed()}`;
+
+    let heightUnit = workZone.offsetWidth / 100;
+    let heightMultiplier = item.getAttribute('heightMultiplier');
+    let height = `${(heightUnit * heightMultiplier).toFixed()}`;
+
+    let borderWidthUnit = workZone.offsetWidth / 100;
+    let borderWidthMultiplier = item.getAttribute('borderWidthMultiplier');
+    let borderWidth = `${(borderWidthUnit * borderWidthMultiplier).toFixed()}`;
+
+    let borderRadiusUnit = workZone.offsetWidth / 100;
+    let borderRadiusMultiplier = item.getAttribute('borderRadiusMultiplier');
+    let borderRadius = `${(borderRadiusUnit * borderRadiusMultiplier).toFixed()}`;
+
+    return {
+        width,
+        height,
+        borderWidth,
+        borderRadius
+    }
 }
 
 /**
@@ -90,10 +126,10 @@ function moveAt(mouseEvent, movableItem, itemOffsetX, itemOffsetY) {
  */
 function addDragAndDropToItem(item) {
     item.onmousedown = (event) => {
-        itemDragActions(item,event)
+        itemDragActions(item, event)
         removeContextMenu()
     }
-    itemDragActions(item,event)
+    itemDragActions(item, event)
 }
 
 /**
@@ -102,19 +138,15 @@ function addDragAndDropToItem(item) {
  */
 function itemDragActions(item, event) {
     item.onmouseup = () => {
-        /**
-         * If workspace item has more than 1 child item and user wants to click on this child item
-         * if statement down below prevent workspace item context menu appearing
-         */
         if (event.buttons == 2) {   
             if(item.getAttribute('i-is-selectable') == 'true') {
                 showContextMenuOfItem(item, event);
                 currentItem = null
             }
         }
-        if (event.buttons == 1) {   
+        if (event.buttons == 1 && selectedItemForModification == null) {   
             if(item.getAttribute('i-is-selectable') == 'true') {
-                console.log(123)
+                selectItem(item)
                 currentItem = null
             }
         }
@@ -149,11 +181,14 @@ function itemDragActions(item, event) {
     document.body.onmousemove = (event) => {
         if (event.buttons == 1) {
             enableItemPositionCalculationMethod = true;
+
             if(contextMenu) {
                 removeContextMenu()
             }
+
             newScrollPosition.y = everythingHolder.scrollTop;
             newScrollPosition.x = everythingHolder.scrollLeft;
+
             if (newScrollPosition.x != initialScrollPosition.x 
                 || newScrollPosition.y != initialScrollPosition.y) {
                 mouseEvent.clientX = event.clientX + (newScrollPosition.x - initialScrollPosition.x);
@@ -216,8 +251,10 @@ function itemDropActions(item) {
     || workZone.getBoundingClientRect().top > item.getBoundingClientRect().bottom
     || workZone.getBoundingClientRect().bottom < item.getBoundingClientRect().top) {
         enableItemPositionCalculationMethod = false;
-        console.log('item should be deleted')
+        clearItemSelection();
         item.remove();
+
+        console.log('item should be deleted')
     } 
 
     if ((workZone.getBoundingClientRect().left > item.getBoundingClientRect().left) 
@@ -270,6 +307,68 @@ function itemDropActions(item) {
     enableItemPositionCalculationMethod = false;
     document.body.onmousemove = null;
     document.body.onmouseup = null;
+}
+
+/**
+ * 
+ * @param {object} item item which has been clicked
+ */
+function selectItem(item) {
+    console.log('open side panel')
+    selectedItemForModification = item;
+    item.classList.add('selected-item');
+    contextPanel.style.display = 'flex';
+    contextPanel.innerHTML = '';
+    contextPanel.innerHTML += 
+    `<div style="padding: 5px; margin-bottom: 10px; border-radius: 5px; width: 100%; background-color: rgb(240, 240, 240);"> 
+        <h3>
+            Coordinates:
+        </h3>
+        <p> 
+            X: ${(item.offsetLeft / workZone.offsetWidth * 100).toFixed(2)}%, Y: ${(item.offsetTop / workZone.offsetHeight * 100).toFixed(2)}%
+        </p>
+    </div>`;
+    contextPanel.innerHTML += 
+    `<div style="padding: 5px; margin-bottom: 10px; border-radius: 5px; width: 100%; background-color: rgb(240, 240, 240);"> 
+        <h3>
+            Inventory number:
+        </h3>
+        <p> 
+            ${item.getAttribute('i-name')}
+        </p>
+    </div>`;
+    contextPanel.innerHTML += 
+    `<div style="padding: 5px; margin-bottom: 10px; border-radius: 5px; width: 100%; background-color: rgb(240, 240, 240);"> 
+        <h3>
+            Name:
+        </h3>
+        <p> 
+            ${item.getAttribute('i-name')}</p></div>
+        </p>
+    </div>`;
+    contextPanel.innerHTML += 
+    `<div style="padding: 5px; margin-bottom: 10px; border-radius: 5px; width: 100%; background-color: rgb(240, 240, 240);"> 
+        <h3>
+            Type:
+        </h3>
+        <p> 
+            ${item.getAttribute('i-type')}
+        </p>
+    </div>`;
+    contextPanel.innerHTML += 
+    `<div style="padding: 5px; margin-bottom: 10px; border-radius: 5px; width: 100%; background-color: rgb(240, 240, 240);"> 
+        <h3 style="text-align: center; cursor: pointer; user-select: none;" onclick="clearItemSelection()">
+            Close
+        </h3>
+    </div>`;
+}
+
+function clearItemSelection() {
+    console.log('close side panel')
+    item = selectedItemForModification;
+    selectedItemForModification = null;
+    item.classList.remove('selected-item');
+    contextPanel.style.display = 'none'
 }
 
 /**

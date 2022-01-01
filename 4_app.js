@@ -39,6 +39,8 @@ let amountOfItemsInWorkZone = document.querySelectorAll(".field-item").length,
   currentItem = null,
   contextMenu = null,
   contextMenuContent = null,
+  //if lmb was clicked on item, we should fill this variable with its instance
+  selectedItemForModification = null,
   //preventing moving of item when just clicking on it, becouse every time when
   //user clicks on item, it gains coordinates of mouse as a top and left value and
   //then transforming it from px into % depends on workZone, this leads to unnecesory little moving,
@@ -83,30 +85,22 @@ setTimeout(() => {
 
 //Initialization root items, making them be dependent of config
 rootItems.forEach((element) => {
-  element.className = `${element.className} ${element.className}-${CONFIG.UI.panelOrientation}`;
+  element.className = `${element.className}`;
   //root item's width and height initialisation
   element.style.width = `${CONFIG.UI.defaultWorkZoneItemsOffsets.width}px`;
   element.style.height = `${CONFIG.UI.defaultWorkZoneItemsOffsets.height}px`;
   element.style.borderRadius = `${CONFIG.UI.defaultWorkZoneItemBorderRadius}px`;
 
   element.ondragstart = () => false;
-  if (element.getAttribute("i-name") == "work_space") {
-    element.childNodes[1].childNodes.forEach((element) => {
-      element.ondragstart = () => false;
-    });
-  } else {
     element.childNodes.forEach((element) => {
       element.ondragstart = () => false;
     });
-  }
 });
 
 //loop wich allows to accept all needed functions to every root item
 for (let i = 0; i < rootItems.length; i++) {
   rootItems[i].onmousedown = (event) => {
     createNewItem(event, rootItems[i]);
-    //Variable has been assigned in createNewItem function
-    moveAt(event, newElementOfSchema, shiftX, shiftY);
     addDragAndDropToItem(newElementOfSchema);
   };
 }
@@ -118,6 +112,15 @@ document.body.onmousedown = (event) => {
       .closest(".context-menu-item")
   ) {
     removeContextMenu();
+  }
+  if (event.buttons == 1) {
+    if (
+      !document.elementFromPoint(event.clientX, event.clientY).closest(".field-item") &&
+      !document.elementFromPoint(event.clientX, event.clientY).closest(".drag-and-drop-item") &&
+      !document.elementFromPoint(event.clientX, event.clientY).closest(".context-panel") &&
+      selectedItemForModification != null) {
+      clearItemSelection();
+    }
   }
 };
 
