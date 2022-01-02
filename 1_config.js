@@ -40,6 +40,42 @@ let CONFIG = {
         height: 16, //px
       },
     },
+    itemTemplates: {
+      div: {
+        get: () => {    
+          let itemTemplate = document.createElement('div');
+
+          itemTemplate.classList.add('div-template');
+          itemTemplate.setAttribute('i-name', 'div');
+          itemTemplate.setAttribute('widthMultiplier', '20');
+          itemTemplate.setAttribute('heightMultiplier', '2');
+          itemTemplate.setAttribute('borderWidthMultiplier', '0.15');
+          itemTemplate.setAttribute('borderRadiusMultiplier', '50');
+
+          return itemTemplate;
+         },
+         contextPanelParams: [
+             'width', 'height'
+         ], 
+      },
+      p: {
+          get: () => {    
+              let itemTemplate = document.createElement('p');
+
+              itemTemplate.classList.add('p-template');
+              itemTemplate.setAttribute('i-name', 'p');
+              itemTemplate.setAttribute('widthMultiplier', '20');
+              itemTemplate.setAttribute('heightMultiplier', '2');
+              itemTemplate.setAttribute('borderWidthMultiplier', '0.15');
+              itemTemplate.setAttribute('borderRadiusMultiplier', '50');
+
+              return itemTemplate;
+         },
+         contextPanelParams: [
+             'width', 'height'
+         ], 
+      },
+    },
     zoomStep: 0.1,
     defaultWorkZoneItemBorderRadius: 3, //px
     workZoneCurrentScale: 1, //multiplier

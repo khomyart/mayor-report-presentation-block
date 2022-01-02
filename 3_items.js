@@ -36,35 +36,8 @@ function fillItemPanelWithItems(itemPanel, objectWithItems) {
  * @param {element} rootItem basis for new item wich will be created after performing a function
  */
 function createNewItem(event, rootItem) {
-    let templates = {
-        div: () => {
-            let divTemplate = document.createElement('div');
-
-            divTemplate.classList.add('div-template');
-            divTemplate.setAttribute('i-name', 'div');
-            divTemplate.setAttribute('widthMultiplier', '20');
-            divTemplate.setAttribute('heightMultiplier', '2');
-            divTemplate.setAttribute('borderWidthMultiplier', '0.15');
-            divTemplate.setAttribute('borderRadiusMultiplier', '50');
-
-            return divTemplate;
-        },
-        p: () => {
-            let pTemplate = document.createElement('p');
-
-            pTemplate.classList.add('p-template');
-            pTemplate.setAttribute('i-name', 'p');
-            pTemplate.setAttribute('widthMultiplier', '4');
-            pTemplate.setAttribute('heightMultiplier', '2');
-            pTemplate.setAttribute('borderWidthMultiplier', '0.15');
-            pTemplate.setAttribute('borderRadiusMultiplier', '1');
-
-            return pTemplate;
-        },
-    }
-
     //creates element and and puts it into elementsOfSchema array
-    newElementOfSchema = templates[rootItem.getAttribute('i-name')]()
+    newElementOfSchema = CONFIG.UI.itemTemplates[rootItem.getAttribute('i-name')].get()
     elementsOfSchema.push(newElementOfSchema)
 
     //append newly created element to work field
@@ -77,6 +50,12 @@ function createNewItem(event, rootItem) {
 
     shiftX = workZone.getBoundingClientRect().left + newElementOfSchema.offsetWidth / 2;
     shiftY = workZone.getBoundingClientRect().top + newElementOfSchema.offsetHeight / 2;
+
+    //clear item selection
+    if (selectedItemForModification) {
+        clearItemSelection();
+        selectedItemForModification = null;
+    }
 
     //set newly created item opacity to value wich is mentioned in config as itemOpacityWhileMoving
     newElementOfSchema.style.opacity = CONFIG.logic.itemOpacityWhileMoving;
@@ -100,7 +79,7 @@ function calculateItemParams(item) {
     let widthMultiplier = item.getAttribute('widthMultiplier');
     let width = `${(widthUnit * widthMultiplier).toFixed()}`;
 
-    let heightUnit = workZone.offsetWidth / 100;
+    let heightUnit = workZone.offsetHeight / 100;
     let heightMultiplier = item.getAttribute('heightMultiplier');
     let height = `${(heightUnit * heightMultiplier).toFixed()}`;
 
@@ -144,9 +123,11 @@ function itemDragActions(item, event) {
                 currentItem = null
             }
         }
-        if (event.buttons == 1 && selectedItemForModification == null) {   
+        if (event.buttons == 1) {   
             if(item.getAttribute('i-is-selectable') == 'true') {
-                selectItem(item)
+                console.log(selectedItemForModification == item)
+                    selectItem(item)
+                
                 currentItem = null
             }
         }
@@ -241,6 +222,10 @@ function itemDragActions(item, event) {
  * @param {*} item 
  */
 function itemDropActions(item) {
+    // if(selectedItemForModification) {
+    //     selectItem(item)
+    // }
+
     item.style.opacity = 1;
     item.style.zIndex = '1000'
     item.style.transition = `all ease-in-out 0s`;
@@ -251,7 +236,9 @@ function itemDropActions(item) {
     || workZone.getBoundingClientRect().top > item.getBoundingClientRect().bottom
     || workZone.getBoundingClientRect().bottom < item.getBoundingClientRect().top) {
         enableItemPositionCalculationMethod = false;
-        clearItemSelection();
+        if (selectedItemForModification) {
+            clearItemSelection();
+        }
         item.remove();
 
         console.log('item should be deleted')
@@ -317,58 +304,19 @@ function selectItem(item) {
     console.log('open side panel')
     selectedItemForModification = item;
     item.classList.add('selected-item');
-    contextPanel.style.display = 'flex';
-    contextPanel.innerHTML = '';
-    contextPanel.innerHTML += 
-    `<div style="padding: 5px; margin-bottom: 10px; border-radius: 5px; width: 100%; background-color: rgb(240, 240, 240);"> 
-        <h3>
-            Coordinates:
-        </h3>
-        <p> 
-            X: ${(item.offsetLeft / workZone.offsetWidth * 100).toFixed(2)}%, Y: ${(item.offsetTop / workZone.offsetHeight * 100).toFixed(2)}%
-        </p>
-    </div>`;
-    contextPanel.innerHTML += 
-    `<div style="padding: 5px; margin-bottom: 10px; border-radius: 5px; width: 100%; background-color: rgb(240, 240, 240);"> 
-        <h3>
-            Inventory number:
-        </h3>
-        <p> 
-            ${item.getAttribute('i-name')}
-        </p>
-    </div>`;
-    contextPanel.innerHTML += 
-    `<div style="padding: 5px; margin-bottom: 10px; border-radius: 5px; width: 100%; background-color: rgb(240, 240, 240);"> 
-        <h3>
-            Name:
-        </h3>
-        <p> 
-            ${item.getAttribute('i-name')}</p></div>
-        </p>
-    </div>`;
-    contextPanel.innerHTML += 
-    `<div style="padding: 5px; margin-bottom: 10px; border-radius: 5px; width: 100%; background-color: rgb(240, 240, 240);"> 
-        <h3>
-            Type:
-        </h3>
-        <p> 
-            ${item.getAttribute('i-type')}
-        </p>
-    </div>`;
-    contextPanel.innerHTML += 
-    `<div style="padding: 5px; margin-bottom: 10px; border-radius: 5px; width: 100%; background-color: rgb(240, 240, 240);"> 
-        <h3 style="text-align: center; cursor: pointer; user-select: none;" onclick="clearItemSelection()">
-            Close
-        </h3>
-    </div>`;
+    configureContextPanel('create');
 }
 
 function clearItemSelection() {
     console.log('close side panel')
     item = selectedItemForModification;
+    configureContextPanel('destroy');
+
+    if (item.classList.contains('selected-item')) {
+        item.classList.remove('selected-item');
+    }
+
     selectedItemForModification = null;
-    item.classList.remove('selected-item');
-    contextPanel.style.display = 'none'
 }
 
 /**
