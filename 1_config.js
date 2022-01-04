@@ -50,12 +50,14 @@ let CONFIG = {
           itemTemplate.setAttribute('widthMultiplier', '20');
           itemTemplate.setAttribute('heightMultiplier', '2');
           itemTemplate.setAttribute('borderWidthMultiplier', '0.15');
-          itemTemplate.setAttribute('borderRadiusMultiplier', '50');
+          itemTemplate.setAttribute('borderRadiusMultiplier', '5');
 
           return itemTemplate;
          },
          contextPanelParams: [
-             'width', 'height'
+             'width', 'height', 'opacity', 
+             'backgroundColor', 'borderColor', 'borderWidth', 
+             'borderRadius', 'backgroundLinearGradient',
          ], 
       },
       p: {
@@ -67,13 +69,15 @@ let CONFIG = {
               itemTemplate.setAttribute('widthMultiplier', '20');
               itemTemplate.setAttribute('heightMultiplier', '2');
               itemTemplate.setAttribute('borderWidthMultiplier', '0.15');
-              itemTemplate.setAttribute('borderRadiusMultiplier', '50');
+              itemTemplate.setAttribute('borderRadiusMultiplier', '5');
 
               return itemTemplate;
          },
          contextPanelParams: [
-             'width', 'height'
-         ], 
+          'width', 'height', 'opacity', 
+          'backgroundColor', 'borderColor', 'borderWidth', 
+          'borderRadius', 'backgroundLinearGradient',
+        ], 
       },
     },
     zoomStep: 0.1,

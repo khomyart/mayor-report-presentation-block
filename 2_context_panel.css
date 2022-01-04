@@ -1,0 +1,325 @@
+.context-panel {
+    --display: flex;
+
+    width: 369px;
+    height: 100%;
+    background-color: rgb(230, 230, 230);
+    align-items: center;
+    flex-direction: column;
+    box-sizing: border-box;
+    padding: 20px 15px 10px;
+    display: var(--display);
+}
+
+.context-panel-separator {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    align-items: center;
+    margin-bottom: 15px;
+    margin-top: 20px;
+    justify-content: space-between;
+}
+
+.context-panel-separator-text {
+    width: 33%;
+    text-align: center;
+    font-size: 1.4rem;
+}
+
+.context-panel-separator-line {
+    width: 20%;
+    height: 2px;
+    background-color: black;
+}
+
+/* context panel WIDTH */
+.context-panel-width {
+    width: 100%;
+    display: var(--display);
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.context-panel-width-label {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 3px;
+    font-size: 1.2rem;
+}
+
+.context-panel-width-range-and-input-holder {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+#panel_width_range {
+    flex-grow: 1;
+}
+
+#panel_width_input {
+    width: 50px;
+    margin-left: 10px;
+    text-align: center;
+}
+
+/* context panel HEIGHT */
+.context-panel-height {
+    width: 100%;
+    display: var(--display);
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.context-panel-height-label {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 3px;
+    font-size: 1.2rem;
+}
+
+.context-panel-height-range-and-input-holder {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+#panel_height_range {
+    flex-grow: 1;
+}
+
+#panel_height_input {
+    width: 50px;
+    margin-left: 10px;
+    text-align: center;
+}
+
+/* context panel OPACITY */
+.context-panel-opacity {
+    width: 100%;
+    display: var(--display);
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.context-panel-opacity-label {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 3px;
+    font-size: 1.2rem;
+}
+
+.context-panel-opacity-range-and-input-holder {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+#panel_opacity_range {
+    flex-grow: 1;
+}
+
+#panel_opacity_input {
+    width: 50px;
+    margin-left: 10px;
+    text-align: center;
+}
+
+
+/* context panel BACKGROUND COLOR */
+.context-panel-background-color {
+    width: 100%;
+    display: var(--display);
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.context-panel-background-color-label {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 3px;
+    font-size: 1.2rem;
+}
+
+.context-panel-background-color-opacity-range-and-input-holder {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+#panel_background_color_input {
+    flex-grow: 0.5;
+}
+
+#panel_background_color_opacity_range {
+    flex-grow: 1;
+    margin-left: 10px;
+}
+
+#panel_background_color_opacity_input {
+    width: 50px;
+    margin-left: 10px;
+    text-align: center;
+}
+
+/* context panel BACKGROUND LINEAR GRADIENT */
+.context-panel-background-linear-gradient {
+    width: 100%;
+    display: var(--display);
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.context-panel-background-color-label {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 6px;
+    font-size: 1.2rem;
+}
+
+.context-panel-background-linear-gradient-panels-holders-block {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.context-panel-background-linear-gradient-panels-holder-label {
+
+}
+
+.context-panel-background-linear-gradient-panels-holder {
+    width: 47%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-direction: column;
+}
+
+.context-panel-background-linear-gradient-panels-holder * {
+    width: 100%;
+    margin-bottom: 5px;
+}
+
+.context-panel-background-linear-gradient-deg-panel-holder {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.gradient-deg-panels {
+    display: flex;
+    width: 100%;
+}
+
+#panel_background_linear_gradient_from_opacity_range {
+    flex-grow: 1;
+}
+
+#panel_background_linear_gradient_to_opacity_range {
+    flex-grow: 1;
+}
+
+#panel_background_linear_gradient_deg_range {
+    flex-grow: 1;
+}
+
+#panel_background_linear_gradient_deg_input {
+    width: 50px;
+    margin-left: 10px;
+    text-align: center;
+}
+
+/* context panel BORDER COLOR*/
+#panel_border_color_input {
+    flex-grow: 0.5;
+}
+
+#panel_border_color_opacity_range {
+    flex-grow: 1;
+    margin-left: 10px;
+}
+
+#panel_border_color_opacity_input {
+    width: 50px;
+    margin-left: 10px;
+    text-align: center;
+}
+
+
+/* context panel BORDER WIDTH */
+.context-panel-border-width {
+    width: 100%;
+    display: var(--display);
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.context-panel-border-width-label {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 3px;
+    font-size: 1.2rem;
+}
+
+.context-panel-border-width-range-and-input-holder {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+#panel_border_width_range {
+    flex-grow: 1;
+}
+
+#panel_border_width_input {
+    width: 50px;
+    margin-left: 10px;
+    text-align: center;
+}
+
+/* context panel BORDER RADIUS */
+.context-panel-border-radius {
+    width: 100%;
+    display: var(--display);
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.context-panel-border-radius-label {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 3px;
+    font-size: 1.2rem;
+}
+
+.context-panel-border-radius-range-and-input-holder {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+#panel_border_radius_range {
+    flex-grow: 1;
+}
+
+#panel_border_radius_input {
+    width: 50px;
+    margin-left: 10px;
+    text-align: center;
+}
+

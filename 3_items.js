@@ -57,8 +57,6 @@ function createNewItem(event, rootItem) {
         selectedItemForModification = null;
     }
 
-    //set newly created item opacity to value wich is mentioned in config as itemOpacityWhileMoving
-    newElementOfSchema.style.opacity = CONFIG.logic.itemOpacityWhileMoving;
     newElementOfSchema.ondragstart = () => false;
     newElementOfSchema.childNodes.forEach(element => {
         element.ondragstart = () => false;
@@ -125,9 +123,7 @@ function itemDragActions(item, event) {
         }
         if (event.buttons == 1) {   
             if(item.getAttribute('i-is-selectable') == 'true') {
-                console.log(selectedItemForModification == item)
                     selectItem(item)
-                
                 currentItem = null
             }
         }
@@ -192,7 +188,6 @@ function itemDragActions(item, event) {
                 item.style.height = `${CONFIG.UI.defaultWorkZoneItemsOffsets.height * CONFIG.UI.workZoneCurrentScale}px`;
                 item.style.borderRadius = `${CONFIG.UI.defaultWorkZoneItemBorderRadius * CONFIG.UI.workZoneCurrentScale}px`;
                 moveAt(event, item, shiftX, shiftY);   
-                item.style.opacity = CONFIG.itemOpacityWhileMoving;
                 currentItem = null
             }
 
@@ -200,7 +195,6 @@ function itemDragActions(item, event) {
             // mouseEvent.clientX = x;
             // mouseEvent.clientY = y;
             moveAt(mouseEvent, item, shiftX, shiftY);           
-            item.style.opacity = CONFIG.logic.itemOpacityWhileMoving;
             //To get information about what we have under the item wich moving with cursor, we should do checking when actual item 
             //is invisible, so in this case we will get correct information for workFieldSelectedAsDropTarget variable
             item.style.display = 'none';
@@ -226,7 +220,6 @@ function itemDropActions(item) {
     //     selectItem(item)
     // }
 
-    item.style.opacity = 1;
     item.style.zIndex = '1000'
     item.style.transition = `all ease-in-out 0s`;
     item.setAttribute('i-is-selectable', 'true');

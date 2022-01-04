@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap" rel="stylesheet">
     <title>Mayor report presentation</title>
-    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./1_style.css">
+    <link rel="stylesheet" href="./2_context_panel.css">
 </head>
 <body style="position: relative; display: none;">
     <div class="container">
@@ -44,12 +45,20 @@
                 </div>
             </div>
             <div class="context-panel">
+                <div class="context-panel-separator">
+                    <div class="context-panel-separator-line"></div>
+                    <span class="context-panel-separator-text">
+                        Загальні параметри
+                    </span> 
+                    <div class="context-panel-separator-line"></div>   
+                </div>
+
                 <div class="context-panel-width" ci-name="width">
                     <div class="context-panel-width-label">
                         Ширина
                     </div>
                     <div class="context-panel-width-range-and-input-holder">
-                        <input id="panel_width_range" type="range" step="1" min="0" max="100" ci-type="input">
+                        <input id="panel_width_range" type="range" step="1" min="2" max="100" ci-type="input">
                         <input id="panel_width_input" ci-type="input"></input>
                     </div>
                 </div>
@@ -59,8 +68,122 @@
                         Висота
                     </div>
                     <div class="context-panel-height-range-and-input-holder">
-                        <input id="panel_height_range" type="range" step="1" min="0" max="100" ci-type="input">
+                        <input id="panel_height_range" type="range" step="1" min="2" max="100" ci-type="input">
                         <input id="panel_height_input" ci-type="input"></input>
+                    </div>
+                </div>
+
+                <div class="context-panel-opacity" ci-name="opacity">
+                    <div class="context-panel-opacity-label">
+                        Прозорість
+                    </div>
+                    <div class="context-panel-opacity-range-and-input-holder">
+                        <input id="panel_opacity_range" type="range" step="1" min="3" max="100" ci-type="input">
+                        <input id="panel_opacity_input" ci-type="input"></input>
+                    </div>
+                </div>
+
+                <div class="context-panel-separator">
+                    <div class="context-panel-separator-line"></div>
+                    <span class="context-panel-separator-text">
+                        Тло
+                    </span> 
+                    <div class="context-panel-separator-line"></div>   
+                </div>
+
+                <div class="context-panel-background-color" ci-name="backgroundColor">
+                    <div class="context-panel-background-color-label">
+                        Колір
+                    </div>
+                    <div class="context-panel-background-color-opacity-range-and-input-holder">
+                        <input id="panel_background_color_input" type="color" ci-type="input"></input>
+                        <input id="panel_background_color_opacity_range" type="range" step="1" min="0" max="100" ci-type="input">
+                        <input id="panel_background_color_opacity_input" ci-type="input"></input>
+                    </div>
+                </div>
+
+                <div class="context-panel-background-linear-gradient" ci-name="backgroundLinearGradient">
+                    <div class="context-panel-background-color-label">
+                        Градієнт
+                    </div>
+                    <div class="context-panel-background-linear-gradient-panels-holders-block">
+                        <div class="context-panel-background-linear-gradient-panels-holder">
+                            <div class="context-panel-background-linear-gradient-panels-holder-label">
+                                Від
+                            </div>
+                            <input id="panel_background_linear_gradient_from_input" type="color" ci-type="input"></input>
+                            <div class="context-panel-background-linear-gradient-panels-holder-label">
+                                Прозорість
+                            </div>
+                            <input id="panel_background_linear_gradient_from_opacity_range" type="range" step="1" min="0" max="100" ci-type="input">
+                            <div class="context-panel-background-linear-gradient-panels-holder-label">
+                                Значення
+                            </div>
+                            <input id="panel_background_linear_gradient_from_value_range" type="range" step="1" min="0" max="100" ci-type="input">
+                        </div>
+                        <div class="context-panel-background-linear-gradient-panels-holder">
+                            <div class="context-panel-background-linear-gradient-panels-holder-label">
+                                До
+                            </div>
+                            <input id="panel_background_linear_gradient_to_input" type="color" ci-type="input"></input>
+                            <div class="context-panel-background-linear-gradient-panels-holder-label">
+                                Прозорість
+                            </div>
+                            <input id="panel_background_linear_gradient_to_opacity_range" type="range" step="1" min="0" max="100" ci-type="input">
+                            <div class="context-panel-background-linear-gradient-panels-holder-label">
+                                Значення
+                            </div>
+                            <input id="panel_background_linear_gradient_to_value_range" type="range" step="1" min="0" max="100" ci-type="input">
+                        </div>
+                    </div>
+                    <div class="context-panel-background-linear-gradient-deg-panel-holder">
+                        <div class="context-panel-background-linear-gradient-panels-holder-label">
+                            Напрямок (градуси)
+                        </div>
+
+                        <div class="gradient-deg-panels">
+                            <input id="panel_background_linear_gradient_deg_range" type="range" step="1" min="0" max="360" ci-type="input">
+                            <input id="panel_background_linear_gradient_deg_input" ci-type="input"></input>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="context-panel-separator">
+                    <div class="context-panel-separator-line"></div>
+                    <span class="context-panel-separator-text">
+                        Грані
+                    </span> 
+                    <div class="context-panel-separator-line"></div>   
+                </div>
+
+                <div class="context-panel-background-color" ci-name="borderColor">
+                    <div class="context-panel-background-color-label">
+                        Колір
+                    </div>
+                    <div class="context-panel-background-color-opacity-range-and-input-holder">
+                        <input id="panel_border_color_input" type="color" ci-type="input"></input>
+                        <input id="panel_border_color_opacity_range" type="range" step="1" min="0" max="100" ci-type="input">
+                        <input id="panel_border_color_opacity_input" ci-type="input"></input>
+                    </div>
+                </div>
+
+                <div class="context-panel-border-width" ci-name="borderWidth">
+                    <div class="context-panel-border-width-label">
+                        Товщина
+                    </div>
+                    <div class="context-panel-border-width-range-and-input-holder">
+                        <input id="panel_border_width_range" type="range" step="0.1" min="0" max="10" ci-type="input">
+                        <input id="panel_border_width_input" ci-type="input"></input>
+                    </div>
+                </div>
+
+                <div class="context-panel-border-radius" ci-name="borderRadius">
+                    <div class="context-panel-border-radius-label">
+                        Округлість блоку
+                    </div>
+                    <div class="context-panel-border-radius-range-and-input-holder">
+                        <input id="panel_border_radius_range" type="range" step="0.1" min="0" max="35" ci-type="input">
+                        <input id="panel_border_radius_input" ci-type="input"></input>
                     </div>
                 </div>
             </div>
