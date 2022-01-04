@@ -47,6 +47,61 @@ function rgbToHex(rgb) {
  */
 function configureContextPanel(mode) {   
     let availableFields = {
+        position: {
+            init: function() {
+                let minValue = 0;
+                let maxValue = 100;
+                let fieldHolder = document.querySelector('div[ci-name="position"]')
+                fieldHolder.style.display = 'flex';
+
+                /* context panel POSITION */
+                let x = document.querySelector('#panel_position_x');
+                let y = document.querySelector('#panel_position_y');
+                x.value = (selectedItemForModification.offsetLeft / workZone.offsetWidth * 100).toFixed();
+                y.value = (selectedItemForModification.offsetTop / workZone.offsetHeight * 100).toFixed();
+
+                x.addEventListener('input', function(event) {
+                    if (event.target.value > maxValue) {
+                        event.target.value = maxValue;
+                    }
+
+                    if (event.target.value < minValue) {
+                        event.target.value = minValue;
+                    }
+
+                    selectedItemForModification.style.left = `${event.target.value}%`;
+                })
+                y.addEventListener('input', function(event) {
+                    if (event.target.value > maxValue) {
+                        event.target.value = maxValue;
+                    }
+
+                    if (event.target.value < minValue) {
+                        event.target.value = minValue;
+                    }
+                    selectedItemForModification.style.top = `${event.target.value}%`;
+                })
+                
+                
+            },
+        },
+
+        anchor: {
+            init: function() {
+                let fieldHolder = document.querySelector('div[ci-name="anchor"]')
+                fieldHolder.style.display = 'flex';
+                
+                let anchorButtons = document.querySelectorAll('.anchor-button')
+                anchorButtons.forEach((button)=>{
+                    button.addEventListener('click', function(event) {
+                        let anchorValue = button.getAttribute('ca-value');
+                        selectedItemForModification.setAttribute('cAnchor', anchorValue)
+                        selectedItemForModification.style.transform = `${calculateItemParams(selectedItemForModification).anchor}`;
+                    })
+                })
+            },
+        },
+
         width: {
             init: function() {
                 let fieldHolder = document.querySelector('div[ci-name="width"]')

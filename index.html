@@ -53,6 +53,49 @@
                     <div class="context-panel-separator-line"></div>   
                 </div>
 
+                <div class="context-panel-background-linear-gradient" ci-name="position">
+                    <div class="context-panel-background-color-label">
+                        Розміщення
+                    </div>
+                    <div class="context-panel-background-linear-gradient-panels-holders-block">
+                        <div class="context-panel-background-linear-gradient-panels-holder">
+                            <div class="context-panel-background-linear-gradient-panels-holder-label">
+                                X (%)
+                            </div>
+                            <input id="panel_position_x" step="1" min="0" max="100" ci-type="input">
+                        </div>
+                        <div class="context-panel-background-linear-gradient-panels-holder">
+                            <div class="context-panel-background-linear-gradient-panels-holder-label">
+                                Y (%)
+                            </div>
+                            <input id="panel_position_y" step="1" min="0" max="100" ci-type="input">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="context-panel-background-linear-gradient" ci-name="anchor">
+                    <div class="context-panel-background-color-label">
+                        Якір
+                    </div>
+                    <div class="context-panel-column-holder-100">
+                        <div class="context-panel-row-holder">
+                            <button class="anchor-button" id="acnhor_top_left" ca-value="0%,0%">123</button>
+                            <button class="anchor-button" id="acnhor_top_center" ca-value="-50%,0%">123</button>
+                            <button class="anchor-button" id="acnhor_top_right" ca-value="-100%,0%">123</button>
+                        </div>
+                        <div class="context-panel-row-holder">
+                            <button class="anchor-button" id="acnhor_middle_left" ca-value="-50%,0%">123</button>
+                            <button class="anchor-button" id="acnhor_middle_center" ca-value="-50%,-50%">123</button>
+                            <button class="anchor-button" id="acnhor_middle_right" ca-value="-50%,-100%">123</button>
+                        </div>
+                        <div class="context-panel-row-holder">
+                            <button class="anchor-button" id="acnhor_bottom_left" ca-value="-100%,0%">123</button>
+                            <button class="anchor-button" id="acnhor_bottom_center" ca-value="-100%,-50%">123</button>
+                            <button class="anchor-button" id="acnhor_bottom_right" ca-value="-100%,-100%">123</button>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="context-panel-width" ci-name="width">
                     <div class="context-panel-width-label">
                         Ширина
@@ -185,6 +228,10 @@
                         <input id="panel_border_radius_range" type="range" step="0.1" min="0" max="35" ci-type="input">
                         <input id="panel_border_radius_input" ci-type="input"></input>
                     </div>
+                </div>
+
+                <div class="context-panel-footer">
+
                 </div>
             </div>
         </div>

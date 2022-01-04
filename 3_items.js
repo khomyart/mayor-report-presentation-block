@@ -47,7 +47,8 @@ function createNewItem(event, rootItem) {
     newElementOfSchema.style.height = `${calculateItemParams(newElementOfSchema).height}px`;
     newElementOfSchema.style.borderWidth = `${calculateItemParams(newElementOfSchema).borderWidth}px`;
     newElementOfSchema.style.borderRadius = `${calculateItemParams(newElementOfSchema).borderRadius}px`;
-
+    newElementOfSchema.style.transform = `${calculateItemParams(newElementOfSchema).anchor}`
+    
     shiftX = workZone.getBoundingClientRect().left + newElementOfSchema.offsetWidth / 2;
     shiftY = workZone.getBoundingClientRect().top + newElementOfSchema.offsetHeight / 2;
 
@@ -89,11 +90,16 @@ function calculateItemParams(item) {
     let borderRadiusMultiplier = item.getAttribute('borderRadiusMultiplier');
     let borderRadius = `${(borderRadiusUnit * borderRadiusMultiplier).toFixed()}`;
 
+    const anchorRegex = /\s+/gi;
+    let cAnchorParam = item.getAttribute('cAnchor').replace(anchorRegex, '').split(',');
+    let anchor = `translate(${cAnchorParam[0]}, ${cAnchorParam[1]})`; 
+
     return {
+        anchor,
         width,
         height,
         borderWidth,
-        borderRadius
+        borderRadius,
     }
 }
 
@@ -216,9 +222,9 @@ function itemDragActions(item, event) {
  * @param {*} item 
  */
 function itemDropActions(item) {
-    // if(selectedItemForModification) {
-    //     selectItem(item)
-    // }
+    if(selectedItemForModification) {
+        selectItem(item)
+    }
 
     item.style.zIndex = '1000'
     item.style.transition = `all ease-in-out 0s`;

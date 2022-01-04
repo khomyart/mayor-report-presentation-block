@@ -7,8 +7,9 @@
     align-items: center;
     flex-direction: column;
     box-sizing: border-box;
-    padding: 20px 15px 10px;
+    padding: 10px 15px 10px;
     display: var(--display);
+    overflow-x: auto;
 }
 
 .context-panel-separator {
@@ -31,6 +32,25 @@
     width: 20%;
     height: 2px;
     background-color: black;
+}
+
+/* context panel ANCHOR */
+.context-panel-column-holder-100 {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+}
+
+.context-panel-row-holder {
+    display: flex;
+    width: fit-content;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.context-panel-row-holder * {
+    margin: 5px 5px;
+    padding: 5px;
 }
 
 /* context panel WIDTH */
@@ -323,3 +343,7 @@
     text-align: center;
 }
 
+.context-panel-footer {
+    width: 100%;
+    padding-bottom: 25px;
+}
