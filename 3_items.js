@@ -47,10 +47,11 @@ function createNewItem(event, rootItem) {
     newElementOfSchema.style.height = `${calculateItemParams(newElementOfSchema).height}px`;
     newElementOfSchema.style.borderWidth = `${calculateItemParams(newElementOfSchema).borderWidth}px`;
     newElementOfSchema.style.borderRadius = `${calculateItemParams(newElementOfSchema).borderRadius}px`;
-    newElementOfSchema.style.transform = `${calculateItemParams(newElementOfSchema).anchor}`
-    
-    shiftX = workZone.getBoundingClientRect().left + newElementOfSchema.offsetWidth / 2;
-    shiftY = workZone.getBoundingClientRect().top + newElementOfSchema.offsetHeight / 2;
+    newElementOfSchema.style.transform = `${calculateItemParams(newElementOfSchema).transform}`
+    newElementOfSchema.style.zIndex = getZIndexes().highest + 1;
+
+    shiftX = workZone.getBoundingClientRect().left + newElementOfSchema.offsetWidth / 2 - calculateItemParams(newElementOfSchema).anchorShiftX;
+    shiftY = workZone.getBoundingClientRect().top + newElementOfSchema.offsetHeight / 2 - calculateItemParams(newElementOfSchema).anchorShiftY;
 
     //clear item selection
     if (selectedItemForModification) {
@@ -90,17 +91,63 @@ function calculateItemParams(item) {
     let borderRadiusMultiplier = item.getAttribute('borderRadiusMultiplier');
     let borderRadius = `${(borderRadiusUnit * borderRadiusMultiplier).toFixed()}`;
 
-    const anchorRegex = /\s+/gi;
-    let cAnchorParam = item.getAttribute('cAnchor').replace(anchorRegex, '').split(',');
-    let anchor = `translate(${cAnchorParam[0]}, ${cAnchorParam[1]})`; 
+    const anchorRegexSpaces = /\s+/gi;
+    const anchorRegexPersentages = /\%+/gi;
+    let cAnchorParam = item.getAttribute('cAnchor').replace(anchorRegexSpaces, '').replace(anchorRegexPersentages, '').split(',');
+    let transform = `translate(${cAnchorParam[0]}%, ${cAnchorParam[1]}%)`; 
+
+    let anchorShiftX = Math.abs(parseInt(item.offsetWidth * (cAnchorParam[0] / 100)));
+    let anchorShiftY = Math.abs(parseInt(item.offsetHeight * (cAnchorParam[1] / 100)));
 
     return {
-        anchor,
+        transform, // full string of transform: translate
+        anchorX: cAnchorParam[0], //x part of transform: translate without '%' sign
+        anchorY: cAnchorParam[1], //y part of transform: translate without '%' sign
+        anchorShiftX, //x shift for object mooving depends on its transform: translate x value
+        anchorShiftY, //y shift for object mooving depends on its transform: translate y value
         width,
         height,
         borderWidth,
         borderRadius,
     }
+}
+
+/**
+ * 
+ * @returns object with highest and lowest zIndexes of the .field-items
+ */
+function getZIndexes() {
+    let highestZIndex = 1000;
+    let lowestZIndex = 1000;
+    let fieldItems = document.querySelectorAll('.field-item');
+    
+    if (fieldItems.length == 0) {
+        return {
+            highest: highestZIndex,
+            lowest: lowestZIndex,
+        };
+    } 
+
+    fieldItems.forEach((item, index) => {
+        let currentItemZindex = window.getComputedStyle(item, null).zIndex
+        
+        if (index == 0) {
+            highestZIndex = currentItemZindex;
+            lowestZIndex = currentItemZindex;
+        } else {
+            if (currentItemZindex > highestZIndex) {
+                highestZIndex = currentItemZindex;
+            }
+            if (currentItemZindex < lowestZIndex) {
+                lowestZIndex = currentItemZindex;
+            }
+        }
+    });
+
+    return {
+        highest: parseInt(highestZIndex),
+        lowest: parseInt(lowestZIndex),
+    };
 }
 
 /**
@@ -111,6 +158,9 @@ function addDragAndDropToItem(item) {
     item.onmousedown = (event) => {
         itemDragActions(item, event)
         removeContextMenu()
+        if(selectedItemForModification) {
+            selectItem(item)
+        }
     }
     itemDragActions(item, event)
 }
@@ -129,7 +179,7 @@ function itemDragActions(item, event) {
         }
         if (event.buttons == 1) {   
             if(item.getAttribute('i-is-selectable') == 'true') {
-                    selectItem(item)
+                selectItem(item)
                 currentItem = null
             }
         }
@@ -148,8 +198,8 @@ function itemDragActions(item, event) {
         x: null,
         y: null,
     };
-    shiftX = event.pageX - item.getBoundingClientRect().left + workZone.getBoundingClientRect().left;
-    shiftY = event.pageY - item.getBoundingClientRect().top + workZone.getBoundingClientRect().top;
+    shiftX = event.pageX - item.getBoundingClientRect().left + workZone.getBoundingClientRect().left - calculateItemParams(item).anchorShiftX;
+    shiftY = event.pageY - item.getBoundingClientRect().top + workZone.getBoundingClientRect().top - calculateItemParams(item).anchorShiftY;
 
     if (!currentItem) {
         currentItem = 
@@ -180,13 +230,11 @@ function itemDragActions(item, event) {
                 mouseEvent.clientX = event.clientX;
                 mouseEvent.clientY = event.clientY;
             }
-            // var x = (event.pageX - everythingHolder.offsetLeft) + everythingHolder.scrollLeft;
-            // var y = (event.pageY - everythingHolder.offsetTop) + everythingHolder.scrollTop;
-            //console.log(x, y)
+
             if(currentItem) {
                 item = currentItem
-                shiftX = event.pageX - item.getBoundingClientRect().left + workZone.getBoundingClientRect().left;
-                shiftY = event.pageY - item.getBoundingClientRect().top + workZone.getBoundingClientRect().top;
+                shiftX = event.pageX - item.getBoundingClientRect().left + workZone.getBoundingClientRect().left - calculateItemParams(item).anchorShiftX;
+                shiftY = event.pageY - item.getBoundingClientRect().top + workZone.getBoundingClientRect().top - calculateItemParams(item).anchorShiftY;
                 item.className = 'field-item' 
                 workZone.append(item)
                 calculatePositionForItems(item)
@@ -207,7 +255,6 @@ function itemDragActions(item, event) {
             workFieldSelectedAsDropTarget = 
             document.elementFromPoint(event.clientX, event.clientY).closest('#main_field');
            
-            item.style.zIndex = '2000';
             item.style.display = 'flex';
         }
     }
@@ -226,7 +273,6 @@ function itemDropActions(item) {
         selectItem(item)
     }
 
-    item.style.zIndex = '1000'
     item.style.transition = `all ease-in-out 0s`;
     item.setAttribute('i-is-selectable', 'true');
 

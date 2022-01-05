@@ -57,7 +57,7 @@ let CONFIG = {
          },
          contextPanelParams: [
              'anchor', 'position', 'width', 'height', 'opacity', 
-             'backgroundColor', 'borderColor', 'borderWidth', 
+             'zIndex', 'backgroundColor', 'borderColor', 'borderWidth', 
              'borderRadius', 'backgroundLinearGradient',
          ], 
       },
@@ -72,12 +72,11 @@ let CONFIG = {
               itemTemplate.setAttribute('borderWidthMultiplier', '0.15');
               itemTemplate.setAttribute('borderRadiusMultiplier', '5');
               itemTemplate.setAttribute('cAnchor', '0%,0%');
-
               return itemTemplate;
          },
          contextPanelParams: [
           'anchor', 'position', 'width', 'height', 'opacity', 
-          'backgroundColor', 'borderColor', 'borderWidth', 
+          'zIndex', 'backgroundColor', 'borderColor', 'borderWidth', 
           'borderRadius', 'backgroundLinearGradient',
         ], 
       },

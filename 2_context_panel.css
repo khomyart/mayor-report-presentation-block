@@ -34,6 +34,19 @@
     background-color: black;
 }
 
+/* context panel ZINDEX */
+.context-panel-row-holder-zIndex {
+    display: flex;
+    width: fit-content;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.zIndex-button {
+ width: 50px;
+}
+
 /* context panel ANCHOR */
 .context-panel-column-holder-100 {
     display: flex;
@@ -51,6 +64,11 @@
 .context-panel-row-holder * {
     margin: 5px 5px;
     padding: 5px;
+}
+
+.anchor-button-activated {
+    background-color: rgb(78, 64, 204);
+    color: white;
 }
 
 /* context panel WIDTH */

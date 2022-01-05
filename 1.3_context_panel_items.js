@@ -57,8 +57,8 @@ function configureContextPanel(mode) {
                 /* context panel POSITION */
                 let x = document.querySelector('#panel_position_x');
                 let y = document.querySelector('#panel_position_y');
-                x.value = (selectedItemForModification.offsetLeft / workZone.offsetWidth * 100).toFixed();
-                y.value = (selectedItemForModification.offsetTop / workZone.offsetHeight * 100).toFixed();
+                x.value = (selectedItemForModification.offsetLeft / workZone.offsetWidth * 100).toFixed(4);
+                y.value = (selectedItemForModification.offsetTop / workZone.offsetHeight * 100).toFixed(4);
 
                 x.addEventListener('input', function(event) {
                     if (event.target.value > maxValue) {
@@ -81,23 +81,72 @@ function configureContextPanel(mode) {
                     }
                     selectedItemForModification.style.top = `${event.target.value}%`;
                 })
+            },
+        },
+
+        zIndex: {
+            init: function() {
+                let fieldHolder = document.querySelector('div[ci-name="zIndex"]')
+                fieldHolder.style.display = 'flex';
                 
-                
+                let riseZIndexButton = document.querySelector('#zIndex_rise');
+                let riseZIndexToEndButton = document.querySelector('#zIndex_rise_to_end');
+                let downZIndexButton = document.querySelector('#zIndex_down');
+                let downZIndexToEndButton = document.querySelector('#zIndex_down_to_end');
+
+                riseZIndexButton.onclick = function () {
+                    selectedItemForModification.style.zIndex = 
+                        parseInt(window.getComputedStyle(selectedItemForModification, null).zIndex) + 1;
+                }
+                riseZIndexToEndButton.onclick = function () {
+                    selectedItemForModification.style.zIndex =
+                        getZIndexes().highest + 1;
+                }
+                downZIndexButton.onclick = function () {
+                    selectedItemForModification.style.zIndex = 
+                        parseInt(window.getComputedStyle(selectedItemForModification, null).zIndex) - 1;
+                }
+                downZIndexToEndButton.onclick = function () {
+                    selectedItemForModification.style.zIndex =
+                        getZIndexes().lowest - 1;
+                }
             },
         },
 
         anchor: {
             init: function() {
+                function assignActivatedAnchorButtonClass(buttons) {
+                    buttons.forEach(button => {
+                        if (button.getAttribute('ca-value') == selectedItemForModification.getAttribute('cAnchor')) {
+                            button.classList.add('anchor-button-activated');
+                        } else {
+                            button.classList.remove('anchor-button-activated');
+                        }
+                    });
+                }
+
                 let fieldHolder = document.querySelector('div[ci-name="anchor"]')
                 fieldHolder.style.display = 'flex';
-                
                 let anchorButtons = document.querySelectorAll('.anchor-button')
+
+                assignActivatedAnchorButtonClass(anchorButtons);
+
                 anchorButtons.forEach((button)=>{
-                    button.addEventListener('click', function(event) {
+                    button.onclick =  function(event) {
+                        selectedItemForModification.style.left = selectedItemForModification.offsetLeft - calculateItemParams(selectedItemForModification).anchorShiftX + 'px';
+                        selectedItemForModification.style.top = selectedItemForModification.offsetTop - calculateItemParams(selectedItemForModification).anchorShiftY  + 'px';
+
                         let anchorValue = button.getAttribute('ca-value');
                         selectedItemForModification.setAttribute('cAnchor', anchorValue)
-                        selectedItemForModification.style.transform = `${calculateItemParams(selectedItemForModification).anchor}`;
-                    })
+
+                        selectedItemForModification.style.transform = `${calculateItemParams(selectedItemForModification).transform}`;
+                        console.log(calculateItemParams(selectedItemForModification).anchorShiftX)
+                        selectedItemForModification.style.left = selectedItemForModification.offsetLeft + calculateItemParams(selectedItemForModification).anchorShiftX + 'px';
+                        selectedItemForModification.style.top = selectedItemForModification.offsetTop + calculateItemParams(selectedItemForModification).anchorShiftY + 'px';
+                    
+                        assignActivatedAnchorButtonClass(anchorButtons);
+                        selectItem(selectedItemForModification);
+                    }
                 })
             },
         },
