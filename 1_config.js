@@ -47,16 +47,17 @@ let CONFIG = {
 
           itemTemplate.classList.add('div-template');
           itemTemplate.setAttribute('i-name', 'div');
-          itemTemplate.setAttribute('widthMultiplier', '20');
-          itemTemplate.setAttribute('heightMultiplier', '2');
+          itemTemplate.setAttribute('widthMultiplier', '10');
+          itemTemplate.setAttribute('heightMultiplier', '14');
           itemTemplate.setAttribute('borderWidthMultiplier', '0.15');
-          itemTemplate.setAttribute('borderRadiusMultiplier', '5');
+          itemTemplate.setAttribute('borderRadiusMultiplier', '0');
           itemTemplate.setAttribute('cAnchor', '0%,0%');
+          itemTemplate.setAttribute('lockType', 'none');
 
           return itemTemplate;
          },
          contextPanelParams: [
-             'anchor', 'position', 'width', 'height', 'opacity', 
+             'anchor', 'position', 'width', 'height', 'textEditor','opacity', 
              'zIndex', 'backgroundColor', 'borderColor', 'borderWidth', 
              'borderRadius', 'backgroundLinearGradient',
          ], 
@@ -67,15 +68,17 @@ let CONFIG = {
 
               itemTemplate.classList.add('p-template');
               itemTemplate.setAttribute('i-name', 'p');
-              itemTemplate.setAttribute('widthMultiplier', '20');
-              itemTemplate.setAttribute('heightMultiplier', '2');
+              itemTemplate.setAttribute('widthMultiplier', '10');
+              itemTemplate.setAttribute('heightMultiplier', '14');
               itemTemplate.setAttribute('borderWidthMultiplier', '0.15');
-              itemTemplate.setAttribute('borderRadiusMultiplier', '5');
+              itemTemplate.setAttribute('borderRadiusMultiplier', '0');
               itemTemplate.setAttribute('cAnchor', '0%,0%');
+              itemTemplate.setAttribute('lockType', 'none');
+
               return itemTemplate;
          },
          contextPanelParams: [
-          'anchor', 'position', 'width', 'height', 'opacity', 
+          'anchor', 'position', 'width', 'height', 'opacity', 'textEditor',
           'zIndex', 'backgroundColor', 'borderColor', 'borderWidth', 
           'borderRadius', 'backgroundLinearGradient',
         ], 

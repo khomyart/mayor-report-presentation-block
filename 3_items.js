@@ -212,6 +212,10 @@ function itemDragActions(item, event) {
     };
     
     document.body.onmousemove = (event) => {
+        if (item.getAttribute('lockType') != 'none') {
+            return
+        }
+        
         if (event.buttons == 1) {
             enableItemPositionCalculationMethod = true;
 
@@ -289,49 +293,6 @@ function itemDropActions(item) {
         console.log('item should be deleted')
     } 
 
-    if ((workZone.getBoundingClientRect().left > item.getBoundingClientRect().left) 
-    || (workZone.getBoundingClientRect().right < item.getBoundingClientRect().right)
-    || (workZone.getBoundingClientRect().top > item.getBoundingClientRect().top)
-    || (workZone.getBoundingClientRect().bottom < item.getBoundingClientRect().bottom)) {
-        enableItemPositionCalculationMethod = false;
-        item.style.transition = `all ease-in-out ${CONFIG.logic.outOfZoneAnimationTime}s`
-        setTimeout(() => {
-            item.style.transition = `all ease-in-out 0s`;
-        }, CONFIG.logic.outOfZoneAnimationTime*1000)
-    }
-
-    if (workZone.getBoundingClientRect().left > item.getBoundingClientRect().left) {
-        enableItemPositionCalculationMethod = false;
-        item.style.left =
-        CONFIG.logic.itemMovingOffsetFromWorkZoneBorder + '%';
-        item.style.top =
-        item.offsetTop / workZone.offsetHeight * 100  + '%';
-    }
-
-    if (workZone.getBoundingClientRect().right < item.getBoundingClientRect().right) {
-        enableItemPositionCalculationMethod = false;
-        item.style.left = 100 - (CONFIG.UI.defaultWorkZoneItemsOffsets.width * CONFIG.UI.workZoneCurrentScale /
-             workZone.offsetWidth * 100) - CONFIG.logic.itemMovingOffsetFromWorkZoneBorder + '%';
-        item.style.top =
-        item.offsetTop / workZone.offsetHeight * 100  + '%';
-    }
-
-    if (workZone.getBoundingClientRect().top > item.getBoundingClientRect().top) {
-        enableItemPositionCalculationMethod = false;
-        item.style.top = 
-        CONFIG.logic.itemMovingOffsetFromWorkZoneBorder + '%';
-        item.style.left =
-        item.offsetLeft / workZone.offsetWidth * 100  + '%';
-    }
-
-    if (workZone.getBoundingClientRect().bottom < item.getBoundingClientRect().bottom) {
-        enableItemPositionCalculationMethod = false;
-        item.style.top = 100 - (CONFIG.UI.defaultWorkZoneItemsOffsets.height * CONFIG.UI.workZoneCurrentScale /
-             workZone.offsetHeight * 100) - CONFIG.logic.itemMovingOffsetFromWorkZoneBorder + '%';
-        item.style.left =
-        item.offsetLeft / workZone.offsetWidth * 100  + '%';
-    }
-   
     if (enableItemPositionCalculationMethod == true) {
         calculatePositionForItems(item)
     }
@@ -375,78 +336,37 @@ function showContextMenuOfItem(item, event) {
     document.body.append(contextMenu)
     contextMenuContent = [
         {
-            name:`${event.clientX}, ${event.clientY}`,
+            name: () => {
+                return item.getAttribute('lockType') == 'none' ? 'Блокувати переміщення' : 'Розблокувати переміщення'
+            },
             method: () => {
-                alert(contextMenuContent[0].name)
+                switch (item.getAttribute('lockType')) {
+                    case 'none':
+                        item.setAttribute('lockType', 'movement')
+                    break;
+                    case 'movement':
+                        item.setAttribute('lockType', 'none')
+                    break;
+                }
                 removeContextMenu()
             },
             //TODO: create extendable stuff
             extendable: {}
         },
         {
-            name:`${item.getAttribute('i-name')}`,
-            method: () => {
-                console.log(contextMenuContent[1].name)
-                removeContextMenu()
-            },
-        }, 
-        {
-            name:`hr`
+            name: () => `hr`
         },
         {
-            name: `Remove`,
+            name: () => `Видалити`,
             method: () => {
                 item.remove()
                 removeContextMenu()
             },
         },
-        {
-            name:`hr`
-        },
-        {
-            name: `Show additional info`,
-            method: () => {
-                contextPanel.innerHTML = '';
-                contextPanel.innerHTML += 
-                `<div style="padding: 5px; margin-bottom: 10px; border-radius: 5px; width: 100%; background-color: rgb(240, 240, 240);"> 
-                    <h3>
-                        Inventory number:
-                    </h3>
-                    <p> 
-                        ${item.getAttribute('i-inventory')}
-                    </p>
-                </div>`;
-                contextPanel.innerHTML += 
-                `<div style="padding: 5px; margin-bottom: 10px; border-radius: 5px; width: 100%; background-color: rgb(240, 240, 240);"> 
-                    <h3>
-                        Name:
-                    </h3>
-                    <p> 
-                        ${item.getAttribute('i-name')}</p></div>
-                    </p>
-                </div>`;
-                contextPanel.innerHTML += 
-                `<div style="padding: 5px; margin-bottom: 10px; border-radius: 5px; width: 100%; background-color: rgb(240, 240, 240);"> 
-                    <h3>
-                        Type:
-                    </h3>
-                    <p> 
-                        ${item.getAttribute('i-type')}
-                    </p>
-                </div>`;
-                contextPanel.innerHTML += 
-                `<div style="padding: 5px; margin-bottom: 10px; border-radius: 5px; width: 100%; background-color: rgb(240, 240, 240);"> 
-                    <h3 style="text-align: center; cursor: pointer; user-select: none;" onclick="contextPanel.innerHTML = ''">
-                        Close
-                    </h3>
-                </div>`;
-                removeContextMenu()
-            },
-        }, 
     ]
 
     contextMenuContent.forEach((element, index) => {
-        if(element.name == 'hr') {
+        if(element.name() == 'hr') {
             contextMenu.innerHTML = contextMenu.innerHTML +
             `
                 <div class="context-menu-separator"></div>
@@ -455,7 +375,7 @@ function showContextMenuOfItem(item, event) {
             contextMenu.innerHTML = contextMenu.innerHTML +
             `
                 <div class="context-menu-item" onclick="contextMenuContent[${index}].method()">
-                    ${element.name}
+                    ${element.name()}
                 <div>
             `
         }

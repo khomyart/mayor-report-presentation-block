@@ -199,6 +199,21 @@ function configureContextPanel(mode) {
             }
         },
 
+        textEditor: {
+            init: function () {
+                let fieldHolder = document.querySelector('div[ci-name="textEditor"]'),
+                    data
+                fieldHolder.style.display = 'block';
+
+                editor.setData( selectedItemForModification.innerHTML );
+
+                editor.model.document.on( 'change:data', () => {
+                    data = editor.getData();
+                    selectedItemForModification.innerHTML = data;
+                } );
+            }
+        },
+
         opacity: {
             init: function () {
                 let minValue = 3;

@@ -115,11 +115,11 @@ document.body.onmousedown = (event) => {
   }
   if (event.buttons == 1) {
     if (
-      !document.elementFromPoint(event.clientX, event.clientY).closest(".field-item") &&
-      !document.elementFromPoint(event.clientX, event.clientY).closest(".drag-and-drop-item") &&
-      !document.elementFromPoint(event.clientX, event.clientY).closest(".context-panel") &&
+      (document.elementFromPoint(event.clientX, event.clientY).closest(".main-field") ||
+      document.elementFromPoint(event.clientX, event.clientY).closest(".items-panel") ||
+      document.elementFromPoint(event.clientX, event.clientY).closest(".main-field-holder")) &&
       selectedItemForModification != null) {
-      clearItemSelection();
+        clearItemSelection();
     }
   }
 };

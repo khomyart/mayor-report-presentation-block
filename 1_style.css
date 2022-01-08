@@ -124,7 +124,10 @@ html, body {
 .field-item {
     user-select: none;
     position: absolute;
-    z-index: 1000;
+}
+
+.field-item * {
+    width: 100%;
 }
 
 .div-template {
@@ -137,7 +140,11 @@ html, body {
     border: solid #b92f2f;
     background-color: #a580be;
     box-sizing: border-box;
-}  
+} 
+
+.a-template {
+
+}
 
 
 .selected-item {
@@ -243,7 +250,7 @@ html, body {
     box-sizing: border-box;
     font-size: 1.5rem;
     width: 100%;
-    padding-left: 10px;
+    padding: 0 10px;
     height: 3rem;
     display: flex;
     align-items: center;

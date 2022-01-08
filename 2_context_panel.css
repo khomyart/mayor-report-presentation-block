@@ -1,7 +1,8 @@
-.context-panel {
-    --display: flex;
+/* cpf - context-panel-field */
 
-    width: 369px;
+.context-panel {
+    --display: block;
+    width: 450px;
     height: 100%;
     background-color: rgb(230, 230, 230);
     align-items: center;
@@ -57,12 +58,11 @@
 
 .context-panel-row-holder {
     display: flex;
-    width: fit-content;
+    width: 100%;
     flex-direction: row;
     justify-content: space-between;
 }
 .context-panel-row-holder * {
-    margin: 5px 5px;
     padding: 5px;
 }
 
@@ -278,6 +278,14 @@
     text-align: center;
 }
 
+/* context panel TEXT */
+.context-panel-text-editor-holder {
+    width: 100%;
+    height: fit-content;
+    display: var(--display);
+}
+
+
 /* context panel BORDER COLOR*/
 #panel_border_color_input {
     flex-grow: 0.5;
@@ -361,7 +369,102 @@
     text-align: center;
 }
 
+/* REWORKED CLASSES */
 .context-panel-footer {
     width: 100%;
     padding-bottom: 25px;
+}
+
+.cpf-container {
+    display: flex;
+    width: 100%;
+    height: fit-content;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+.cpf-container-label {
+    display: block;
+    width: 100%;
+    text-align: center;
+    height: fit-content;
+    font-size: 1.2rem;
+    margin-bottom: 6px;
+}
+
+.cpf-inputs-holder {
+    display: flex;
+    justify-content: space-between;
+}
+
+.cpf-input-block {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 5px;
+}
+
+.cpf-input-label {
+    display: block;
+    width: 100%;
+    text-align: start;
+    height: fit-content;
+    margin-bottom: 2px;
+    font-size: 1rem;
+}
+
+.cpf-input-holder {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    height: 100%;
+}
+
+.cpf-input-holder * {
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.context-panel-text-editor {
+    width: 100%;
+    height: fit-content;
+    box-sizing: border-box;
+    background-color: rgb(251, 251, 251);
+    border-radius: 3px !important;
+    border: 1px solid rgb(8, 8, 8) !important;
+}
+
+.w-full {
+    width: 100%;
+}
+
+.w-half {
+    width: 47%;
+}
+
+.w-wide {
+    width: 79%;
+}
+
+.w-middle {
+    width: 58%;
+}
+
+.w-narrow {
+    width: 17%;
+}
+
+.w-tiny {
+    width: 10%;
+}
+
+.d-row {
+    flex-direction: row;
+}
+
+.d-column {
+    flex-direction: column;
+}
+
+.add-margin-bot {
+    margin-bottom: 10px;
 }
