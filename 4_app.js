@@ -114,7 +114,7 @@ document.body.onmousedown = (event) => {
     removeContextMenu();
   }
   if (event.buttons == 1) {
-    if (
+    if ( !document.elementFromPoint(event.clientX, event.clientY).closest(".field-item") &&
       (document.elementFromPoint(event.clientX, event.clientY).closest(".main-field") ||
       document.elementFromPoint(event.clientX, event.clientY).closest(".items-panel") ||
       document.elementFromPoint(event.clientX, event.clientY).closest(".main-field-holder")) &&

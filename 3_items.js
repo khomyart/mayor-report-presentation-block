@@ -259,7 +259,7 @@ function itemDragActions(item, event) {
             workFieldSelectedAsDropTarget = 
             document.elementFromPoint(event.clientX, event.clientY).closest('#main_field');
            
-            item.style.display = 'flex';
+            item.style.display = 'block';
         }
     }
 
@@ -359,8 +359,11 @@ function showContextMenuOfItem(item, event) {
         {
             name: () => `Видалити`,
             method: () => {
-                item.remove()
-                removeContextMenu()
+                item.remove();
+                removeContextMenu();
+                if (selectedItemForModification != null) {
+                    clearItemSelection();
+                }
             },
         },
     ]
