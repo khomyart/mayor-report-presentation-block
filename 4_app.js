@@ -98,7 +98,7 @@ rootItems.forEach((element) => {
     });
 });
 
-//loop wich allows to accept all needed functions to every root item
+//loop which allows to accept all needed functions to every root item
 for (let i = 0; i < rootItems.length; i++) {
   rootItems[i].onmousedown = (event) => {
     createNewItem(event, rootItems[i]);
@@ -192,13 +192,13 @@ workZoneHolder.onmousedown = (e) => {
 //     }
 // }
 
-// const   btn1 = document.getElementById('debug_button_1'),
-//         btn2 = document.getElementById('debug_button_2');
+const   btn1 = document.getElementById('debug_button_1'),
+        btn2 = document.getElementById('debug_button_2');
 
-// btn1.onclick = () => {
-//     //itemsMenu(everythingHolder, availableItems, 'open')
-// }
+btn1.onclick = () => {
+    //itemsMenu(everythingHolder, availableItems, 'open')
+}
 
-// btn2.onclick = () => {
-//     //itemsMenu(everythingHolder, availableItems, 'close')
-// }
+btn2.onclick = () => {
+    //itemsMenu(everythingHolder, availableItems, 'close')
+}

@@ -83,6 +83,7 @@
     width: 100%;
     align-items: center;
     height: 100%;
+    justify-content: center;
 }
 
 .cpf-input-holder * {
@@ -130,6 +131,10 @@
 
 .d-column {
     flex-direction: column;
+}
+
+.t-align-center {
+    text-align: center;
 }
 
 .add-margin-bot {

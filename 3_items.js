@@ -80,9 +80,13 @@ function calculateItemParams(item) {
     let widthMultiplier = item.getAttribute('widthMultiplier');
     let width = `${(widthUnit * widthMultiplier).toFixed()}`;
 
+    let widthInverted = `${((item.offsetWidth / workZone.offsetWidth) * 100).toFixed(3)}`;
+    
     let heightUnit = workZone.offsetHeight / 100;
     let heightMultiplier = item.getAttribute('heightMultiplier');
     let height = `${(heightUnit * heightMultiplier).toFixed()}`;
+
+    let heightInverted = `${((item.offsetHeight / workZone.offsetHeight) * 100).toFixed(3)}`;
 
     let borderWidthUnit = workZone.offsetWidth / 100;
     let borderWidthMultiplier = item.getAttribute('borderWidthMultiplier');
@@ -125,6 +129,8 @@ function calculateItemParams(item) {
         fontSize,
         padding,
         marginBottom,
+        widthInverted, //inverted value, when we have item.offsetWidth and we need to transform it to withMultiplier
+        heightInverted,
     }
 }
 

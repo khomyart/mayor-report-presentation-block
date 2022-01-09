@@ -158,8 +158,23 @@ function configureContextPanel(mode) {
 
                 let widthRange = document.querySelector('#panel_width_range');
                 let widthInput = document.querySelector('#panel_width_input');
+                let widthCheckbox = document.querySelector('#panel_width_checkbox');
+
                 widthRange.value = selectedItemForModification.getAttribute('widthMultiplier');
                 widthInput.value = selectedItemForModification.getAttribute('widthMultiplier');
+ 
+                if (selectedItemForModification.style.width == 'auto') {
+                    widthCheckbox.checked = true;
+                    widthRange.disabled = true;
+                    widthInput.disabled = true;
+                    selectedItemForModification.setAttribute('widthMultiplier', calculateItemParams(selectedItemForModification).widthInverted);
+                    widthRange.value = selectedItemForModification.getAttribute('widthMultiplier');
+                    widthInput.value = selectedItemForModification.getAttribute('widthMultiplier');
+                } else {
+                    widthRange.disabled = false;
+                    widthInput.disabled = false;
+                    widthCheckbox.checked = false;
+                }
 
                 widthRange.oninput = function(event) {
                     widthInput.value = event.target.value;
@@ -170,7 +185,24 @@ function configureContextPanel(mode) {
                     widthRange.value = event.target.value;
                     selectedItemForModification.setAttribute('widthMultiplier', event.target.value);
                     selectedItemForModification.style.width = `${calculateItemParams(selectedItemForModification).width}px`;
-                }               
+                }    
+                widthCheckbox.oninput = function(event) {
+                    if (event.target.checked) {
+                        widthRange.disabled = true;
+                        widthInput.disabled = true;
+                        selectedItemForModification.setAttribute('widthMultiplier', 'auto');
+                        selectedItemForModification.style.width = `auto`;
+                    } else if (!event.target.checked) {
+                        widthRange.disabled = false;
+                        widthInput.disabled = false;
+                        console.log(calculateItemParams(selectedItemForModification).widthInverted)
+                        selectedItemForModification.setAttribute('widthMultiplier', calculateItemParams(selectedItemForModification).widthInverted);
+                        widthRange.value = selectedItemForModification.getAttribute('widthMultiplier');
+                        widthInput.value = selectedItemForModification.getAttribute('widthMultiplier');
+
+                        selectedItemForModification.style.width = `${calculateItemParams(selectedItemForModification).width}px`;
+                    }
+                }           
             },
         },
 
@@ -182,8 +214,23 @@ function configureContextPanel(mode) {
                 /* context panel HEIGHT */
                 let heightRange = document.querySelector('#panel_height_range');
                 let heightInput = document.querySelector('#panel_height_input');
+                let heightCheckbox = document.querySelector('#panel_height_checkbox');
+
                 heightRange.value = selectedItemForModification.getAttribute('heightMultiplier');
                 heightInput.value = selectedItemForModification.getAttribute('heightMultiplier');
+
+                if (selectedItemForModification.style.height == 'auto') {
+                    heightCheckbox.checked = true;
+                    heightRange.disabled = true;
+                    heightInput.disabled = true;
+                    selectedItemForModification.setAttribute('heightMultiplier', calculateItemParams(selectedItemForModification).heightInverted);
+                    heightRange.value = selectedItemForModification.getAttribute('heightMultiplier');
+                    heightInput.value = selectedItemForModification.getAttribute('heightMultiplier');
+                } else {
+                    heightRange.disabled = false;
+                    heightInput.disabled = false;
+                    heightCheckbox.checked = false;
+                }
 
                 heightRange.oninput = function(event) {
                     heightInput.value = event.target.value;
@@ -195,6 +242,23 @@ function configureContextPanel(mode) {
                     selectedItemForModification.setAttribute('heightMultiplier', event.target.value);
                     selectedItemForModification.style.height = `${calculateItemParams(selectedItemForModification).height}px`;
                 }
+                heightCheckbox.oninput = function(event) {
+                    if (event.target.checked) {
+                        heightRange.disabled = true;
+                        heightInput.disabled = true;
+                        selectedItemForModification.setAttribute('heightMultiplier', 'auto');
+                        selectedItemForModification.style.height = `auto`;
+                    } else if (!event.target.checked) {
+                        heightRange.disabled = false;
+                        heightInput.disabled = false;
+                        console.log(calculateItemParams(selectedItemForModification).heightInverted)
+                        selectedItemForModification.setAttribute('heightMultiplier', calculateItemParams(selectedItemForModification).heightInverted);
+                        heightRange.value = selectedItemForModification.getAttribute('heightMultiplier');
+                        heightInput.value = selectedItemForModification.getAttribute('heightMultiplier');
+
+                        selectedItemForModification.style.height = `${calculateItemParams(selectedItemForModification).height}px`;
+                    }
+                } 
             }
         },
 
