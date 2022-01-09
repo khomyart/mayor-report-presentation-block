@@ -1,7 +1,7 @@
 /* cpf - context-panel-field */
 
 .context-panel {
-    --display: block;
+    --display: flex;
     width: 450px;
     height: 100%;
     background-color: rgb(230, 230, 230);
@@ -134,4 +134,9 @@
 
 .add-margin-bot {
     margin-bottom: 10px;
+}
+
+.anchor-button-activated {
+    background-color: rgb(107, 63, 148);
+    color: white;
 }

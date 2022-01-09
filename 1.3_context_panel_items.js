@@ -60,7 +60,7 @@ function configureContextPanel(mode) {
                 x.value = (selectedItemForModification.offsetLeft / workZone.offsetWidth * 100).toFixed(4);
                 y.value = (selectedItemForModification.offsetTop / workZone.offsetHeight * 100).toFixed(4);
 
-                x.addEventListener('input', function(event) {
+                x.oninput = function(event) {
                     if (event.target.value > maxValue) {
                         event.target.value = maxValue;
                     }
@@ -70,8 +70,8 @@ function configureContextPanel(mode) {
                     }
 
                     selectedItemForModification.style.left = `${event.target.value}%`;
-                })
-                y.addEventListener('input', function(event) {
+                }
+                y.oninput = function(event) {
                     if (event.target.value > maxValue) {
                         event.target.value = maxValue;
                     }
@@ -80,7 +80,7 @@ function configureContextPanel(mode) {
                         event.target.value = minValue;
                     }
                     selectedItemForModification.style.top = `${event.target.value}%`;
-                })
+                }
             },
         },
 
@@ -97,6 +97,7 @@ function configureContextPanel(mode) {
                 riseZIndexButton.onclick = function () {
                     selectedItemForModification.style.zIndex = 
                         parseInt(window.getComputedStyle(selectedItemForModification, null).zIndex) + 1;
+                    console.log(window.getComputedStyle(selectedItemForModification, null).zIndex)
                 }
                 riseZIndexToEndButton.onclick = function () {
                     selectedItemForModification.style.zIndex =
@@ -140,7 +141,6 @@ function configureContextPanel(mode) {
                         selectedItemForModification.setAttribute('cAnchor', anchorValue)
 
                         selectedItemForModification.style.transform = `${calculateItemParams(selectedItemForModification).transform}`;
-                        console.log(calculateItemParams(selectedItemForModification).anchorShiftX)
                         selectedItemForModification.style.left = selectedItemForModification.offsetLeft + calculateItemParams(selectedItemForModification).anchorShiftX + 'px';
                         selectedItemForModification.style.top = selectedItemForModification.offsetTop + calculateItemParams(selectedItemForModification).anchorShiftY + 'px';
                     
@@ -156,22 +156,21 @@ function configureContextPanel(mode) {
                 let fieldHolder = document.querySelector('div[ci-name="width"]')
                 fieldHolder.style.display = 'flex';
 
-                /* context panel WIDTH */
                 let widthRange = document.querySelector('#panel_width_range');
                 let widthInput = document.querySelector('#panel_width_input');
                 widthRange.value = selectedItemForModification.getAttribute('widthMultiplier');
                 widthInput.value = selectedItemForModification.getAttribute('widthMultiplier');
 
-                widthRange.addEventListener('input', function(event) {
+                widthRange.oninput = function(event) {
                     widthInput.value = event.target.value;
                     selectedItemForModification.setAttribute('widthMultiplier', event.target.value);
                     selectedItemForModification.style.width = `${calculateItemParams(selectedItemForModification).width}px`;
-                })
-                widthInput.addEventListener('input', function(event) {
+                }
+                widthInput.oninput = function(event) {
                     widthRange.value = event.target.value;
                     selectedItemForModification.setAttribute('widthMultiplier', event.target.value);
                     selectedItemForModification.style.width = `${calculateItemParams(selectedItemForModification).width}px`;
-                })                
+                }               
             },
         },
 
@@ -186,31 +185,16 @@ function configureContextPanel(mode) {
                 heightRange.value = selectedItemForModification.getAttribute('heightMultiplier');
                 heightInput.value = selectedItemForModification.getAttribute('heightMultiplier');
 
-                heightRange.addEventListener('input', function(event) {
+                heightRange.oninput = function(event) {
                     heightInput.value = event.target.value;
                     selectedItemForModification.setAttribute('heightMultiplier', event.target.value);
                     selectedItemForModification.style.height = `${calculateItemParams(selectedItemForModification).height}px`;
-                })
-                heightInput.addEventListener('input', function(event) {
+                }
+                heightInput.oninput = function(event) {
                     heightRange.value = event.target.value;
                     selectedItemForModification.setAttribute('heightMultiplier', event.target.value);
                     selectedItemForModification.style.height = `${calculateItemParams(selectedItemForModification).height}px`;
-                })
-            }
-        },
-
-        textEditor: {
-            init: function () {
-                let fieldHolder = document.querySelector('div[ci-name="textEditor"]'),
-                    data
-                fieldHolder.style.display = 'block';
-
-                editor.setData( selectedItemForModification.innerHTML );
-
-                editor.model.document.on( 'change:data', () => {
-                    data = editor.getData();
-                    selectedItemForModification.innerHTML = data;
-                } );
+                }
             }
         },
 
@@ -228,11 +212,11 @@ function configureContextPanel(mode) {
                 opacityRange.value = itemOpacity;
                 opacityInput.value = itemOpacity;
 
-                opacityRange.addEventListener('input', function(event) {
+                opacityRange.oninput = function(event) {
                     opacityInput.value = event.target.value;
                     selectedItemForModification.style.opacity = `${event.target.value / 100}`;
-                })
-                opacityInput.addEventListener('input', function(event) {
+                }
+                opacityInput.oninput = function(event) {
                     if (event.target.value > maxValue) {
                         opacityInput.value = maxValue;
                     }
@@ -243,7 +227,118 @@ function configureContextPanel(mode) {
 
                     opacityRange.value = event.target.value;
                     selectedItemForModification.style.opacity = `${event.target.value / 100}`;
-                })
+                }
+            }
+        },
+
+        padding: {
+            init: function() {
+                let fieldHolder = document.querySelector('div[ci-name="padding"]')
+                fieldHolder.style.display = 'flex';
+
+                let paddingRange = document.querySelector('#panel_padding_range');
+                let paddingInput = document.querySelector('#panel_padding_input');
+                paddingRange.value = selectedItemForModification.getAttribute('paddingMultiplier');
+                paddingInput.value = selectedItemForModification.getAttribute('paddingMultiplier');
+
+                paddingRange.oninput = function(event) {
+                    paddingInput.value = event.target.value;
+                    selectedItemForModification.setAttribute('paddingMultiplier', event.target.value);
+                    selectedItemForModification.style.padding = `${calculateItemParams(selectedItemForModification).padding}px`;
+                }
+                paddingInput.oninput = function(event) {
+                    paddingRange.value = event.target.value;
+                    selectedItemForModification.setAttribute('paddingMultiplier', event.target.value);
+                    selectedItemForModification.style.padding = `${calculateItemParams(selectedItemForModification).padding}px`;
+                }             
+            },
+        },
+
+        marginBottom: {
+            init: function() {
+                let fieldHolder = document.querySelector('div[ci-name="marginBottom"]')
+                fieldHolder.style.display = 'flex';
+
+                let marginBottomRange = document.querySelector('#panel_margin_bottom_range');
+                let marginBottomInput = document.querySelector('#panel_margin_bottom_input');
+                marginBottomRange.value = selectedItemForModification.getAttribute('marginBottomMultiplier');
+                marginBottomInput.value = selectedItemForModification.getAttribute('marginBottomMultiplier');
+
+                marginBottomRange.oninput = function(event) {
+                    marginBottomInput.value = event.target.value;
+                    selectedItemForModification.setAttribute('marginBottomMultiplier', event.target.value);
+                    let marginBottomValue = `${calculateItemParams(selectedItemForModification).marginBottom}px`;
+
+                    selectedItemForModification.childNodes.forEach((childNode)=>{
+                        childNode.setAttribute('marginBottomMultiplier', event.target.value)
+                        childNode.style.marginBottom = marginBottomValue;
+                        console.log(marginBottomValue)
+                    })
+                }
+                marginBottomInput.oninput = function(event) {
+                    marginBottomRange.value = event.target.value;
+                    selectedItemForModification.setAttribute('marginBottomMultiplier', event.target.value);
+                    let marginBottomValue = `${calculateItemParams(selectedItemForModification).marginBottom}px`;
+
+                    console.log(selectedItemForModification.childNodes.length)
+
+                    selectedItemForModification.childNodes.forEach((childNode)=>{
+                        childNode.setAttribute('marginBottomMultiplier', event.target.value)
+                        childNode.style.marginBottom = marginBottomValue;
+                        console.log(marginBottomValue)
+                    })
+                }               
+            },
+        },
+
+        fontSize: {
+            init: function() {
+                let fieldHolder = document.querySelector('div[ci-name="fontSize"]')
+                fieldHolder.style.display = 'flex';
+
+                let fontSizeRange = document.querySelector('#panel_font_size_range');
+                let fontSizeInput = document.querySelector('#panel_font_size_input');
+                fontSizeRange.value = selectedItemForModification.getAttribute('fontSizeMultiplier');
+                fontSizeInput.value = selectedItemForModification.getAttribute('fontSizeMultiplier');
+
+                fontSizeRange.oninput = function(event) {
+                    fontSizeInput.value = event.target.value;
+                    selectedItemForModification.setAttribute('fontSizeMultiplier', event.target.value);
+                    selectedItemForModification.style.fontSize = `${calculateItemParams(selectedItemForModification).fontSize}px`;
+                }
+                fontSizeInput.oninput = function(event) {
+                    fontSizeRange.value = event.target.value;
+                    selectedItemForModification.setAttribute('fontSizeMultiplier', event.target.value);
+                    selectedItemForModification.style.fontSize = `${calculateItemParams(selectedItemForModification).fontSize}px`;
+                }                
+            },
+        },
+
+        textEditor: {
+            init: function () {
+                let fieldHolder = document.querySelector('div[ci-name="textEditor"]'),
+                    marginBottomInput = document.querySelector('#panel_margin_bottom_input');
+
+                fieldHolder.style.display = 'block';
+                editor.setData( selectedItemForModification.innerHTML );
+
+                if (textEditorOnChangeMethodIsCreated == false) {
+                    editor.model.document.on( 'change:data', () => {
+                        textEditorOnChangeMethodIsCreated = true
+                        selectedItemForModification.innerHTML = editor.getData();
+
+                        selectedItemForModification.childNodes.forEach((childNode)=>{
+                            childNode.setAttribute('marginBottomMultiplier', marginBottomInput.value);
+                        })
+
+                        selectedItemForModification.childNodes.forEach((childNode, index)=>{
+                            let marginBottomValue = `${calculateItemParams(selectedItemForModification).marginBottom}px`
+                            childNode.style.marginBottom = marginBottomValue;
+                            console.log('child_node: ' + (index + 1))
+                            console.log('margin-calculated')
+                        })      
+                    });
+                } 
             }
         },
 
@@ -272,18 +367,18 @@ function configureContextPanel(mode) {
                 backgroundColorOpacityRange.value = parseInt(parseFloat(backgroundColor.a) * 100);
                 backgroundColorOpacityInput.value = parseInt(parseFloat(backgroundColor.a) * 100);
 
-                backgroundColorInput.addEventListener('input', function(event) {
+                backgroundColorInput.oninput = function(event) {
                     selectedItemForModification.style.backgroundColor = `
                         ${event.target.value}${getOpacity(backgroundColorOpacityRange.value)}
                     `;
-                })
-                backgroundColorOpacityRange.addEventListener('input', function(event) {
+                }
+                backgroundColorOpacityRange.oninput = function(event) {
                     backgroundColorOpacityInput.value = event.target.value;
                     selectedItemForModification.style.backgroundColor = `
                         ${backgroundColorInput.value}${getOpacity(event.target.value)}
                     `;
-                })
-                backgroundColorOpacityInput.addEventListener('input', function(event) {
+                }
+                backgroundColorOpacityInput.oninput = function(event) {
                     if (event.target.value > maxValue) {
                         backgroundColorOpacityInput.value = maxValue;
                     }
@@ -296,7 +391,7 @@ function configureContextPanel(mode) {
                     selectedItemForModification.style.backgroundColor = `
                         ${backgroundColorInput.value}${getOpacity(event.target.value)}
                     `;
-                })
+                }
             }
         },
 
@@ -328,7 +423,6 @@ function configureContextPanel(mode) {
 
                     match = backgroundImage.matchAll(/[0-9.]+%/gi);
                     match = Array.from(match, x => x[0]);
-                    console.log(match)
                     persentagesValue.from = match[0].slice(0,-1);
                     persentagesValue.to = match[1].slice(0,-1);
 
@@ -382,34 +476,34 @@ function configureContextPanel(mode) {
                 degRange.value = decomposedBI.deg;
                 degInput.value = decomposedBI.deg;
                 
-                cF.addEventListener('input', function(event) {
+                cF.oninput = function(event) {
                     selectedItemForModification.style.backgroundImage = getCompiledLinearGradientString (degRange.value, cF.value, getOpacity(oF.value), vF.value, cT.value, getOpacity(oT.value), getToValue(vT.value))
-                })
-                oF.addEventListener('input', function(event) {
+                }
+                oF.oninput = function(event) {
                     selectedItemForModification.style.backgroundImage = getCompiledLinearGradientString (degRange.value, cF.value, getOpacity(oF.value), vF.value, cT.value, getOpacity(oT.value), getToValue(vT.value))
-                })
-                vF.addEventListener('input', function(event) {
+                }
+                vF.oninput = function(event) {
                     selectedItemForModification.style.backgroundImage = getCompiledLinearGradientString (degRange.value, cF.value, getOpacity(oF.value), vF.value, cT.value, getOpacity(oT.value), getToValue(vT.value))
-                })
+                }
 
-                cT.addEventListener('input', function(event) {
+                cT.oninput = function(event) {
                     selectedItemForModification.style.backgroundImage = getCompiledLinearGradientString (degRange.value, cF.value, getOpacity(oF.value), vF.value, cT.value, getOpacity(oT.value), getToValue(vT.value))
-                })
-                oT.addEventListener('input', function(event) {
+                }
+                oT.oninput = function(event) {
                     selectedItemForModification.style.backgroundImage = getCompiledLinearGradientString (degRange.value, cF.value, getOpacity(oF.value), vF.value, cT.value, getOpacity(oT.value), getToValue(vT.value))
-                })
-                vT.addEventListener('input', function(event) {
+                }
+                vT.oninput = function(event) {
                     selectedItemForModification.style.backgroundImage = getCompiledLinearGradientString (degRange.value, cF.value, getOpacity(oF.value), vF.value, cT.value, getOpacity(oT.value), getToValue(vT.value))
-                })
+                }
 
-                degRange.addEventListener('input', function(event) {
+                degRange.oninput = function(event) {
                     degInput.value = event.target.value;
                     selectedItemForModification.style.backgroundImage = getCompiledLinearGradientString (degRange.value, cF.value, getOpacity(oF.value), vF.value, cT.value, getOpacity(oT.value), getToValue(vT.value))
-                })
-                degInput.addEventListener('input', function(event) {
+                }
+                degInput.oninput = function(event) {
                     degRange.value = event.target.value;
                     selectedItemForModification.style.backgroundImage = getCompiledLinearGradientString (degRange.value, cF.value, getOpacity(oF.value), vF.value, cT.value, getOpacity(oT.value), getToValue(vT.value))
-                })
+                }
             }
         },
 
@@ -437,18 +531,18 @@ function configureContextPanel(mode) {
                 borderColorOpacityRange.value = parseInt(parseFloat(borderColor.a) * 100);
                 borderColorOpacityInput.value = parseInt(parseFloat(borderColor.a) * 100);
 
-                borderColorInput.addEventListener('input', function(event) {
+                borderColorInput.oninput = function(event) {
                     selectedItemForModification.style.borderColor = `
                         ${event.target.value}${getOpacity(borderColorOpacityRange.value)}
                     `;
-                })
-                borderColorOpacityRange.addEventListener('input', function(event) {
+                }
+                borderColorOpacityRange.oninput = function(event) {
                     borderColorOpacityInput.value = event.target.value;
                     selectedItemForModification.style.borderColor = `
                         ${borderColorInput.value}${getOpacity(event.target.value)}
                     `;
-                })
-                borderColorOpacityInput.addEventListener('input', function(event) {
+                }
+                borderColorOpacityInput.oninput = function(event) {
                     if (event.target.value > maxValue) {
                         borderColorOpacityInput.value = maxValue;
                     }
@@ -461,7 +555,7 @@ function configureContextPanel(mode) {
                     selectedItemForModification.style.borderColor = `
                         ${borderColorInput.value}${getOpacity(event.target.value)}
                     `;
-                })
+                }
             }
         },
 
@@ -476,16 +570,16 @@ function configureContextPanel(mode) {
                 borderWidthRange.value = selectedItemForModification.getAttribute('borderWidthMultiplier');
                 borderWidthInput.value = selectedItemForModification.getAttribute('borderWidthMultiplier');
 
-                borderWidthRange.addEventListener('input', function(event) {
+                borderWidthRange.oninput = function(event) {
                     borderWidthInput.value = event.target.value;
                     selectedItemForModification.setAttribute('borderWidthMultiplier', event.target.value);
                     selectedItemForModification.style.borderWidth = `${calculateItemParams(selectedItemForModification).borderWidth}px`;
-                })
-                borderWidthInput.addEventListener('input', function(event) {
+                }
+                borderWidthInput.oninput = function(event) {
                     borderWidthRange.value = event.target.value;
                     selectedItemForModification.setAttribute('borderWidthMultiplier', event.target.value);
                     selectedItemForModification.style.borderWidth = `${calculateItemParams(selectedItemForModification).borderWidth}px`;
-                })                
+                }               
             },
         },
 
@@ -500,16 +594,16 @@ function configureContextPanel(mode) {
                 borderRadiusRange.value = selectedItemForModification.getAttribute('borderRadiusMultiplier');
                 borderRadiusInput.value = selectedItemForModification.getAttribute('borderRadiusMultiplier');
 
-                borderRadiusRange.addEventListener('input', function(event) {
+                borderRadiusRange.oninput = function(event) {
                     borderRadiusInput.value = event.target.value;
                     selectedItemForModification.setAttribute('borderRadiusMultiplier', event.target.value);
                     selectedItemForModification.style.borderRadius = `${calculateItemParams(selectedItemForModification).borderRadius}px`;
-                })
-                borderRadiusInput.addEventListener('input', function(event) {
+                }
+                borderRadiusInput.oninput = function(event) {
                     borderRadiusRange.value = event.target.value;
                     selectedItemForModification.setAttribute('borderRadiusMultiplier', event.target.value);
                     selectedItemForModification.style.borderRadius = `${calculateItemParams(selectedItemForModification).borderRadius}px`;
-                })                
+                }                
             },
         },
     }

@@ -51,14 +51,17 @@ let CONFIG = {
           itemTemplate.setAttribute('heightMultiplier', '14');
           itemTemplate.setAttribute('borderWidthMultiplier', '0.15');
           itemTemplate.setAttribute('borderRadiusMultiplier', '0');
+          itemTemplate.setAttribute('fontSizeMultiplier', '1');
+          itemTemplate.setAttribute('paddingMultiplier', '0.2');
+          itemTemplate.setAttribute('marginBottomMultiplier', '0.2');
           itemTemplate.setAttribute('cAnchor', '0%,0%');
           itemTemplate.setAttribute('lockType', 'none');
 
           return itemTemplate;
          },
          contextPanelParams: [
-             'anchor', 'position', 'width', 'height', 'textEditor','opacity', 
-             'zIndex', 'backgroundColor', 'borderColor', 'borderWidth', 
+             'fontSize', 'anchor', 'position', 'width', 'height', 'textEditor','opacity', 
+             'marginBottom', 'padding', 'zIndex', 'backgroundColor', 'borderColor', 'borderWidth', 
              'borderRadius', 'backgroundLinearGradient',
          ], 
       },
@@ -72,14 +75,17 @@ let CONFIG = {
               itemTemplate.setAttribute('heightMultiplier', '14');
               itemTemplate.setAttribute('borderWidthMultiplier', '0.15');
               itemTemplate.setAttribute('borderRadiusMultiplier', '0');
+              itemTemplate.setAttribute('fontSizeMultiplier', '1');
+              itemTemplate.setAttribute('paddingMultiplier', '0.2');
+              itemTemplate.setAttribute('marginBottomMultiplier', '0.2');
               itemTemplate.setAttribute('cAnchor', '0%,0%');
               itemTemplate.setAttribute('lockType', 'none');
 
               return itemTemplate;
          },
          contextPanelParams: [
-          'anchor', 'position', 'width', 'height', 'opacity', 'textEditor',
-          'zIndex', 'backgroundColor', 'borderColor', 'borderWidth', 
+          'fontSize', 'anchor', 'position', 'width', 'height', 'textEditor','opacity', 
+          'marginBottom', 'padding', 'zIndex', 'backgroundColor', 'borderColor', 'borderWidth', 
           'borderRadius', 'backgroundLinearGradient',
         ], 
       },

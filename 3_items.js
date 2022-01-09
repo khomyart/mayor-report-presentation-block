@@ -41,7 +41,6 @@ function createNewItem(event, rootItem) {
     elementsOfSchema.push(newElementOfSchema)
 
     //append newly created element to work field
-    workZone.append(newElementOfSchema)
     newElementOfSchema.classList.add('field-item');
     newElementOfSchema.style.width = `${calculateItemParams(newElementOfSchema).width}px`;
     newElementOfSchema.style.height = `${calculateItemParams(newElementOfSchema).height}px`;
@@ -49,6 +48,8 @@ function createNewItem(event, rootItem) {
     newElementOfSchema.style.borderRadius = `${calculateItemParams(newElementOfSchema).borderRadius}px`;
     newElementOfSchema.style.transform = `${calculateItemParams(newElementOfSchema).transform}`
     newElementOfSchema.style.zIndex = getZIndexes().highest + 1;
+
+    workZone.append(newElementOfSchema)
 
     shiftX = workZone.getBoundingClientRect().left + newElementOfSchema.offsetWidth / 2 - calculateItemParams(newElementOfSchema).anchorShiftX;
     shiftY = workZone.getBoundingClientRect().top + newElementOfSchema.offsetHeight / 2 - calculateItemParams(newElementOfSchema).anchorShiftY;
@@ -87,9 +88,21 @@ function calculateItemParams(item) {
     let borderWidthMultiplier = item.getAttribute('borderWidthMultiplier');
     let borderWidth = `${(borderWidthUnit * borderWidthMultiplier).toFixed()}`;
 
+    let fontSizeUnit = workZone.offsetWidth / 100;
+    let fontSizeMultiplier = item.getAttribute('fontSizeMultiplier');
+    let fontSize = `${(fontSizeUnit * fontSizeMultiplier).toFixed()}`;
+
+    let paddingUnit = workZone.offsetWidth / 100;
+    let paddingMultiplier = item.getAttribute('paddingMultiplier');
+    let padding = `${(paddingUnit * paddingMultiplier).toFixed()}`;
+
     let borderRadiusUnit = workZone.offsetWidth / 100;
     let borderRadiusMultiplier = item.getAttribute('borderRadiusMultiplier');
     let borderRadius = `${(borderRadiusUnit * borderRadiusMultiplier).toFixed()}`;
+
+    let marginBottomUnit = workZone.offsetHeight/100;
+    let marginBottomMultiplier = item.getAttribute('marginBottomMultiplier');
+    let marginBottom = `${(marginBottomUnit * marginBottomMultiplier).toFixed()}`;
 
     const anchorRegexSpaces = /\s+/gi;
     const anchorRegexPersentages = /\%+/gi;
@@ -109,6 +122,9 @@ function calculateItemParams(item) {
         height,
         borderWidth,
         borderRadius,
+        fontSize,
+        padding,
+        marginBottom,
     }
 }
 
@@ -158,9 +174,9 @@ function addDragAndDropToItem(item) {
     item.onmousedown = (event) => {
         itemDragActions(item, event)
         removeContextMenu()
-        if(selectedItemForModification) {
-            selectItem(item)
-        }
+        // if(selectedItemForModification) {
+        //     selectItem(item)
+        // }
     }
     itemDragActions(item, event)
 }
@@ -273,9 +289,9 @@ function itemDragActions(item, event) {
  * @param {*} item 
  */
 function itemDropActions(item) {
-    if(selectedItemForModification) {
-        selectItem(item)
-    }
+    // if(selectedItemForModification) {
+    //     selectItem(item)
+    // }
 
     item.style.transition = `all ease-in-out 0s`;
     item.setAttribute('i-is-selectable', 'true');
