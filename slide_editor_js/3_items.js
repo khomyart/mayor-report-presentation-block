@@ -29,6 +29,7 @@ function fillItemPanelWithItems(itemPanel, objectWithItems) {
  function moveAt(mouseEvent, movableItem, itemOffsetX, itemOffsetY) {
     movableItem.style.left = mouseEvent.clientX - itemOffsetX + 'px';
     movableItem.style.top = mouseEvent.clientY - itemOffsetY + 'px';
+    calculatePositionForItems(movableItem, true)
 }
 
 /**
@@ -94,7 +95,7 @@ function calculateItemParams(item) {
 
     let fontSizeUnit = workZone.offsetWidth / 100;
     let fontSizeMultiplier = item.getAttribute('fontSizeMultiplier');
-    let fontSize = `${(fontSizeUnit * fontSizeMultiplier).toFixed()}`;
+    let fontSize = `${(fontSizeUnit * fontSizeMultiplier).toFixed(4)}`;
 
     let paddingUnit = workZone.offsetWidth / 100;
     let paddingMultiplier = item.getAttribute('paddingMultiplier');
@@ -106,13 +107,21 @@ function calculateItemParams(item) {
 
     let marginBottomUnit = workZone.offsetHeight/100;
     let marginBottomMultiplier = item.getAttribute('marginBottomMultiplier');
-    let marginBottom = `${(marginBottomUnit * marginBottomMultiplier).toFixed()}`;
+    let marginBottom = `${(marginBottomUnit * marginBottomMultiplier).toFixed(4)}`;
+
+    let cX = ((item.offsetLeft / workZone.offsetWidth) * 100).toFixed(4);
+    let cY = ((item.offsetTop / workZone.offsetHeight) * 100).toFixed(4);
 
     const anchorRegexSpaces = /\s+/gi;
     const anchorRegexPersentages = /\%+/gi;
-    let cAnchorParam = item.getAttribute('cAnchor').replace(anchorRegexSpaces, '').replace(anchorRegexPersentages, '').split(',');
-    let transform = `translate(${cAnchorParam[0]}%, ${cAnchorParam[1]}%)`; 
 
+    let cAnchorParam,
+    transform;
+    if (typeof item.getAttribute('cAnchor') == 'string') {
+        cAnchorParam = item.getAttribute('cAnchor').replace(anchorRegexSpaces, '').replace(anchorRegexPersentages, '').split(',');
+        transform = `translate(${cAnchorParam[0]}%, ${cAnchorParam[1]}%)`; 
+    }
+    
     let anchorShiftX = Math.abs(parseInt(item.offsetWidth * (cAnchorParam[0] / 100)));
     let anchorShiftY = Math.abs(parseInt(item.offsetHeight * (cAnchorParam[1] / 100)));
 
@@ -131,6 +140,7 @@ function calculateItemParams(item) {
         marginBottom,
         widthInverted, //inverted value, when we have item.offsetWidth and we need to transform it to withMultiplier
         heightInverted,
+        cX, cY,
     }
 }
 
@@ -184,7 +194,9 @@ function addDragAndDropToItem(item) {
         //     selectItem(item)
         // }
     }
-    itemDragActions(item, event)
+    if (item.getAttribute('newly-created') == 'true') {
+        itemDragActions(item, event)
+    }
 }
 
 /**
@@ -223,10 +235,10 @@ function itemDragActions(item, event) {
     shiftX = event.pageX - item.getBoundingClientRect().left + workZone.getBoundingClientRect().left - calculateItemParams(item).anchorShiftX;
     shiftY = event.pageY - item.getBoundingClientRect().top + workZone.getBoundingClientRect().top - calculateItemParams(item).anchorShiftY;
 
-    if (!currentItem) {
-        currentItem = 
-        document.elementFromPoint(event.clientX, event.clientY).closest('.work-space-container-item');
-    }
+    // if (!currentItem) {
+    //     currentItem = 
+    //     document.elementFromPoint(event.clientX, event.clientY).closest('.work-space-container-item');
+    // }
 
     mouseEvent = {
         clientX: null,
@@ -295,9 +307,10 @@ function itemDragActions(item, event) {
  * @param {*} item 
  */
 function itemDropActions(item) {
-    // if(selectedItemForModification) {
-    //     selectItem(item)
-    // }
+    item.setAttribute('newly-created', false)
+    if(selectedItemForModification) {
+        selectItem(item)
+    }
 
     item.style.transition = `all ease-in-out 0s`;
     item.setAttribute('i-is-selectable', 'true');

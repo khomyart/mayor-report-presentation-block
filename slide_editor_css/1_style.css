@@ -6,6 +6,10 @@
     font-family: 'Noto Sans', sans-serif;
 }
 
+p {
+    margin: 0;
+}
+
 .div-debugger {
     border: 2px solid red;
 }
@@ -17,7 +21,7 @@ html, body {
     overflow: hidden;
 }
 
-.container {
+.c-container {
     width: 100%;
     height: 100%;
     display: flex;
@@ -28,6 +32,7 @@ html, body {
 
 .items-panel {
     background-color: rgb(230, 230, 230);
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -40,6 +45,11 @@ html, body {
     -moz-box-shadow: 0px 10px 16px -1px rgba(21, 43, 60, 0.2);
     box-shadow: 0px 10px 16px -1px rgba(21, 43, 60, 0.2);
     z-index: 1000;
+}
+
+.item-panel-buttons {
+    display: flex;
+    align-items: center;
 }
 
 .side-bars-and-main-field-holder {
@@ -126,20 +136,26 @@ html, body {
     position: absolute;
 }
 
+.field-item-replacer {
+    user-select: none;
+    position: absolute;
+}
+
 .field-item * {
     width: 100%;
 }
 
-.div-template {
-    border: solid #000000;
+.block-elem-template {
     background-color: #80beaa;
     box-sizing: border-box;
+    border: solid #000000;
+    position: absolute;
 }  
 
-.p-template {
-    border: solid #b92f2f;
-    background-color: #a580be;
+.text-elem-template {
+    border: solid #000000;
     box-sizing: border-box;
+    position: absolute;
 } 
 
 .a-template {
@@ -354,15 +370,4 @@ html, body {
 
 .items-menu-category-selected {
     border: 2px solid black;
-}
-
-.slides-panel {
-    width: 300px;
-    height: 100%;
-    background-color: rgb(173, 173, 173);
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    padding: 20px 10px 10px 10px;
-    box-sizing: border-box;
 }

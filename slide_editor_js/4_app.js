@@ -192,13 +192,67 @@ workZoneHolder.onmousedown = (e) => {
 //     }
 // }
 
+let variableWidthHTML;
+
 const   btn1 = document.getElementById('debug_button_1'),
         btn2 = document.getElementById('debug_button_2');
 
 btn1.onclick = () => {
-    //itemsMenu(everythingHolder, availableItems, 'open')
+    variableWidthHTML = workZone.innerHTML;
+    workZone.innerHTML = '';
+    console.log(variableWidthHTML);
 }
 
 btn2.onclick = () => {
-    //itemsMenu(everythingHolder, availableItems, 'close')
+    workZone.innerHTML = variableWidthHTML;
+    document.querySelectorAll('.field-item').forEach((item)=>{
+      addDragAndDropToItem(item);
+    })
+
 }
+
+/* workZone inner html observation */
+const observer = new MutationObserver(function() {
+  console.log('mutata');
+  slidesConfig.updateCurrent(slidesConfig.selectedSlideNumber);
+});
+
+// call `observe()` on that MutationObserver instance,
+// passing it the element to observe, and the options object
+observer.observe(workZone, {subtree: true, childList: true, attributes: true});
+
+setInterval(()=>{
+  let currentSlideContentContainer = document.querySelector(
+    `div[slide-number="${slidesConfig.selectedSlideNumber}"].slide-content`
+  )
+
+  currentSlideContentContainer.innerHTML = 
+    slidesConfig.slideList[slidesConfig.selectedSlideNumber].content
+    .replace(/field-item/gi, '')
+    .replace(/selected-item/gi, '');
+
+  currentSlideContentContainer.childNodes.forEach(childNode => {
+    childNode.style.width =`${ slidesConfig.updatePreviewItemParam(childNode).width}px`;
+    childNode.style.height =`${ slidesConfig.updatePreviewItemParam(childNode).height}px`;
+    childNode.style.borderRadius =`${ slidesConfig.updatePreviewItemParam(childNode).borderRadius}px`;
+    childNode.style.borderWidth =`${ slidesConfig.updatePreviewItemParam(childNode).borderWidth}px`;
+    childNode.style.fontSize = `${ slidesConfig.updatePreviewItemParam(childNode).fontSize}px`;
+    childNode.style.padding = `${ slidesConfig.updatePreviewItemParam(childNode).padding}px`;
+
+    childNode.style.top = childNode.getAttribute('cY');
+    childNode.style.left = childNode.getAttribute('cX');
+
+    if (childNode.childNodes.length > 0) {
+        childNode.childNodes.forEach((p)=>{
+          p.style.marginBottom = `${slidesConfig.updatePreviewItemParam(p).marginBottom}px`
+        })
+    }
+  }) 
+  console.log('transfered')
+},2000)
+
+window.addEventListener('load', function() {
+  srpConfig.panels.slideList.show();
+  srpConfig.buttons.slidesList.classList.add(srpConfig.buttons.activeButtonClass)
+  slidesConfig.select(slidesConfig.selectedSlideNumber, true);
+})

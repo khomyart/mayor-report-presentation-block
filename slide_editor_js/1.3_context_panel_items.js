@@ -672,10 +672,10 @@ function configureContextPanel(mode) {
         },
     }
 
-    let availableFieldsOfParticularItem = CONFIG.UI.itemTemplates[selectedItemForModification.getAttribute('i-name')].contextPanelParams
     
     switch (mode) {
         case 'create':
+            let availableFieldsOfParticularItem = CONFIG.UI.itemTemplates[selectedItemForModification.getAttribute('i-name')].contextPanelParams
             document.querySelectorAll('[ci-name]').forEach((item)=>{
                 item.style.display = 'none';
             })
@@ -690,7 +690,7 @@ function configureContextPanel(mode) {
             document.querySelectorAll('[ci-name]').forEach((item)=>{
                 item.style.display = 'none';
             })
-
+            selectedItemForModification = null;
             contextPanel.style.display = 'none'
             break;
     }

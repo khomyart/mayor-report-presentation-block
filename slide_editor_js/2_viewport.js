@@ -44,6 +44,14 @@ function zoom(direction, step) {
             e.style.height =`${calculateItemParams(e).height}px`;
             e.style.borderRadius =`${calculateItemParams(e).borderRadius}px`;
             e.style.borderWidth =`${calculateItemParams(e).borderWidth}px`;
+            e.style.fontSize = `${calculateItemParams(e).fontSize}px`;
+            e.style.padding = `${calculateItemParams(e).padding}px`;
+
+            if (e.childNodes.length > 0) {
+                e.childNodes.forEach((childNode)=>{
+                    childNode.style.marginBottom = `${calculateItemParams(childNode).marginBottom}px`
+                })
+            }
         })
 
         // // can be proper but a bit strange variant, here we have zoom in and zoom out variants
@@ -63,15 +71,28 @@ function zoom(direction, step) {
  * 
  * @param {string} selector pointer on items type (class)
  */
-function calculatePositionForItems (selector) {
-    if (typeof selector == 'string') {
-        let allItems = document.querySelectorAll(selector);
-        allItems.forEach(e => {
-            e.style.top = `${e.offsetTop / workZone.offsetHeight * 100}%`
-            e.style.left = `${e.offsetLeft / workZone.offsetWidth * 100}%`
-        })
-    } else if (typeof selector == 'object') {
-        selector.style.top = `${selector.offsetTop / workZone.offsetHeight * 100}%`
-        selector.style.left = `${selector.offsetLeft / workZone.offsetWidth * 100}%`
+function calculatePositionForItems (selector, convertToAttribute = false) {
+    if (convertToAttribute) {
+        if (typeof selector == 'string') {
+            let allItems = document.querySelectorAll(selector);
+            allItems.forEach(e => {
+                e.setAttribute('cY', `${(e.offsetTop / workZone.offsetHeight * 100).toFixed(4)}%`)
+                e.setAttribute('cX', `${(e.offsetLeft / workZone.offsetWidth * 100).toFixed(4)}%`)
+            })
+        } else if (typeof selector == 'object') {
+            selector.setAttribute('cY', `${(selector.offsetTop / workZone.offsetHeight * 100).toFixed(4)}%`)
+            selector.setAttribute('cX', `${(selector.offsetLeft / workZone.offsetWidth * 100).toFixed(4)}%`)
+        }
+    } else {
+        if (typeof selector == 'string') {
+            let allItems = document.querySelectorAll(selector);
+            allItems.forEach(e => {
+                e.style.top = `${e.offsetTop / workZone.offsetHeight * 100}%`
+                e.style.left = `${e.offsetLeft / workZone.offsetWidth * 100}%`
+            })
+        } else if (typeof selector == 'object') {
+            selector.style.top = `${selector.offsetTop / workZone.offsetHeight * 100}%`
+            selector.style.left = `${selector.offsetLeft / workZone.offsetWidth * 100}%`
+        }
     }
 }

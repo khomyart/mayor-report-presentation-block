@@ -1,8 +1,11 @@
 /* cpf - context-panel-field */
 
 .context-panel {
-    --display: flex;
-    width: 450px;
+    --display: none;
+    --width: 300px;
+
+    min-width: var(--width);
+    max-width: var(--width);
     height: 100%;
     background-color: rgb(230, 230, 230);
     align-items: center;

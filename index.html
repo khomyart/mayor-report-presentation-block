@@ -5,38 +5,60 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap" rel="stylesheet">
     <title>Mayor report presentation</title>
-    <link rel="stylesheet" href="./1_style.css">
-    <link rel="stylesheet" href="./2_context_panel.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="./slide_editor_css/1_style.css">
+    <link rel="stylesheet" href="./slide_editor_css/2_context_panel.css">
+    <link rel="stylesheet" href="./slide_editor_css/3_slides_related_panels.css">
+
 </head>
 <body style="position: relative; display: none;">
-    <div class="container">
+    <div class="c-container">
         <div class="items-panel">
-            <div class="drag-and-drop-item" i-name="div" i-addinfo="" i-is-selectable="false" i-is-movable="true" i-type="structure">
-                DIV
+            <div class="slides-related-panels-buttons-holder">
+                <div id="slide_list" class="slides-related-panels-button">
+                    Слайди
+                </div>
+                <div id="templates_list" class="slides-related-panels-button">
+                    Шаблони
+                </div>
+                <div id="images_list" class="slides-related-panels-button">
+                    Зображення
+                </div>
             </div>
-            <div class="drag-and-drop-items-separator">
-            </div>
-            <div class="drag-and-drop-item" i-name="p" i-addinfo="" i-is-selectable="false" i-is-movable="true" i-type="element">
-                Р
-            </div>
-            <div class="drag-and-drop-item" i-name="href" i-addinfo="" i-is-selectable="false" i-is-movable="true" i-type="element">
-                HREF
-            </div>
-            <div class="drag-and-drop-item" i-name="img" i-addinfo="" i-is-selectable="false" i-is-movable="true" i-type="element">
-                IMG
-            </div>
-            <div style="display: flex; flex-direction:row;">
-                <button id="debug_button_1" style="padding: 3px; margin-right: 10px;">
-                    debug button 1
-                </button>
-                <button id="debug_button_2" style="padding: 3px;">
-                    debug button 2
-                </button>
+            <div class="item-panel-buttons">
+                <div class="drag-and-drop-item" i-name="block" i-addinfo="" i-is-selectable="false" i-is-movable="true" i-type="structure">
+                    БЛОК
+                </div>
+                <div class="drag-and-drop-items-separator">
+                </div>
+                <div class="drag-and-drop-item" i-name="text" i-addinfo="" i-is-selectable="false" i-is-movable="true" i-type="element">
+                    ТЕКСТ
+                </div>
+                <div class="drag-and-drop-item" i-name="href" i-addinfo="" i-is-selectable="false" i-is-movable="true" i-type="element">
+                    HREF
+                </div>
+                <div class="drag-and-drop-item" i-name="img" i-addinfo="" i-is-selectable="false" i-is-movable="true" i-type="element">
+                    IMG
+                </div>
+                <div style="display: flex; flex-direction:row;">
+                    <button id="debug_button_1" style="padding: 3px; margin-right: 10px;">
+                        debug button 1
+                    </button>
+                    <button id="debug_button_2" style="padding: 3px;">
+                        debug button 2
+                    </button>
+                </div>
             </div>
         </div>
         <div class="side-bars-and-main-field-holder">
-            <div class="slides-panel" style="display: none;">
-    
+            <div class="slides-panel">
+
+            </div>
+            <div class="templates-panel">
+                Шаблони
+            </div>
+            <div class="images-panel">
+                зображення
             </div>
             <div class="pahlava" id="pahlava">
                 <div class="main-field-holder" id="main_field_holder">
@@ -199,7 +221,7 @@
 
                 <div class="cpf-container" ci-name="opacity">
                     <div class="cpf-container-label">
-                        Прозорість
+                        Чіткість
                     </div>
                     <div class="cpf-inputs-holder w-full">
                         <div class="cpf-input-block w-wide">
@@ -488,7 +510,7 @@
         </div>
     </div>
 
-    <script src="ckeditor/ckeditor.js"></script>
+    <script src="./slide_editor_js/ckeditor/ckeditor.js"></script>
     <script>
         let editor;
         InlineEditor
@@ -502,12 +524,14 @@
             } );
     </script>
 
-    <script src="./1_config.js" type="application/javascript"></script>
-    <script src="./1.2_available_items_and_context_methods.js" type="application/javascript"></script>
-    <script src="./1.3_context_panel_items.js" type="application/javascript"></script>
-    <script src="./2_viewport.js" type="application/javascript"></script>
-    <script src="./3_items.js" type="application/javascript"></script>
-    <script src="./4_app.js" type="application/javascript"></script>  
+    <script src="./slide_editor_js/1_config.js" type="application/javascript"></script>
+    <script src="./slide_editor_js/1.2_available_items_and_context_methods.js" type="application/javascript"></script>
+    <script src="./slide_editor_js/1.3_context_panel_items.js" type="application/javascript"></script>
+    <script src="./slide_editor_js/1.4_slides_related_panels.js" type="application/javascript"></script>
+    <script src="./slide_editor_js/2_viewport.js" type="application/javascript"></script>
+    <script src="./slide_editor_js/3_items.js" type="application/javascript"></script>
+    <script src="./slide_editor_js/4_app.js" type="application/javascript"></script>  
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
 </body>
 </html>

@@ -1,6 +1,6 @@
 let CONFIG = {
   coreElementsSelectors: {
-    container: ".container",
+    container: ".c-container",
     sideBarsAndMainFieldHolder: ".side-bars-and-main-field-holder",
     workZoneHolder: "#main_field_holder",
     workZoneIdentifier: "#main_field",
@@ -26,7 +26,7 @@ let CONFIG = {
       height: window.screen.width / 3,
     },
     defaultWorkZoneItemsOffsets: {
-      width: 50,
+      width: 70,
       height: 35,
     },
     defaultWorkZoneItemImageOffsets: {
@@ -41,36 +41,37 @@ let CONFIG = {
       },
     },
     itemTemplates: {
-      div: {
+      block: {
         get: () => {    
           let itemTemplate = document.createElement('div');
 
-          itemTemplate.classList.add('div-template');
-          itemTemplate.setAttribute('i-name', 'div');
+          itemTemplate.classList.add('block-elem-template');
+          itemTemplate.setAttribute('i-name', 'block');
           itemTemplate.setAttribute('widthMultiplier', '10');
           itemTemplate.setAttribute('heightMultiplier', '14');
-          itemTemplate.setAttribute('borderWidthMultiplier', '0.15');
+          itemTemplate.setAttribute('borderWidthMultiplier', '0');
           itemTemplate.setAttribute('borderRadiusMultiplier', '0');
           itemTemplate.setAttribute('fontSizeMultiplier', '1');
           itemTemplate.setAttribute('paddingMultiplier', '0.2');
           itemTemplate.setAttribute('marginBottomMultiplier', '0.2');
           itemTemplate.setAttribute('cAnchor', '0%,0%');
           itemTemplate.setAttribute('lockType', 'none');
-
+          itemTemplate.setAttribute('newly-created', 'true');
+          
           return itemTemplate;
          },
          contextPanelParams: [
-             'fontSize', 'anchor', 'position', 'width', 'height', 'textEditor','opacity', 
-             'marginBottom', 'padding', 'zIndex', 'backgroundColor', 'borderColor', 'borderWidth', 
+             'anchor', 'position', 'width', 'height', 'opacity', 
+             'zIndex', 'backgroundColor', 'borderColor', 'borderWidth', 
              'borderRadius', 'backgroundLinearGradient',
          ], 
       },
-      p: {
+      text: {
           get: () => {    
-              let itemTemplate = document.createElement('p');
+              let itemTemplate = document.createElement('div');
 
-              itemTemplate.classList.add('p-template');
-              itemTemplate.setAttribute('i-name', 'p');
+              itemTemplate.classList.add('text-elem-template');
+              itemTemplate.setAttribute('i-name', 'text');
               itemTemplate.setAttribute('widthMultiplier', '10');
               itemTemplate.setAttribute('heightMultiplier', '14');
               itemTemplate.setAttribute('borderWidthMultiplier', '0.15');
@@ -80,6 +81,7 @@ let CONFIG = {
               itemTemplate.setAttribute('marginBottomMultiplier', '0.2');
               itemTemplate.setAttribute('cAnchor', '0%,0%');
               itemTemplate.setAttribute('lockType', 'none');
+              itemTemplate.setAttribute('newly-created', 'true');
 
               return itemTemplate;
          },
