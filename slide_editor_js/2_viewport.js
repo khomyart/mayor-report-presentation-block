@@ -19,12 +19,7 @@ function zoom(direction, step) {
             amountOfItemsInWorkZone = document.querySelectorAll('.field-item').length
             calculatePositionForItems('.field-item')
         }
-    
-        if (amountOfWorkSpacesInWorkZone != document.querySelectorAll('.work-space').length) {
-            amountOfWorkSpacesInWorkZone = document.querySelectorAll('.work-space').length
-            calculatePositionForItems('.work-space')
-        }
-   
+       
         scrollPosition.top = everythingHolder.scrollTop / workZoneHolder.offsetHeight * 100;
         scrollPosition.left = everythingHolder.scrollLeft / workZoneHolder.offsetWidth * 100;
     

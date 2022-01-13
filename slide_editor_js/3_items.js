@@ -48,6 +48,8 @@ function createNewItem(event, rootItem) {
     newElementOfSchema.style.borderWidth = `${calculateItemParams(newElementOfSchema).borderWidth}px`;
     newElementOfSchema.style.borderRadius = `${calculateItemParams(newElementOfSchema).borderRadius}px`;
     newElementOfSchema.style.transform = `${calculateItemParams(newElementOfSchema).transform}`
+    newElementOfSchema.style.fontSize = `${calculateItemParams(newElementOfSchema).fontSize}px`
+    newElementOfSchema.style.padding = `${calculateItemParams(newElementOfSchema).padding}px`
     newElementOfSchema.style.zIndex = getZIndexes().highest + 1;
 
     workZone.append(newElementOfSchema)
@@ -91,7 +93,7 @@ function calculateItemParams(item) {
 
     let borderWidthUnit = workZone.offsetWidth / 100;
     let borderWidthMultiplier = item.getAttribute('borderWidthMultiplier');
-    let borderWidth = `${(borderWidthUnit * borderWidthMultiplier).toFixed()}`;
+    let borderWidth = `${(borderWidthUnit * borderWidthMultiplier).toFixed(4)}`;
 
     let fontSizeUnit = workZone.offsetWidth / 100;
     let fontSizeMultiplier = item.getAttribute('fontSizeMultiplier');
@@ -115,15 +117,14 @@ function calculateItemParams(item) {
     const anchorRegexSpaces = /\s+/gi;
     const anchorRegexPersentages = /\%+/gi;
 
-    let cAnchorParam,
-    transform;
-    if (typeof item.getAttribute('cAnchor') == 'string') {
+    let cAnchorParam = [null, null],
+    transform, anchorShiftX, anchorShiftY;
+    if (item.hasAttribute('cAnchor')) {
         cAnchorParam = item.getAttribute('cAnchor').replace(anchorRegexSpaces, '').replace(anchorRegexPersentages, '').split(',');
         transform = `translate(${cAnchorParam[0]}%, ${cAnchorParam[1]}%)`; 
+        anchorShiftX = Math.abs(parseInt(item.offsetWidth * (cAnchorParam[0] / 100)));
+        anchorShiftY = Math.abs(parseInt(item.offsetHeight * (cAnchorParam[1] / 100)));
     }
-    
-    let anchorShiftX = Math.abs(parseInt(item.offsetWidth * (cAnchorParam[0] / 100)));
-    let anchorShiftY = Math.abs(parseInt(item.offsetHeight * (cAnchorParam[1] / 100)));
 
     return {
         transform, // full string of transform: translate

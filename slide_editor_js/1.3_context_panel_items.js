@@ -70,6 +70,7 @@ function configureContextPanel(mode) {
                     }
 
                     selectedItemForModification.style.left = `${event.target.value}%`;
+                    calculatePositionForItems(selectedItemForModification, true)
                 }
                 y.oninput = function(event) {
                     if (event.target.value > maxValue) {
@@ -80,6 +81,7 @@ function configureContextPanel(mode) {
                         event.target.value = minValue;
                     }
                     selectedItemForModification.style.top = `${event.target.value}%`;
+                    calculatePositionForItems(selectedItemForModification, true)
                 }
             },
         },

@@ -78,9 +78,28 @@ const slidesConfig = {
     // slidesInstances: [],
     //update slide depends on currentNumber
     showCurrent: function() {
-
+        
     },
-    updatePreviewItemParam: function (item) {
+    updateSlideContentElementChildsValues(slideContentElement) {
+        slideContentElement.childNodes.forEach(childNode => {
+            childNode.style.width =`${ this.calculatePreviewItemParam(childNode).width}px`;
+            childNode.style.height =`${ this.calculatePreviewItemParam(childNode).height}px`;
+            childNode.style.borderRadius =`${ this.calculatePreviewItemParam(childNode).borderRadius}px`;
+            childNode.style.borderWidth =`${ this.calculatePreviewItemParam(childNode).borderWidth}px`;
+            childNode.style.fontSize = `${ this.calculatePreviewItemParam(childNode).fontSize}px`;
+            childNode.style.padding = `${ this.calculatePreviewItemParam(childNode).padding}px`;
+        
+            childNode.style.top = childNode.getAttribute('cY');
+            childNode.style.left = childNode.getAttribute('cX');
+        
+            if (childNode.childNodes.length > 0) {
+                childNode.childNodes.forEach((p)=>{
+                    p.style.marginBottom = `${this.calculatePreviewItemParam(p).marginBottom}px`
+                })
+            }
+        }) 
+    },
+    calculatePreviewItemParam: function (item) {
         let widthUnit = this.selectedSlideInnerHtmlInstance.offsetWidth / 100;
         let widthMultiplier = item.getAttribute('widthMultiplier');
         let width = `${(widthUnit * widthMultiplier).toFixed(5)}`;
@@ -146,64 +165,61 @@ const slidesConfig = {
                     this.mainSlide == index, index, slide.name);                    
         });
 
-        if (this.selectedSlideInnerHtmlInstance == null) {
-            this.selectedSlideInnerHtmlInstance = document.querySelector(`div[slide-number="${this.selectedSlideNumber}"].slide-content`)
-        }
+        this.selectedSlideInnerHtmlInstance = document.querySelector(`div[slide-number="${this.selectedSlideNumber}"].slide-content`)
 
         slideList.forEach((slide, index) => {
             let currentSlide = document.querySelector(`div[slide-number="${index}"].slide-content`)
             currentSlide.innerHTML = slide.content.replace(/field-item/gim, '').replace(/selected-item/gim, '')  
-
-            currentSlide.childNodes.forEach(childNode => {
-                childNode.style.width =`${ this.updatePreviewItemParam(childNode).width}px`;
-                childNode.style.height =`${ this.updatePreviewItemParam(childNode).height}px`;
-                childNode.style.borderRadius =`${ this.updatePreviewItemParam(childNode).borderRadius}px`;
-                childNode.style.borderWidth =`${ this.updatePreviewItemParam(childNode).borderWidth}px`;
-                childNode.style.fontSize = `${ this.updatePreviewItemParam(childNode).fontSize}px`;
-                childNode.style.padding = `${ this.updatePreviewItemParam(childNode).padding}px`;
-            
-                childNode.style.top = childNode.getAttribute('cY');
-                childNode.style.left = childNode.getAttribute('cX');
-            
-                if (childNode.childNodes.length > 0) {
-                    childNode.childNodes.forEach((p)=>{
-                        p.style.marginBottom = `${this.updatePreviewItemParam(p).marginBottom}px`
-                    })
-                }
-            }) 
         });
 
         let slideInstances = document.querySelectorAll('.slide');
         slideInstances.forEach(slide => {
-            slide.onclick = () => {
-                this.select(slide.getAttribute('slide-number'), true)
+            slide.onclick = (event) => {
+                if(event.target.getAttribute('slide-number') != this.selectedSlideNumber){
+                    this.select(slide.getAttribute('slide-number'), true)
+                }
             };
         })
 
+        let slidesContents = document.querySelectorAll(`div[slide-number].slide-content`);
+        slidesContents.forEach(currentSlide => {
+            this.updateSlideContentElementChildsValues(currentSlide);
+        })
+        console.log('rebuilded')
         //this needed when we trying to open slide panel on page init, sort of
         // this.select(this.mainSlide, false);
     },
     select: function(slideNumber, isRebuildNeeded) {
         this.selectedSlideNumber = slideNumber;
         this.selectedSlideInnerHtmlInstance = document.querySelector(`div[slide-number="${slideNumber}"].slide-content`)
-        console.log(slideNumber)
         //rebuilding work zone inner html with all items
         if (workZone.innerHTML != this.slideList[this.selectedSlideNumber].content) {
             workZone.innerHTML = this.slideList[this.selectedSlideNumber].content;
             let fieldItems = document.querySelectorAll('.field-item');
-            // fieldItems.push(null)
             fieldItems.forEach((item)=>{
                 addDragAndDropToItem(item);
             })
         }
-        item = null;
         configureContextPanel('destroy');
-        if (isRebuildNeeded) {this.rebuildSlidesList(this.slideList);}
-        console.log()
-        //rebuild slides list in panel
+        //rebuild slide content window
+        if (isRebuildNeeded) {this.rebuildSlidesList(this.slideList);} else {
+            this.clearSelection();
+            document.querySelector(`div[slide-number="${this.selectedSlideNumber}"].slide`).classList.add('selected-slide')
+            this.updateSlideContentElementChildsValues(this.selectedSlideInnerHtmlInstance);
+        }
+        
+        //viewport stuff
+        CONFIG.UI.workZoneCurrentScale = 1;
+        zoom('in', 0);
+
+        //initial scroll position
+        everythingHolder.scrollTop =
+            workZoneHolder.offsetHeight / 2 - everythingHolder.offsetHeight / 2;
+        everythingHolder.scrollLeft =
+            workZoneHolder.offsetWidth / 2 - everythingHolder.offsetWidth / 2;
     },
     clearSelection: function() {
-        
+        document.querySelector('.selected-slide').classList.remove('selected-slide')
     },
     // makeMainSign: function(slideNumber) {
 
