@@ -4,7 +4,7 @@ const srpConfig = {
     panels: {
         displayType: 'flex',
         slideList: {
-            object: document.querySelector('.slides-panel'),
+            object: document.querySelector('.slides-panel-holder'),
             isShow: function () {
                 return true ? window.getComputedStyle(this.object, null).display != 'none' : false;
             },
@@ -13,7 +13,11 @@ const srpConfig = {
             },
             hide: function() {
                 this.object.style.display = 'none';
-            }
+            },
+            buttons: {
+                saveSlidesList: document.querySelector('#save_slides_list'),
+                addSlide: document.querySelector('#add_slide')
+            },
         },
         templatesList: {
             object: document.querySelector('.templates-panel'),
@@ -71,6 +75,11 @@ const slidesConfig = {
             content: '<div class="block-elem-template field-item" i-name="block" widthmultiplier="10" heightmultiplier="14" borderwidthmultiplier="0" borderradiusmultiplier="0" fontsizemultiplier="1" paddingmultiplier="0.2" marginbottommultiplier="0.2" canchor="0%,0%" locktype="none" newly-created="false" cy="4.6875%" cx="8.0357%" style="width: 90px; height: 90px; border-width: 0px; border-radius: 0px; transform: translate(0%, 0%); z-index: 1003; left: 8.03571%; top: 4.6875%; display: block; transition: all 0s ease-in-out 0s;" i-is-selectable="true"></div><div class="text-elem-template field-item" i-name="text" widthmultiplier="10" heightmultiplier="14" borderwidthmultiplier="0.15" borderradiusmultiplier="0" fontsizemultiplier="1" paddingmultiplier="0.2" marginbottommultiplier="2.5" canchor="0%,0%" locktype="none" newly-created="false" cy="22.9688%" cx="40.0670%" style="width: 90px; height: 90px; border-width: 1px; border-radius: 0px; transform: translate(0%, 0%); z-index: 1004; left: 40.067%; top: 22.9688%; display: block; transition: all 0s ease-in-out 0s; background-image: linear-gradient(90deg, rgba(255, 255, 255, 0) 10%, rgba(255, 255, 255, 0) 90%);" i-is-selectable="true"><p marginbottommultiplier="2.5" style="margin-bottom: 16px;">123</p><p marginbottommultiplier="2.5" style="margin-bottom: 16px;">123</p><p marginbottommultiplier="2.5" style="margin-bottom: 16px;">123</p><p marginbottommultiplier="2.5" style="margin-bottom: 16px;">&nbsp;</p></div>',
         },
     ],
+    buttons: {
+        removeSlide: document.querySelector('#remove_slide'),
+        renameSlide: document.querySelector('#rename_slide'),
+        // ...
+    },
     slideContainer: document.querySelector('.slides-panel'),
     selectedSlideNumber: 0,
     selectedSlideInnerHtmlInstance: null,
@@ -150,20 +159,53 @@ const slidesConfig = {
             this.slideList[slideNumber].content = workZone.innerHTML;
         }
     },
-    add: function() {
-
+    /**
+     * 
+     * @param {string} newSlideName name of the newly created slide
+     * @returns true | false. true if creation has been done successfuly, eaither false
+     */
+    add: function(newSlideName) {
+        console.log(newSlideName)
+        this.slideList.push(
+            {
+                name: newSlideName,
+                content: '',
+            },
+        )
+        return true
     },
     remove: function(slideNumber) {
+        this.slideList.splice(slideNumber, 1);
+        return true;
+    },
+    rename: function(slideName) {
+        slidesConfig.slideList[slidesConfig.selectedSlideNumber].name = slideName;
+        return true;
+    },
+    moveUp: function(slideNumber) {
+
+    },
+    moveDown: function(slideNumber) {
 
     },
     rebuildSlidesList: function(slideList) {
+        //when we clicks on moveup or movedown slide's buttons, click event fires 2 times,
+        //first for button event, second for slide itselft,
+        //so, to prevent this, we nned to clear slide click event
+        function clearSlidesClickEvenets() {
+            let slideInstances = document.querySelectorAll('.slide');
+            slideInstances.forEach(slide => {
+                slide.onclick = null;
+            })
+        }
+
         this.slideContainer.innerHTML = '';
 
         slideList.forEach((slide, index) => {
             this.slideContainer.innerHTML += 
                 this.slideTemplate(this.selectedSlideNumber == index, 
                     this.mainSlide == index, index, slide.name);                    
-        });
+        });     
 
         this.selectedSlideInnerHtmlInstance = document.querySelector(`div[slide-number="${this.selectedSlideNumber}"].slide-content`)
 
@@ -186,11 +228,49 @@ const slidesConfig = {
             this.updateSlideContentElementChildsValues(currentSlide);
         })
         console.log('rebuilded')
-        //this needed when we trying to open slide panel on page init, sort of
-        // this.select(this.mainSlide, false);
+
+        //slide buttons events, place them here!
+        document.querySelector('button[button-action="rename"]').
+        addEventListener('click', function(){
+            document.querySelector('#edited_slide_name').value = 
+            slidesConfig.slideList[slidesConfig.selectedSlideNumber].name;
+        })
+        document.querySelector('button[button-action="moveUp"]').
+        addEventListener('click', function(){
+            let slideNumber = slidesConfig.selectedSlideNumber;
+
+            if (slideNumber != 0) {
+                let currentSlide = slidesConfig.slideList[slideNumber];
+                let upperSlide = slidesConfig.slideList[slideNumber-1];
+
+                slidesConfig.slideList[slideNumber - 1] = currentSlide;
+                slidesConfig.slideList[slideNumber] = upperSlide;
+                
+                clearSlidesClickEvenets()
+
+                slidesConfig.select(slideNumber - 1, true);
+            }
+        })
+        document.querySelector('button[button-action="moveDown"]').onclick = 
+        function(){
+            let slideNumber = slidesConfig.selectedSlideNumber;
+
+            if (slideNumber < slidesConfig.slideList.length) {
+                let currentSlide = slidesConfig.slideList[slideNumber];
+                let lowerSlide = slidesConfig.slideList[slideNumber + 1];
+
+                slidesConfig.slideList[slideNumber + 1] = currentSlide;
+                slidesConfig.slideList[slideNumber] = lowerSlide;
+
+                clearSlidesClickEvenets()
+
+                slidesConfig.select(slideNumber + 1, true);
+            }                
+        }
     },
     select: function(slideNumber, isRebuildNeeded) {
-        this.selectedSlideNumber = slideNumber;
+        this.selectedSlideNumber = parseInt(slideNumber);
+        console.log(this.selectedSlideNumber)
         this.selectedSlideInnerHtmlInstance = document.querySelector(`div[slide-number="${slideNumber}"].slide-content`)
         //rebuilding work zone inner html with all items
         if (workZone.innerHTML != this.slideList[this.selectedSlideNumber].content) {
@@ -230,10 +310,10 @@ const slidesConfig = {
     slideTemplate: function(isSelected, isMain, slideNumber, slideName) {
         let buttonsTemplate = `
         <div class="slide-control-buttons">
-            <button class="slide-control-button" button-action="remove" slide-number="${slideNumber}">
+            <button class="slide-control-button" data-bs-toggle="modal" data-bs-target="#removeSlideModal" button-action="remove" slide-number="${slideNumber}">
                 ВИ
             </button>
-            <button class="slide-control-button" button-action="rename" slide-number="${slideNumber}">
+            <button class="slide-control-button" data-bs-toggle="modal" data-bs-target="#renameSlideModal" button-action="rename" slide-number="${slideNumber}">
                 П
             </button>
             <button class="slide-control-button" button-action="moveUp" slide-number="${slideNumber}">
@@ -266,6 +346,7 @@ const slidesConfig = {
     },
 */
 
+/* MENU PANEL BUTTONS */
 srpConfig.buttons.slidesList.onclick = () => {
     if (srpConfig.panels.slideList.isShow()) {
         srpConfig.buttons.slidesList.classList.remove(srpConfig.buttons.activeButtonClass)
@@ -298,3 +379,45 @@ srpConfig.buttons.imagesList.onclick = () => {
     } 
 }
 
+/* SLIDE PANEL BUTTONS */
+srpConfig.panels.slideList.buttons.addSlide.onclick = () => {
+    var modalElement = document.getElementById('createSlideModal')
+    var modal = bootstrap.Modal.getInstance(modalElement) // Returns a Bootstrap modal instance
+    let newSlideName = document.querySelector('#new_slide_name').value;
+    
+    if (newSlideName == '') {
+        newSlideName = 'Новий слайд';
+    }
+
+    if (slidesConfig.add(newSlideName)) {
+        modal.hide()
+        slidesConfig.select(slidesConfig.slideList.length - 1, true);
+        slidesConfig.selectedSlideInnerHtmlInstance.
+            scrollIntoView({block: "center", behavior: "smooth"});
+    }
+    
+}
+/* SLIDE BUTTONS */
+slidesConfig.buttons.removeSlide.onclick = () => {
+    var modalElement = document.getElementById('removeSlideModal')
+    var modal = bootstrap.Modal.getInstance(modalElement) // Returns a Bootstrap modal instance
+
+    if (slidesConfig.remove(slidesConfig.selectedSlideNumber)) {
+        modal.hide()
+        slidesConfig.selectedSlideNumber == 0 ? slidesConfig.selectedSlideNumber = 0 : slidesConfig.selectedSlideNumber -= 1;
+        console.log(slidesConfig.selectedSlideNumber)
+        console.log(slidesConfig.slideList)
+        slidesConfig.select(slidesConfig.selectedSlideNumber, true);
+    }
+}
+slidesConfig.buttons.renameSlide.onclick = () => {
+    var modalElement = document.getElementById('renameSlideModal')
+    var modal = bootstrap.Modal.getInstance(modalElement) // Returns a Bootstrap modal instance
+    let editedSlideNameInput = document.querySelector('#edited_slide_name').value;
+    console.log(modal)
+
+    if (slidesConfig.rename(editedSlideNameInput)) {
+        modal.hide()
+        slidesConfig.rebuildSlidesList(slidesConfig.slideList);
+    }
+}

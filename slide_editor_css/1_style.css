@@ -292,7 +292,7 @@ html, body {
 
   /* Track */
 ::-webkit-scrollbar-track {
-    background: #ffffff; 
+    background: rgb(219, 219, 219); 
 }
    
 /* Handle */

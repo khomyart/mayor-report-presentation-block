@@ -51,14 +51,20 @@
             </div>
         </div>
         <div class="side-bars-and-main-field-holder">
-            <!-- <div class="slides-panel-holder">
+            <div class="slides-panel-holder">
                 <div class="slides-panel-buttons">
+                    <button id="save_slides_list" class="btn btn-primary slides-panel-button">
+                        Зберегти
+                    </button>
+                    <button class="btn btn-primary slides-panel-button" data-bs-toggle="modal" data-bs-target="#createSlideModal">
+                        Створити
+                    </button>
+                </div>
+                <div class="slides-panel">
 
                 </div>
-            </div> -->
-            <div class="slides-panel">
-
             </div>
+            
             <div class="templates-panel">
                 Шаблони
             </div>
@@ -514,6 +520,67 @@
             </div>
         </div>
     </div>
+
+    <!-- FUNCTIONAL MODALS -->
+        <div class="modal fade" id="createSlideModal" tabindex="-1" aria-labelledby="createSlideModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="createSlideModalLabel">Створити слайд</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="new_slide_name" class="form-label">Ім'я слайду</label>
+                        <input type="text" class="form-control" id="new_slide_name" placeholder="Новий слайд">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрити</button>
+                <button type="button" id="add_slide" class="btn btn-primary">Створити</button>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="removeSlideModal" tabindex="-1" aria-labelledby="removeSlideModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="removeSlideModalLabel">Видалити слайд</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Ви точно бажаєте видалити слайд?
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрити</button>
+                <button type="button" id="remove_slide" class="btn btn-danger">Видалити</button>
+                </div>
+            </div>
+            </div>
+        </div>
+        
+        <div class="modal fade" id="renameSlideModal" tabindex="-1" aria-labelledby="renameSlideModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="renameSlideModalLabel">Перейменувати слайд</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="edited_slide_name" class="form-label">Ім'я слайду</label>
+                        <input type="text" class="form-control" id="edited_slide_name" placeholder="Ім'я слайду">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрити</button>
+                <button type="button" id="rename_slide" class="btn btn-primary">Перейменувати</button>
+                </div>
+            </div>
+            </div>
+        </div>
 
     <script src="./slide_editor_js/ckeditor/ckeditor.js"></script>
     <script>
