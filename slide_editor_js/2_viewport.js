@@ -34,9 +34,11 @@ function zoom(direction, step) {
         workZoneHolder.style.height = `${workZone.offsetHeight + everythingHolder.offsetHeight * 1.5}px`;
     
         document.querySelectorAll('.field-item').forEach(e => {
-            //e.style.transition = 'width 0.2s, height 0.2s';
-            e.style.width =`${calculateItemParams(e).width}px`;
-            e.style.height =`${calculateItemParams(e).height}px`;
+            e.style.width != 'auto' ? 
+                e.style.width =`${calculateItemParams(e).width}px`: e.style.width = 'auto';
+            e.style.height != 'auto' ? 
+                e.style.height =`${calculateItemParams(e).height}px`: e.style.height = 'auto';
+
             e.style.borderRadius =`${calculateItemParams(e).borderRadius}px`;
             e.style.borderWidth =`${calculateItemParams(e).borderWidth}px`;
             e.style.fontSize = `${calculateItemParams(e).fontSize}px`;

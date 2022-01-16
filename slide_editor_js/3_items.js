@@ -150,8 +150,8 @@ function calculateItemParams(item) {
  * @returns object with highest and lowest zIndexes of the .field-items
  */
 function getZIndexes() {
-    let highestZIndex = 1000;
-    let lowestZIndex = 1000;
+    let highestZIndex = 100;
+    let lowestZIndex = 100;
     let fieldItems = document.querySelectorAll('.field-item');
     
     if (fieldItems.length == 0) {

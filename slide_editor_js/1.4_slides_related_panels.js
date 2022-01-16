@@ -182,23 +182,46 @@ const slidesConfig = {
         slidesConfig.slideList[slidesConfig.selectedSlideNumber].name = slideName;
         return true;
     },
-    moveUp: function(slideNumber) {
-
+    //when we clicks on moveup or movedown slide's buttons, click event fires 2 times,
+    //first for button event, second for slide itselft,
+    //so, to prevent this, we nned to clear slide click event
+    clearSlidesClickEvenets: function() {
+        let slideInstances = document.querySelectorAll('.slide');
+        slideInstances.forEach(slide => {
+            slide.onclick = null;
+        })
     },
-    moveDown: function(slideNumber) {
+    moveUp: function() {
+        let slideNumber = slidesConfig.selectedSlideNumber;
 
+        if (slideNumber != 0) {
+            let currentSlide = slidesConfig.slideList[slideNumber];
+            let upperSlide = slidesConfig.slideList[slideNumber-1];
+
+            slidesConfig.slideList[slideNumber - 1] = currentSlide;
+            slidesConfig.slideList[slideNumber] = upperSlide;
+            
+            this.clearSlidesClickEvenets()
+
+            slidesConfig.select(slideNumber - 1, true);
+        }
+    },
+    moveDown: function(){
+        let slideNumber = slidesConfig.selectedSlideNumber;
+
+        if (slideNumber != slidesConfig.slideList.length - 1) {
+            let currentSlide = slidesConfig.slideList[slideNumber];
+            let lowerSlide = slidesConfig.slideList[slideNumber + 1];
+
+            slidesConfig.slideList[slideNumber + 1] = currentSlide;
+            slidesConfig.slideList[slideNumber] = lowerSlide;
+
+            this.clearSlidesClickEvenets()
+
+            slidesConfig.select(slideNumber + 1, true);
+        }                
     },
     rebuildSlidesList: function(slideList) {
-        //when we clicks on moveup or movedown slide's buttons, click event fires 2 times,
-        //first for button event, second for slide itselft,
-        //so, to prevent this, we nned to clear slide click event
-        function clearSlidesClickEvenets() {
-            let slideInstances = document.querySelectorAll('.slide');
-            slideInstances.forEach(slide => {
-                slide.onclick = null;
-            })
-        }
-
         this.slideContainer.innerHTML = '';
 
         slideList.forEach((slide, index) => {
@@ -230,43 +253,17 @@ const slidesConfig = {
         console.log('rebuilded')
 
         //slide buttons events, place them here!
+        //becouse some actions happening through modal window with it's own button
+        //confirmation 
         document.querySelector('button[button-action="rename"]').
         addEventListener('click', function(){
             document.querySelector('#edited_slide_name').value = 
             slidesConfig.slideList[slidesConfig.selectedSlideNumber].name;
         })
-        document.querySelector('button[button-action="moveUp"]').
-        addEventListener('click', function(){
-            let slideNumber = slidesConfig.selectedSlideNumber;
-
-            if (slideNumber != 0) {
-                let currentSlide = slidesConfig.slideList[slideNumber];
-                let upperSlide = slidesConfig.slideList[slideNumber-1];
-
-                slidesConfig.slideList[slideNumber - 1] = currentSlide;
-                slidesConfig.slideList[slideNumber] = upperSlide;
-                
-                clearSlidesClickEvenets()
-
-                slidesConfig.select(slideNumber - 1, true);
-            }
-        })
+        document.querySelector('button[button-action="moveUp"]').onclick = 
+            () => {this.moveUp();}
         document.querySelector('button[button-action="moveDown"]').onclick = 
-        function(){
-            let slideNumber = slidesConfig.selectedSlideNumber;
-
-            if (slideNumber < slidesConfig.slideList.length) {
-                let currentSlide = slidesConfig.slideList[slideNumber];
-                let lowerSlide = slidesConfig.slideList[slideNumber + 1];
-
-                slidesConfig.slideList[slideNumber + 1] = currentSlide;
-                slidesConfig.slideList[slideNumber] = lowerSlide;
-
-                clearSlidesClickEvenets()
-
-                slidesConfig.select(slideNumber + 1, true);
-            }                
-        }
+            () => {this.moveDown();}
     },
     select: function(slideNumber, isRebuildNeeded) {
         this.selectedSlideNumber = parseInt(slideNumber);
