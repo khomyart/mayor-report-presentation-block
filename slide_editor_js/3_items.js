@@ -81,15 +81,15 @@ function createNewItem(event, rootItem) {
 function calculateItemParams(item) {
     let widthUnit = workZone.offsetWidth / 100;
     let widthMultiplier = item.getAttribute('widthMultiplier');
-    let width = `${(widthUnit * widthMultiplier).toFixed()}`;
+    let width = `${(widthUnit * widthMultiplier).toFixed(5)}`;
 
-    let widthInverted = `${((item.offsetWidth / workZone.offsetWidth) * 100).toFixed(3)}`;
+    let widthInverted = `${((item.offsetWidth / workZone.offsetWidth) * 100 * 1.05).toFixed(5)}`;
     
     let heightUnit = workZone.offsetHeight / 100;
     let heightMultiplier = item.getAttribute('heightMultiplier');
-    let height = `${(heightUnit * heightMultiplier).toFixed()}`;
+    let height = `${(heightUnit * heightMultiplier).toFixed(5)}`;
 
-    let heightInverted = `${((item.offsetHeight / workZone.offsetHeight) * 100).toFixed(3)}`;
+    let heightInverted = `${((item.offsetHeight / workZone.offsetHeight) * 100 * 1.05).toFixed(5)}`;
 
     let borderWidthUnit = workZone.offsetWidth / 100;
     let borderWidthMultiplier = item.getAttribute('borderWidthMultiplier');
@@ -152,9 +152,11 @@ function calculateItemParams(item) {
 function getZIndexes() {
     let highestZIndex = 100;
     let lowestZIndex = 100;
-    let fieldItems = document.querySelectorAll('.field-item');
-    
+    let fieldItems = document.getElementsByClassName('field-item');
+    fieldItems = [...fieldItems];
+    console.log(fieldItems)
     if (fieldItems.length == 0) {
+        console.log('length 0')
         return {
             highest: highestZIndex,
             lowest: lowestZIndex,
@@ -162,9 +164,10 @@ function getZIndexes() {
     } 
 
     fieldItems.forEach((item, index) => {
-        let currentItemZindex = window.getComputedStyle(item, null).zIndex
+        let currentItemZindex = parseInt(window.getComputedStyle(item, null).zIndex)
         
         if (index == 0) {
+            console.log('what the fuck')
             highestZIndex = currentItemZindex;
             lowestZIndex = currentItemZindex;
         } else {
@@ -214,7 +217,12 @@ function itemDragActions(item, event) {
         }
         if (event.buttons == 1) {   
             if(item.getAttribute('i-is-selectable') == 'true') {
+                clearItemSelection();
                 selectItem(item)
+
+                if (contextPanelScrollPosition != null) {
+                    contextPanel.scrollTop = contextPanelScrollPosition;
+                }
                 currentItem = null
             }
         }
@@ -310,7 +318,8 @@ function itemDragActions(item, event) {
 function itemDropActions(item) {
     item.setAttribute('newly-created', false)
     if(selectedItemForModification) {
-        selectItem(item)
+        clearItemSelection();
+        selectItem(item);
     }
 
     item.style.transition = `all ease-in-out 0s`;
@@ -343,9 +352,13 @@ function itemDropActions(item) {
  * @param {object} item item which has been clicked
  */
 function selectItem(item) {
+    document.querySelectorAll('.selected-item').forEach(item => {
+        item.classList.remove('selected-item')
+    })
+
     console.log('open side panel')
     selectedItemForModification = item;
-    item.classList.add('selected-item');
+    selectedItemForModification.classList.add('selected-item');
     configureContextPanel('create');
 }
 
@@ -354,7 +367,7 @@ function clearItemSelection() {
     item = selectedItemForModification;
     configureContextPanel('destroy');
 
-    if (item.classList.contains('selected-item')) {
+    if (item!=null && item.classList.contains('selected-item')) {
         item.classList.remove('selected-item');
     }
 

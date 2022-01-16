@@ -234,7 +234,7 @@ setInterval(()=>{
 },1000)
 
 window.addEventListener('load', function() {
+  //init slides panel
   srpConfig.panels.slideList.show();
-  srpConfig.buttons.slidesList.classList.add(srpConfig.buttons.activeButtonClass)
   slidesConfig.select(slidesConfig.selectedSlideNumber, true);
 })

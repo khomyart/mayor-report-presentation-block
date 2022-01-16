@@ -1,3 +1,4 @@
+let contextPanelScrollPosition = null;
 
 /**
  * Converts rgb string like "rgb(69, 69, 69, 0.69)" to hex value: "#69696969"
@@ -104,6 +105,7 @@ function configureContextPanel(mode) {
                 riseZIndexToEndButton.onclick = function () {
                     selectedItemForModification.style.zIndex =
                         getZIndexes().highest + 1;
+                    console.log(getZIndexes().highest)
                 }
                 downZIndexButton.onclick = function () {
                     selectedItemForModification.style.zIndex = 
@@ -162,31 +164,33 @@ function configureContextPanel(mode) {
                 let widthInput = document.querySelector('#panel_width_input');
                 let widthCheckbox = document.querySelector('#panel_width_checkbox');
 
-                widthRange.value = selectedItemForModification.getAttribute('widthMultiplier');
-                widthInput.value = selectedItemForModification.getAttribute('widthMultiplier');
- 
                 if (selectedItemForModification.style.width == 'auto') {
                     widthCheckbox.checked = true;
                     widthRange.disabled = true;
                     widthInput.disabled = true;
-                    selectedItemForModification.setAttribute('widthMultiplier', calculateItemParams(selectedItemForModification).widthInverted);
-                    widthRange.value = selectedItemForModification.getAttribute('widthMultiplier');
-                    widthInput.value = selectedItemForModification.getAttribute('widthMultiplier');
+                    widthRange.value = 50;
+                    widthInput.value = 'AUTO';
                 } else {
                     widthRange.disabled = false;
                     widthInput.disabled = false;
                     widthCheckbox.checked = false;
+                    widthRange.value = selectedItemForModification.getAttribute('widthMultiplier');
+                    widthInput.value = selectedItemForModification.getAttribute('widthMultiplier');
                 }
 
                 widthRange.oninput = function(event) {
-                    widthInput.value = event.target.value;
-                    selectedItemForModification.setAttribute('widthMultiplier', event.target.value);
-                    selectedItemForModification.style.width = `${calculateItemParams(selectedItemForModification).width}px`;
+                    if (selectedItemForModification.style.width != 'auto') {
+                        widthInput.value = event.target.value;
+                        selectedItemForModification.setAttribute('widthMultiplier', event.target.value);
+                        selectedItemForModification.style.width = `${calculateItemParams(selectedItemForModification).width}px`;
+                    }
                 }
                 widthInput.oninput = function(event) {
-                    widthRange.value = event.target.value;
-                    selectedItemForModification.setAttribute('widthMultiplier', event.target.value);
-                    selectedItemForModification.style.width = `${calculateItemParams(selectedItemForModification).width}px`;
+                    if (selectedItemForModification.style.width != 'auto') {
+                        widthRange.value = event.target.value;
+                        selectedItemForModification.setAttribute('widthMultiplier', event.target.value);
+                        selectedItemForModification.style.width = `${calculateItemParams(selectedItemForModification).width}px`;
+                    }
                 }    
                 widthCheckbox.oninput = function(event) {
                     if (event.target.checked) {
@@ -194,6 +198,8 @@ function configureContextPanel(mode) {
                         widthInput.disabled = true;
                         selectedItemForModification.setAttribute('widthMultiplier', 'auto');
                         selectedItemForModification.style.width = `auto`;
+                        widthInput.value = 'AUTO';
+                        widthRange.value = 50;
                     } else if (!event.target.checked) {
                         widthRange.disabled = false;
                         widthInput.disabled = false;
@@ -218,31 +224,33 @@ function configureContextPanel(mode) {
                 let heightInput = document.querySelector('#panel_height_input');
                 let heightCheckbox = document.querySelector('#panel_height_checkbox');
 
-                heightRange.value = selectedItemForModification.getAttribute('heightMultiplier');
-                heightInput.value = selectedItemForModification.getAttribute('heightMultiplier');
-
                 if (selectedItemForModification.style.height == 'auto') {
                     heightCheckbox.checked = true;
                     heightRange.disabled = true;
                     heightInput.disabled = true;
-                    selectedItemForModification.setAttribute('heightMultiplier', calculateItemParams(selectedItemForModification).heightInverted);
-                    heightRange.value = selectedItemForModification.getAttribute('heightMultiplier');
-                    heightInput.value = selectedItemForModification.getAttribute('heightMultiplier');
+                    heightRange.value = 50;
+                    heightInput.value = 'AUTO';
                 } else {
                     heightRange.disabled = false;
                     heightInput.disabled = false;
                     heightCheckbox.checked = false;
+                    heightRange.value = selectedItemForModification.getAttribute('heightMultiplier');
+                    heightInput.value = selectedItemForModification.getAttribute('heightMultiplier');
                 }
 
                 heightRange.oninput = function(event) {
-                    heightInput.value = event.target.value;
-                    selectedItemForModification.setAttribute('heightMultiplier', event.target.value);
-                    selectedItemForModification.style.height = `${calculateItemParams(selectedItemForModification).height}px`;
+                    if (selectedItemForModification.style.height != 'auto') {
+                        heightInput.value = event.target.value;
+                        selectedItemForModification.setAttribute('heightMultiplier', event.target.value);
+                        selectedItemForModification.style.height = `${calculateItemParams(selectedItemForModification).height}px`;
+                    }
                 }
                 heightInput.oninput = function(event) {
-                    heightRange.value = event.target.value;
-                    selectedItemForModification.setAttribute('heightMultiplier', event.target.value);
-                    selectedItemForModification.style.height = `${calculateItemParams(selectedItemForModification).height}px`;
+                    if (selectedItemForModification.style.height != 'auto') {
+                        heightRange.value = event.target.value;
+                        selectedItemForModification.setAttribute('heightMultiplier', event.target.value);
+                        selectedItemForModification.style.height = `${calculateItemParams(selectedItemForModification).height}px`;
+                    }
                 }
                 heightCheckbox.oninput = function(event) {
                     if (event.target.checked) {
@@ -250,6 +258,8 @@ function configureContextPanel(mode) {
                         heightInput.disabled = true;
                         selectedItemForModification.setAttribute('heightMultiplier', 'auto');
                         selectedItemForModification.style.height = `auto`;
+                        heightRange.value = 50;
+                        heightInput.value = 'AUTO';
                     } else if (!event.target.checked) {
                         heightRange.disabled = false;
                         heightInput.disabled = false;
@@ -686,12 +696,17 @@ function configureContextPanel(mode) {
             availableFieldsOfParticularItem.forEach(field => {
                 availableFields[field].init();
             });
+
+            contextPanel.scrollTop = contextPanelScrollPosition;
             break;
 
         case 'destroy':
+            contextPanelScrollPosition = contextPanel.scrollTop;
+
             document.querySelectorAll('[ci-name]').forEach((item)=>{
                 item.style.display = 'none';
             })
+    
             selectedItemForModification = null;
             contextPanel.style.display = 'none'
             break;

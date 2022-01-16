@@ -15,9 +15,6 @@
     <div class="c-container">
         <div class="items-panel">
             <div class="slides-related-panels-buttons-holder">
-                <div id="slide_list" class="slides-related-panels-button">
-                    Слайди
-                </div>
                 <div id="templates_list" class="slides-related-panels-button">
                     Шаблони
                 </div>
@@ -65,8 +62,10 @@
                 </div>
             </div>
             
-            <div class="templates-panel">
-                Шаблони
+            <div class="templates-panel-holder">
+                <div class="templates-panel">
+
+                </div>
             </div>
             <div class="images-panel">
                 зображення
@@ -577,6 +576,27 @@
                 <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрити</button>
                 <button type="button" id="rename_slide" class="btn btn-primary">Перейменувати</button>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="applySlideTemplateModal" tabindex="-1" aria-labelledby="applySlideTemplateModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="applySlideTemplateModalLabel">Застосувати шаблон</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <strong>Вміст слайду буде замінено вмістом шаблону!</strong>
+                    <br>
+                    Ви точно бажаєте застосувати шаблон "<span id="blueprint_name_template_modal"></span>" 
+                    до слайду "<span id="slide_name_template_modal"></span>"? 
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрити</button>
+                <button type="button" id="apply_template_to_slide" class="btn btn-success">Застосувати</button>
                 </div>
             </div>
             </div>

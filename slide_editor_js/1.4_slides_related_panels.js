@@ -5,22 +5,22 @@ const srpConfig = {
         displayType: 'flex',
         slideList: {
             object: document.querySelector('.slides-panel-holder'),
-            isShow: function () {
-                return true ? window.getComputedStyle(this.object, null).display != 'none' : false;
-            },
+            // isShow: function () {
+            //     return true ? window.getComputedStyle(this.object, null).display != 'none' : false;
+            // },
             show: function() {
                 this.object.style.display = srpConfig.panels.displayType;
             },
-            hide: function() {
-                this.object.style.display = 'none';
-            },
+            // hide: function() {
+            //     this.object.style.display = 'none';
+            // },
             buttons: {
                 saveSlidesList: document.querySelector('#save_slides_list'),
                 addSlide: document.querySelector('#add_slide')
             },
         },
         templatesList: {
-            object: document.querySelector('.templates-panel'),
+            object: document.querySelector('.templates-panel-holder'),
             isShow: function () {
                 return true ? window.getComputedStyle(this.object, null).display != 'none' : false;
             },
@@ -56,23 +56,23 @@ const slidesConfig = {
     slideList: [
         {
             name: '123',
-            content: '<div class="block-elem-template field-item" i-name="block" widthmultiplier="10" heightmultiplier="14" borderwidthmultiplier="0" borderradiusmultiplier="0" fontsizemultiplier="1" paddingmultiplier="0.2" marginbottommultiplier="0.2" canchor="0%,0%" locktype="none" newly-created="false" cy="4.6875%" cx="8.0357%" style="width: 90px; height: 90px; border-width: 0px; border-radius: 0px; transform: translate(0%, 0%); z-index: 1003; left: 8.03571%; top: 4.6875%; display: block; transition: all 0s ease-in-out 0s;" i-is-selectable="true"></div><div class="text-elem-template field-item" i-name="text" widthmultiplier="10" heightmultiplier="14" borderwidthmultiplier="0.15" borderradiusmultiplier="0" fontsizemultiplier="1" paddingmultiplier="0.2" marginbottommultiplier="2.5" canchor="0%,0%" locktype="none" newly-created="false" cy="22.9688%" cx="40.0670%" style="width: 90px; height: 90px; border-width: 1px; border-radius: 0px; transform: translate(0%, 0%); z-index: 1004; left: 40.067%; top: 22.9688%; display: block; transition: all 0s ease-in-out 0s; background-image: linear-gradient(90deg, rgba(255, 255, 255, 0) 10%, rgba(255, 255, 255, 0) 90%);" i-is-selectable="true"><p marginbottommultiplier="2.5" style="margin-bottom: 16px;">123</p><p marginbottommultiplier="2.5" style="margin-bottom: 16px;">123</p><p marginbottommultiplier="2.5" style="margin-bottom: 16px;">123</p><p marginbottommultiplier="2.5" style="margin-bottom: 16px;">&nbsp;</p></div>',
+            content: '<div class="block-elem-template field-item" i-name="block" widthmultiplier="10" heightmultiplier="14" borderwidthmultiplier="0" borderradiusmultiplier="0" fontsizemultiplier="2" paddingmultiplier="0.2" marginbottommultiplier="0.2" canchor="0%,0%" locktype="none" newly-created="false" style="width: 60px; height: 60px; border-width: 0px; border-radius: 0px; transform: translate(0%, 0%); font-size: 11.94px; padding: 1px; z-index: 101; left: 3.8526%; top: 3.74707%; display: block; transition: all 0s ease-in-out 0s;" cy="3.7471%" cx="3.8526%" i-is-selectable="true"></div><div class="text-elem-template field-item" i-name="text" widthmultiplier="10" heightmultiplier="14" borderwidthmultiplier="0.15" borderradiusmultiplier="0" fontsizemultiplier="2" paddingmultiplier="0.2" marginbottommultiplier="0.2" canchor="0%,0%" locktype="none" newly-created="false" style="width: 60px; height: 60px; border-width: 0.8955px; border-radius: 0px; transform: translate(0%, 0%); font-size: 11.94px; padding: 1px; z-index: 102; left: 10.2178%; top: 12.4122%; display: block; transition: all 0s ease-in-out 0s; background-image: linear-gradient(90deg, rgba(255, 255, 255, 0) 10%, rgba(255, 255, 255, 0) 90%);" cy="12.4122%" cx="10.2178%" i-is-selectable="true"><p marginbottommultiplier="0.2" style="margin-bottom: 0.854px;">123</p><p marginbottommultiplier="0.2" style="margin-bottom: 0.854px;">456</p><p marginbottommultiplier="0.2" style="margin-bottom: 0.854px;">789</p></div>',
         },
         {
             name: '321',
-            content: '<div class="block-elem-template field-item" i-name="block" widthmultiplier="10" heightmultiplier="14" borderwidthmultiplier="0" borderradiusmultiplier="0" fontsizemultiplier="1" paddingmultiplier="0.2" marginbottommultiplier="0.2" canchor="0%,0%" locktype="none" newly-created="false" cy="4.6875%" cx="8.0357%" style="width: 90px; height: 90px; border-width: 0px; border-radius: 0px; transform: translate(0%, 0%); z-index: 1003; left: 8.03571%; top: 4.6875%; display: block; transition: all 0s ease-in-out 0s;" i-is-selectable="true"></div><div class="text-elem-template field-item" i-name="text" widthmultiplier="10" heightmultiplier="14" borderwidthmultiplier="0.15" borderradiusmultiplier="0" fontsizemultiplier="1" paddingmultiplier="0.2" marginbottommultiplier="2.5" canchor="0%,0%" locktype="none" newly-created="false" cy="22.9688%" cx="40.0670%" style="width: 90px; height: 90px; border-width: 1px; border-radius: 0px; transform: translate(0%, 0%); z-index: 1004; left: 40.067%; top: 22.9688%; display: block; transition: all 0s ease-in-out 0s; background-image: linear-gradient(90deg, rgba(255, 255, 255, 0) 10%, rgba(255, 255, 255, 0) 90%);" i-is-selectable="true"><p marginbottommultiplier="2.5" style="margin-bottom: 16px;">123</p><p marginbottommultiplier="2.5" style="margin-bottom: 16px;">123</p><p marginbottommultiplier="2.5" style="margin-bottom: 16px;">123</p><p marginbottommultiplier="2.5" style="margin-bottom: 16px;">&nbsp;</p></div>',
+            content: '<div class="block-elem-template field-item" i-name="block" widthmultiplier="10" heightmultiplier="14" borderwidthmultiplier="0" borderradiusmultiplier="0" fontsizemultiplier="2" paddingmultiplier="0.2" marginbottommultiplier="0.2" canchor="0%,0%" locktype="none" newly-created="false" style="width: 60px; height: 60px; border-width: 0px; border-radius: 0px; transform: translate(0%, 0%); font-size: 11.94px; padding: 1px; z-index: 101; left: 3.8526%; top: 3.74707%; display: block; transition: all 0s ease-in-out 0s;" cy="3.7471%" cx="3.8526%" i-is-selectable="true"></div><div class="text-elem-template field-item" i-name="text" widthmultiplier="10" heightmultiplier="14" borderwidthmultiplier="0.15" borderradiusmultiplier="0" fontsizemultiplier="2" paddingmultiplier="0.2" marginbottommultiplier="0.2" canchor="0%,0%" locktype="none" newly-created="false" style="width: 60px; height: 60px; border-width: 0.8955px; border-radius: 0px; transform: translate(0%, 0%); font-size: 11.94px; padding: 1px; z-index: 102; left: 10.2178%; top: 12.4122%; display: block; transition: all 0s ease-in-out 0s; background-image: linear-gradient(90deg, rgba(255, 255, 255, 0) 10%, rgba(255, 255, 255, 0) 90%);" cy="12.4122%" cx="10.2178%" i-is-selectable="true"><p marginbottommultiplier="0.2" style="margin-bottom: 0.854px;">123</p><p marginbottommultiplier="0.2" style="margin-bottom: 0.854px;">456</p><p marginbottommultiplier="0.2" style="margin-bottom: 0.854px;">789</p></div>',
         },
         {
             name: '456',
-            content: '<div class="block-elem-template field-item" i-name="block" widthmultiplier="10" heightmultiplier="14" borderwidthmultiplier="0" borderradiusmultiplier="0" fontsizemultiplier="1" paddingmultiplier="0.2" marginbottommultiplier="0.2" canchor="0%,0%" locktype="none" newly-created="false" cy="4.6875%" cx="8.0357%" style="width: 90px; height: 90px; border-width: 0px; border-radius: 0px; transform: translate(0%, 0%); z-index: 1003; left: 8.03571%; top: 4.6875%; display: block; transition: all 0s ease-in-out 0s;" i-is-selectable="true"></div><div class="text-elem-template field-item" i-name="text" widthmultiplier="10" heightmultiplier="14" borderwidthmultiplier="0.15" borderradiusmultiplier="0" fontsizemultiplier="1" paddingmultiplier="0.2" marginbottommultiplier="2.5" canchor="0%,0%" locktype="none" newly-created="false" cy="22.9688%" cx="40.0670%" style="width: 90px; height: 90px; border-width: 1px; border-radius: 0px; transform: translate(0%, 0%); z-index: 1004; left: 40.067%; top: 22.9688%; display: block; transition: all 0s ease-in-out 0s; background-image: linear-gradient(90deg, rgba(255, 255, 255, 0) 10%, rgba(255, 255, 255, 0) 90%);" i-is-selectable="true"><p marginbottommultiplier="2.5" style="margin-bottom: 16px;">123</p><p marginbottommultiplier="2.5" style="margin-bottom: 16px;">123</p><p marginbottommultiplier="2.5" style="margin-bottom: 16px;">123</p><p marginbottommultiplier="2.5" style="margin-bottom: 16px;">&nbsp;</p></div>',
+            content: '<div class="block-elem-template field-item" i-name="block" widthmultiplier="10" heightmultiplier="14" borderwidthmultiplier="0" borderradiusmultiplier="0" fontsizemultiplier="2" paddingmultiplier="0.2" marginbottommultiplier="0.2" canchor="0%,0%" locktype="none" newly-created="false" style="width: 60px; height: 60px; border-width: 0px; border-radius: 0px; transform: translate(0%, 0%); font-size: 11.94px; padding: 1px; z-index: 101; left: 3.8526%; top: 3.74707%; display: block; transition: all 0s ease-in-out 0s;" cy="3.7471%" cx="3.8526%" i-is-selectable="true"></div><div class="text-elem-template field-item" i-name="text" widthmultiplier="10" heightmultiplier="14" borderwidthmultiplier="0.15" borderradiusmultiplier="0" fontsizemultiplier="2" paddingmultiplier="0.2" marginbottommultiplier="0.2" canchor="0%,0%" locktype="none" newly-created="false" style="width: 60px; height: 60px; border-width: 0.8955px; border-radius: 0px; transform: translate(0%, 0%); font-size: 11.94px; padding: 1px; z-index: 102; left: 10.2178%; top: 12.4122%; display: block; transition: all 0s ease-in-out 0s; background-image: linear-gradient(90deg, rgba(255, 255, 255, 0) 10%, rgba(255, 255, 255, 0) 90%);" cy="12.4122%" cx="10.2178%" i-is-selectable="true"><p marginbottommultiplier="0.2" style="margin-bottom: 0.854px;">123</p><p marginbottommultiplier="0.2" style="margin-bottom: 0.854px;">456</p><p marginbottommultiplier="0.2" style="margin-bottom: 0.854px;">789</p></div>',
         },
         {
             name: '456',
-            content: '<div class="block-elem-template field-item" i-name="block" widthmultiplier="10" heightmultiplier="14" borderwidthmultiplier="0" borderradiusmultiplier="0" fontsizemultiplier="1" paddingmultiplier="0.2" marginbottommultiplier="0.2" canchor="0%,0%" locktype="none" newly-created="false" cy="4.6875%" cx="8.0357%" style="width: 90px; height: 90px; border-width: 0px; border-radius: 0px; transform: translate(0%, 0%); z-index: 1003; left: 8.03571%; top: 4.6875%; display: block; transition: all 0s ease-in-out 0s;" i-is-selectable="true"></div><div class="text-elem-template field-item" i-name="text" widthmultiplier="10" heightmultiplier="14" borderwidthmultiplier="0.15" borderradiusmultiplier="0" fontsizemultiplier="1" paddingmultiplier="0.2" marginbottommultiplier="2.5" canchor="0%,0%" locktype="none" newly-created="false" cy="22.9688%" cx="40.0670%" style="width: 90px; height: 90px; border-width: 1px; border-radius: 0px; transform: translate(0%, 0%); z-index: 1004; left: 40.067%; top: 22.9688%; display: block; transition: all 0s ease-in-out 0s; background-image: linear-gradient(90deg, rgba(255, 255, 255, 0) 10%, rgba(255, 255, 255, 0) 90%);" i-is-selectable="true"><p marginbottommultiplier="2.5" style="margin-bottom: 16px;">123</p><p marginbottommultiplier="2.5" style="margin-bottom: 16px;">123</p><p marginbottommultiplier="2.5" style="margin-bottom: 16px;">123</p><p marginbottommultiplier="2.5" style="margin-bottom: 16px;">&nbsp;</p></div>',
+            content: '<div class="block-elem-template field-item" i-name="block" widthmultiplier="10" heightmultiplier="14" borderwidthmultiplier="0" borderradiusmultiplier="0" fontsizemultiplier="2" paddingmultiplier="0.2" marginbottommultiplier="0.2" canchor="0%,0%" locktype="none" newly-created="false" style="width: 60px; height: 60px; border-width: 0px; border-radius: 0px; transform: translate(0%, 0%); font-size: 11.94px; padding: 1px; z-index: 101; left: 3.8526%; top: 3.74707%; display: block; transition: all 0s ease-in-out 0s;" cy="3.7471%" cx="3.8526%" i-is-selectable="true"></div><div class="text-elem-template field-item" i-name="text" widthmultiplier="10" heightmultiplier="14" borderwidthmultiplier="0.15" borderradiusmultiplier="0" fontsizemultiplier="2" paddingmultiplier="0.2" marginbottommultiplier="0.2" canchor="0%,0%" locktype="none" newly-created="false" style="width: 60px; height: 60px; border-width: 0.8955px; border-radius: 0px; transform: translate(0%, 0%); font-size: 11.94px; padding: 1px; z-index: 102; left: 10.2178%; top: 12.4122%; display: block; transition: all 0s ease-in-out 0s; background-image: linear-gradient(90deg, rgba(255, 255, 255, 0) 10%, rgba(255, 255, 255, 0) 90%);" cy="12.4122%" cx="10.2178%" i-is-selectable="true"><p marginbottommultiplier="0.2" style="margin-bottom: 0.854px;">123</p><p marginbottommultiplier="0.2" style="margin-bottom: 0.854px;">456</p><p marginbottommultiplier="0.2" style="margin-bottom: 0.854px;">789</p></div>',
         },
         {
             name: '456',
-            content: '<div class="block-elem-template field-item" i-name="block" widthmultiplier="10" heightmultiplier="14" borderwidthmultiplier="0" borderradiusmultiplier="0" fontsizemultiplier="1" paddingmultiplier="0.2" marginbottommultiplier="0.2" canchor="0%,0%" locktype="none" newly-created="false" cy="4.6875%" cx="8.0357%" style="width: 90px; height: 90px; border-width: 0px; border-radius: 0px; transform: translate(0%, 0%); z-index: 1003; left: 8.03571%; top: 4.6875%; display: block; transition: all 0s ease-in-out 0s;" i-is-selectable="true"></div><div class="text-elem-template field-item" i-name="text" widthmultiplier="10" heightmultiplier="14" borderwidthmultiplier="0.15" borderradiusmultiplier="0" fontsizemultiplier="1" paddingmultiplier="0.2" marginbottommultiplier="2.5" canchor="0%,0%" locktype="none" newly-created="false" cy="22.9688%" cx="40.0670%" style="width: 90px; height: 90px; border-width: 1px; border-radius: 0px; transform: translate(0%, 0%); z-index: 1004; left: 40.067%; top: 22.9688%; display: block; transition: all 0s ease-in-out 0s; background-image: linear-gradient(90deg, rgba(255, 255, 255, 0) 10%, rgba(255, 255, 255, 0) 90%);" i-is-selectable="true"><p marginbottommultiplier="2.5" style="margin-bottom: 16px;">123</p><p marginbottommultiplier="2.5" style="margin-bottom: 16px;">123</p><p marginbottommultiplier="2.5" style="margin-bottom: 16px;">123</p><p marginbottommultiplier="2.5" style="margin-bottom: 16px;">&nbsp;</p></div>',
+            content: '<div class="block-elem-template field-item" i-name="block" widthmultiplier="10" heightmultiplier="14" borderwidthmultiplier="0" borderradiusmultiplier="0" fontsizemultiplier="2" paddingmultiplier="0.2" marginbottommultiplier="0.2" canchor="0%,0%" locktype="none" newly-created="false" style="width: 60px; height: 60px; border-width: 0px; border-radius: 0px; transform: translate(0%, 0%); font-size: 11.94px; padding: 1px; z-index: 101; left: 3.8526%; top: 3.74707%; display: block; transition: all 0s ease-in-out 0s;" cy="3.7471%" cx="3.8526%" i-is-selectable="true"></div><div class="text-elem-template field-item" i-name="text" widthmultiplier="10" heightmultiplier="14" borderwidthmultiplier="0.15" borderradiusmultiplier="0" fontsizemultiplier="2" paddingmultiplier="0.2" marginbottommultiplier="0.2" canchor="0%,0%" locktype="none" newly-created="false" style="width: 60px; height: 60px; border-width: 0.8955px; border-radius: 0px; transform: translate(0%, 0%); font-size: 11.94px; padding: 1px; z-index: 102; left: 10.2178%; top: 12.4122%; display: block; transition: all 0s ease-in-out 0s; background-image: linear-gradient(90deg, rgba(255, 255, 255, 0) 10%, rgba(255, 255, 255, 0) 90%);" cy="12.4122%" cx="10.2178%" i-is-selectable="true"><p marginbottommultiplier="0.2" style="margin-bottom: 0.854px;">123</p><p marginbottommultiplier="0.2" style="margin-bottom: 0.854px;">456</p><p marginbottommultiplier="0.2" style="margin-bottom: 0.854px;">789</p></div>',
         },
     ],
     buttons: {
@@ -332,29 +332,110 @@ const slidesConfig = {
         `;
         return slideTemplate;
     },
+    //send slides to backend
+    save() {
+        console.log('sent')
+    }
 }
 
-/*
-    {
-        id: '',
-        isMain: false,
-        name: '',
-        content: '',
+const templatesConfig = {
+    templateList: [
+        {
+            name: 'Привіт, друже',
+            content: '<div class="block-elem-template field-item" i-name="block" widthmultiplier="10" heightmultiplier="14" borderwidthmultiplier="0" borderradiusmultiplier="0" fontsizemultiplier="2" paddingmultiplier="0.2" marginbottommultiplier="0.2" canchor="0%,0%" locktype="none" newly-created="false" style="width: 89.6px; height: 89.6px; border-width: 0px; border-radius: 0px; transform: translate(0%, 0%); font-size: 17.92px; padding: 2px; z-index: 101; left: 3.79464%; top: 3.75%; display: block; transition: all 0s ease-in-out 0s;" cy="3.7471%" cx="3.8526%" i-is-selectable="true"></div><div class="text-elem-template field-item" i-name="text" widthmultiplier="auto" heightmultiplier="auto" borderwidthmultiplier="0.15" borderradiusmultiplier="0" fontsizemultiplier="7.9" paddingmultiplier="0.2" marginbottommultiplier="0.2" canchor="0%,0%" locktype="none" newly-created="false" style="width: auto; height: auto; border-width: 1.344px; border-radius: 0px; transform: translate(0%, 0%); font-size: 70.784px; padding: 2px; z-index: 102; left: 3.45982%; top: 19.6875%; display: block; transition: all 0s ease-in-out 0s; background-image: linear-gradient(90deg, rgba(255, 255, 255, 0) 10%, rgba(255, 255, 255, 0) 90%);" cy="19.6875%" cx="3.4598%" i-is-selectable="true"><p marginbottommultiplier="0.2" style="margin-bottom: 1.28px;">Привіт, друже</p></div>',
+        },
+        {
+            name: 'тест з індексу',
+            content: '<div class="block-elem-template field-item selected-item" i-name="block" widthmultiplier="10" heightmultiplier="14" borderwidthmultiplier="0" borderradiusmultiplier="0" fontsizemultiplier="2" paddingmultiplier="0.2" marginbottommultiplier="0.2" canchor="0%,0%" locktype="none" newly-created="false" style="width: 90px; height: 90px; border-width: 0px; border-radius: 0px; transform: translate(0%, 0%); font-size: 17.92px; padding: 2px; z-index: 101; left: 3.79464%; top: 3.75%; display: block; transition: all 0s ease-in-out 0s; background-image: linear-gradient(90deg, rgba(255, 255, 255, 0) 10%, rgba(255, 255, 255, 0) 90%);" cy="3.7471%" cx="3.8526%" i-is-selectable="true"></div><div class="text-elem-template field-item" i-name="text" widthmultiplier="54.576" heightmultiplier="17.813" borderwidthmultiplier="0.15" borderradiusmultiplier="0" fontsizemultiplier="7.9" paddingmultiplier="0.2" marginbottommultiplier="0.2" canchor="0%,0%" locktype="none" newly-created="false" style="width: auto; height: auto; border-width: 1.344px; border-radius: 0px; transform: translate(0%, 0%); font-size: 70.784px; padding: 2px; z-index: 40; left: 5.24554%; top: 17.6562%; display: block; transition: all 0s ease-in-out 0s; background-image: linear-gradient(90deg, rgba(255, 255, 255, 0) 10%, rgba(255, 255, 255, 0) 90%);" cy="17.6563%" cx="5.2455%" i-is-selectable="true"><p marginbottommultiplier="0.2" style="margin-bottom: 1.28px;">Привіт, друже</p></div>',
+        },
+    ],
+    buttons: {
+        applyTemplateToSlide: document.querySelector('#apply_template_to_slide'),
+        // ...
     },
-*/
+    templateContainer: document.querySelector('.templates-panel'),
+    selectedTemplateNumber: null,
+
+    updateTemplateContentElementChildsValues(templateContentElement) {
+        templateContentElement.childNodes.forEach(childNode => {
+            childNode.style.width =`${ slidesConfig.calculatePreviewItemParam(childNode).width}px`;
+            childNode.style.height =`${ slidesConfig.calculatePreviewItemParam(childNode).height}px`;
+            childNode.style.borderRadius =`${ slidesConfig.calculatePreviewItemParam(childNode).borderRadius}px`;
+            childNode.style.borderWidth =`${ slidesConfig.calculatePreviewItemParam(childNode).borderWidth}px`;
+            childNode.style.fontSize = `${ slidesConfig.calculatePreviewItemParam(childNode).fontSize}px`;
+            childNode.style.padding = `${ slidesConfig.calculatePreviewItemParam(childNode).padding}px`;
+        
+            childNode.style.top = childNode.getAttribute('cY');
+            childNode.style.left = childNode.getAttribute('cX');
+        
+            if (childNode.childNodes.length > 0) {
+                childNode.childNodes.forEach((p)=>{
+                    p.style.marginBottom = `${slidesConfig.calculatePreviewItemParam(p).marginBottom}px`
+                })
+            }
+        }) 
+    },
+    rebuildList: function(templateList) {
+        this.templateContainer.innerHTML = '';
+
+        templateList.forEach((template, index) => {
+            this.templateContainer.innerHTML += 
+                this.templateBlueprint(index, template.name);                    
+        });     
+
+        templateList.forEach((template, index) => {
+            let currentTemplate = document.querySelector(`div[template-number="${index}"].template-content`)
+            currentTemplate.innerHTML = template.content.replace(/field-item/gim, '').replace(/selected-item/gim, '')  
+        });
+
+        let templateInstances = document.querySelectorAll('.template');
+        templateInstances.forEach(template => {
+            template.onclick = () => {
+                this.select(template.getAttribute('template-number'))
+            };
+        })
+
+        let templatesContents = document.querySelectorAll(`div[template-number].template-content`);
+        templatesContents.forEach(templateContent => {
+            this.updateTemplateContentElementChildsValues(templateContent);
+        })
+        console.log('rebuilded')
+    },
+    select: function(templateNumber) {  
+        this.selectedTemplateNumber = templateNumber;
+        
+        let modal = new bootstrap.Modal(document.getElementById('applySlideTemplateModal')),
+        templateNameSpan = document.querySelector('#blueprint_name_template_modal'),
+        slideNameSpan = document.querySelector('#slide_name_template_modal');
+        modal.show();
+
+        templateNameSpan.innerHTML = this.templateList[templateNumber].name;
+        slideNameSpan.innerHTML = slidesConfig.slideList[slidesConfig.selectedSlideNumber].name;
+    },
+    templateBlueprint: function(templateNumber, templateName) {
+        let templateBlueprint = `
+        <div class="template" template-number="${templateNumber}">
+            <div class="template-content" template-number="${templateNumber}"></div>
+            <p class="template-name" template-number="${templateNumber}">
+                ${templateName}
+            </p>
+        </div>
+        `;
+        return templateBlueprint;
+    },
+}
 
 /* MENU PANEL BUTTONS */
-srpConfig.buttons.slidesList.onclick = () => {
-    if (srpConfig.panels.slideList.isShow()) {
-        srpConfig.buttons.slidesList.classList.remove(srpConfig.buttons.activeButtonClass)
-        srpConfig.panels.slideList.hide();
-    } else {
-        srpConfig.panels.slideList.show();
-        srpConfig.buttons.slidesList.classList.add(srpConfig.buttons.activeButtonClass)
-        slidesConfig.rebuildSlidesList(slidesConfig.slideList);
-        // console.log(document.querySelector('div[slide-number=""] div.slide-control-buttons'));
-    } 
-}
+// srpConfig.buttons.slidesList.onclick = () => {
+//     if (srpConfig.panels.slideList.isShow()) {
+//         srpConfig.buttons.slidesList.classList.remove(srpConfig.buttons.activeButtonClass)
+//         srpConfig.panels.slideList.hide();
+//     } else {
+//         srpConfig.panels.slideList.show();
+//         srpConfig.buttons.slidesList.classList.add(srpConfig.buttons.activeButtonClass)
+//         slidesConfig.select(slidesConfig.selectedSlideNumber, true);
+//     } 
+// }
 
 srpConfig.buttons.templatesList.onclick = () => {
     if (srpConfig.panels.templatesList.isShow()) {
@@ -363,6 +444,7 @@ srpConfig.buttons.templatesList.onclick = () => {
     } else {
         srpConfig.panels.templatesList.show();
         srpConfig.buttons.templatesList.classList.add(srpConfig.buttons.activeButtonClass)
+        templatesConfig.rebuildList(templatesConfig.templateList);
     } 
 }
 
@@ -394,6 +476,9 @@ srpConfig.panels.slideList.buttons.addSlide.onclick = () => {
     }
     
 }
+srpConfig.panels.slideList.buttons.saveSlidesList.onclick = () => {
+    slidesConfig.save();
+}
 /* SLIDE BUTTONS */
 slidesConfig.buttons.removeSlide.onclick = () => {
     var modalElement = document.getElementById('removeSlideModal')
@@ -417,4 +502,33 @@ slidesConfig.buttons.renameSlide.onclick = () => {
         modal.hide()
         slidesConfig.rebuildSlidesList(slidesConfig.slideList);
     }
+}
+
+/* TEMPLATE BUTTONS */
+templatesConfig.buttons.applyTemplateToSlide.onclick = () => {
+    var modalElement = document.getElementById('applySlideTemplateModal')
+    var modal = bootstrap.Modal.getInstance(modalElement) // Returns a Bootstrap modal instance
+    modal.hide();
+
+    //rebuilding work zone inner html with all items
+    if (workZone.innerHTML != templatesConfig.templateList[templatesConfig.selectedTemplateNumber].content) {
+        workZone.innerHTML = templatesConfig.templateList[templatesConfig.selectedTemplateNumber].content;
+        slidesConfig.slideList[slidesConfig.selectedSlideNumber].content =
+            templatesConfig.templateList[templatesConfig.selectedTemplateNumber].content;
+
+        let fieldItems = document.querySelectorAll('.field-item');
+        fieldItems.forEach((item)=>{
+            addDragAndDropToItem(item);
+        })
+    }
+
+    configureContextPanel('destroy');
+    // //viewport stuff
+    CONFIG.UI.workZoneCurrentScale = 1;
+    zoom('in', 0);
+    // //initial scroll position
+    everythingHolder.scrollTop =
+        workZoneHolder.offsetHeight / 2 - everythingHolder.offsetHeight / 2;
+    everythingHolder.scrollLeft =
+        workZoneHolder.offsetWidth / 2 - everythingHolder.offsetWidth / 2;
 }
