@@ -59,7 +59,8 @@ function configureContextPanel(mode) {
                 let x = document.querySelector('#panel_position_x');
                 let y = document.querySelector('#panel_position_y');
 
-                if (selectedItemForModification.style.left.match(/px/) != null) {
+                if (selectedItemForModification.style.left.match(/px/) != null &&
+                    selectedItemForModification.style.top.match(/px/) != null) {
                     x.value = (selectedItemForModification.offsetLeft / workZone.offsetWidth * 100).toFixed(4);
                     y.value = (selectedItemForModification.offsetTop / workZone.offsetHeight * 100).toFixed(4);
                 } else {
@@ -77,7 +78,7 @@ function configureContextPanel(mode) {
                     }
 
                     selectedItemForModification.style.left = `${event.target.value}%`;
-                    calculatePositionForItems(selectedItemForModification)
+                    calculatePositionForItems(selectedItemForModification, true)
                 }
                 y.oninput = function(event) {
                     if (event.target.value > maxValue) {
@@ -280,7 +281,37 @@ function configureContextPanel(mode) {
                 } 
             }
         },
+        image: {
+            init: function () {
+                function optionTemplate (name, value, isSelected, isDisabled = false) {
+                    console.log(isSelected)
+                    let optionTemplate = `
+                        <option ${isDisabled ? 'disabled ' : ''} ${isSelected ? 'selected ' : ''} value="${value}">${name}</option>
+                    `
+                    return optionTemplate;
+                }
 
+                let fieldHolder = document.querySelector('div[ci-name="image"]');
+                let itemImageSrc = selectedItemForModification.src;
+                let imageSelectInput = document.querySelector('#panel_image_name_select');
+                fieldHolder.style.display = 'flex';
+
+                /* fill select input with values */
+                imageSelectInput.innerHTML = 
+                    optionTemplate('Оберіть зображення', CONFIG.UI.itemTemplates.imageSrcTemplate, CONFIG.UI.itemTemplates.imageSrcTemplate == itemImageSrc, true);
+
+                imagesConfig.getList().forEach(imageItem => {
+                    imageSelectInput.innerHTML += 
+                    optionTemplate(imageItem.name, imageItem.src, imageItem.src == itemImageSrc)
+                })               
+
+                imageSelectInput.oninput = () => {
+                    selectedItemForModification.src = imageSelectInput.value;
+                }
+
+                console.log(fieldHolder)
+            }
+        },
         href: {
             init: function () {
                 let fieldHolder = document.querySelector('div[ci-name="href"]');

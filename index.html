@@ -67,9 +67,18 @@
 
                 </div>
             </div>
-            <div class="images-panel">
-                зображення
+
+            <div class="images-panel-holder">
+                <div class="images-panel-buttons">
+                    <button class="btn btn-primary image-panel-button" data-bs-toggle="modal" data-bs-target="#createImageModal">
+                        Додати
+                    </button>
+                </div>
+                <div class="images-panel">
+
+                </div>
             </div>
+
             <div class="pahlava" id="pahlava">
                 <div class="main-field-holder" id="main_field_holder">
                     <div class="main-field" id="main_field">
@@ -229,6 +238,23 @@
                     </div>
                 </div>
 
+                <div class="cpf-container" ci-name="image">
+                    <div class="cpf-container-label">
+                        Зображення
+                    </div>
+                    <div class="cpf-inputs-holder w-full">
+                        <div class="cpf-input-block w-full">
+                            <div class="cpf-input-label">
+                            </div>
+                            <div class="cpf-input-holder">
+                                <select name="" id="panel_image_name_select">
+
+                                </select>                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="cpf-container" ci-name="href">
                     <div class="cpf-container-label">
                         Посилання
@@ -282,7 +308,7 @@
                             <div class="cpf-input-label">
                             </div>
                             <div class="cpf-input-holder">
-                                <input id="panel_padding_range" type="range" step="0.1" min="0.1" max="10" ci-type="input">
+                                <input id="panel_padding_range" type="range" step="0.1" min="0" max="10" ci-type="input">
                             </div>
                         </div>
                         <div class="cpf-input-block w-narrow">
@@ -543,86 +569,150 @@
     </div>
 
     <!-- FUNCTIONAL MODALS -->
-        <div class="modal fade" id="createSlideModal" tabindex="-1" aria-labelledby="createSlideModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                <h5 class="modal-title" id="createSlideModalLabel">Створити слайд</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label for="new_slide_name" class="form-label">Ім'я слайду</label>
-                        <input type="text" class="form-control" id="new_slide_name" placeholder="Новий слайд">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрити</button>
-                <button type="button" id="add_slide" class="btn btn-primary">Створити</button>
+    <div class="modal fade" id="createSlideModal" tabindex="-1" aria-labelledby="createSlideModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="createSlideModalLabel">Створити слайд</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label for="new_slide_name" class="form-label">Ім'я слайду</label>
+                    <input type="text" class="form-control" id="new_slide_name" placeholder="Новий слайд">
                 </div>
             </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрити</button>
+            <button type="button" id="add_slide" class="btn btn-primary">Створити</button>
             </div>
         </div>
+        </div>
+    </div>
 
-        <div class="modal fade" id="removeSlideModal" tabindex="-1" aria-labelledby="removeSlideModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                <h5 class="modal-title" id="removeSlideModalLabel">Видалити слайд</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    Ви точно бажаєте видалити слайд?
-                </div>
-                <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрити</button>
-                <button type="button" id="remove_slide" class="btn btn-danger">Видалити</button>
-                </div>
+    <div class="modal fade" id="removeSlideModal" tabindex="-1" aria-labelledby="removeSlideModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="removeSlideModalLabel">Видалити слайд</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
+            <div class="modal-body">
+                Ви точно бажаєте видалити слайд?
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрити</button>
+            <button type="button" id="remove_slide" class="btn btn-danger">Видалити</button>
             </div>
         </div>
-        
-        <div class="modal fade" id="renameSlideModal" tabindex="-1" aria-labelledby="renameSlideModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                <h5 class="modal-title" id="renameSlideModalLabel">Перейменувати слайд</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label for="edited_slide_name" class="form-label">Ім'я слайду</label>
-                        <input type="text" class="form-control" id="edited_slide_name" placeholder="Ім'я слайду">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрити</button>
-                <button type="button" id="rename_slide" class="btn btn-primary">Перейменувати</button>
+        </div>
+    </div>
+    
+    <div class="modal fade" id="renameSlideModal" tabindex="-1" aria-labelledby="renameSlideModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="renameSlideModalLabel">Перейменувати слайд</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label for="edited_slide_name" class="form-label">Ім'я слайду</label>
+                    <input type="text" class="form-control" id="edited_slide_name" placeholder="Ім'я слайду">
                 </div>
             </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрити</button>
+            <button type="button" id="rename_slide" class="btn btn-primary">Перейменувати</button>
             </div>
         </div>
+        </div>
+    </div>
 
-        <div class="modal fade" id="applySlideTemplateModal" tabindex="-1" aria-labelledby="applySlideTemplateModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                <h5 class="modal-title" id="applySlideTemplateModalLabel">Застосувати шаблон</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <strong>Вміст слайду буде замінено вмістом шаблону!</strong>
-                    <br>
-                    Ви точно бажаєте застосувати шаблон "<span id="blueprint_name_template_modal"></span>" 
-                    до слайду "<span id="slide_name_template_modal"></span>"? 
-                </div>
-                <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрити</button>
-                <button type="button" id="apply_template_to_slide" class="btn btn-success">Застосувати</button>
-                </div>
+    <div class="modal fade" id="applySlideTemplateModal" tabindex="-1" aria-labelledby="applySlideTemplateModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="applySlideTemplateModalLabel">Застосувати шаблон</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
+            <div class="modal-body">
+                <strong>Вміст слайду буде замінено вмістом шаблону!</strong>
+                <br>
+                Ви точно бажаєте застосувати шаблон "<span id="blueprint_name_template_modal"></span>" 
+                до слайду "<span id="slide_name_template_modal"></span>"? 
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрити</button>
+            <button type="button" id="apply_template_to_slide" class="btn btn-success">Застосувати</button>
             </div>
         </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="createImageModal" tabindex="-1" aria-labelledby="createImageModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="createImageModalLabel">Додати зображення</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label for="image_name" class="form-label">Ім'я</label>
+                    <input type="text" class="form-control" id="image_name" placeholder="Нове зображення">
+                </div>
+                <div class="mb-3">
+                    <label for="image_file" class="form-label">Файл</label>
+                    <input type="file" class="form-control" id="image_file" placeholder="Натисніть, щоб обрати зображення">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрити</button>
+                <button type="button" id="add_image" class="btn btn-success">Зберегти</button>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="removeImageModal" tabindex="-1" aria-labelledby="removeImageModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="removeSlideModalLabel">Видалити слайд</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Ви точно бажаєте видалити зображення "<span id="delete_image_name"></span>"?
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрити</button>
+            <button type="button" id="remove_image" class="btn btn-danger">Видалити</button>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="renameImageModal" tabindex="-1" aria-labelledby="renameImageModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="renameImageModalLabel">Перейменувати слайд</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label for="edited_slide_name" class="form-label">Ім'я зображення</label>
+                    <input type="text" class="form-control" id="edited_image_name" placeholder="Ім'я зображення">
+                </div>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрити</button>
+            <button type="button" id="rename_image" class="btn btn-primary">Перейменувати</button>
+            </div>
+        </div>
+        </div>
+    </div>
 
     <script src="./slide_editor_js/ckeditor/ckeditor.js"></script>
     <script>

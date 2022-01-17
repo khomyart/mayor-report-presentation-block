@@ -84,13 +84,13 @@ function calculateItemParams(item) {
     let widthMultiplier = item.getAttribute('widthMultiplier');
     let width = `${(widthUnit * widthMultiplier).toFixed(5)}`;
 
-    let widthInverted = `${((item.offsetWidth / workZone.offsetWidth) * 100 * 1.05).toFixed(5)}`;
+    let widthInverted = `${((item.offsetWidth / workZone.offsetWidth) * 100).toFixed(5)}`;
     
     let heightUnit = workZone.offsetHeight / 100;
     let heightMultiplier = item.getAttribute('heightMultiplier');
     let height = `${(heightUnit * heightMultiplier).toFixed(5)}`;
 
-    let heightInverted = `${((item.offsetHeight / workZone.offsetHeight) * 100 * 1.05).toFixed(5)}`;
+    let heightInverted = `${((item.offsetHeight / workZone.offsetHeight) * 100).toFixed(5)}`;
 
     let borderWidthUnit = workZone.offsetWidth / 100;
     let borderWidthMultiplier = item.getAttribute('borderWidthMultiplier');

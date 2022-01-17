@@ -1,4 +1,5 @@
 let CONFIG = {
+  serverConnection: 'http://127.0.0.1:5500',
   coreElementsSelectors: {
     container: ".c-container",
     sideBarsAndMainFieldHolder: ".side-bars-and-main-field-holder",
@@ -41,6 +42,7 @@ let CONFIG = {
       },
     },
     itemTemplates: {
+      imageSrcTemplate: 'http://127.0.0.1:5500/icons/image_placeholder.png',
       block: {
         get: () => {    
           let itemTemplate = document.createElement('div');
@@ -59,37 +61,37 @@ let CONFIG = {
           itemTemplate.setAttribute('newly-created', 'true');
 
           return itemTemplate;
-         },
-         contextPanelParams: [
-             'anchor', 'position', 'width', 'height', 'opacity', 
-             'zIndex', 'backgroundColor', 'borderColor', 'borderWidth', 
-             'borderRadius', 'backgroundLinearGradient',
-         ], 
+        },
+        contextPanelParams: [
+          'anchor', 'position', 'width', 'height', 'opacity', 
+          'zIndex', 'backgroundColor', 'borderColor', 'borderWidth', 
+          'borderRadius', 'backgroundLinearGradient',
+        ], 
       },
       text: {
-          get: () => {    
-              let itemTemplate = document.createElement('div');
+        get: () => {    
+          let itemTemplate = document.createElement('div');
 
-              itemTemplate.classList.add('text-elem-template');
-              itemTemplate.setAttribute('i-name', 'text');
-              itemTemplate.setAttribute('widthMultiplier', 'auto');
-              itemTemplate.setAttribute('heightMultiplier', 'auto');
-              itemTemplate.setAttribute('borderWidthMultiplier', '0.15');
-              itemTemplate.setAttribute('borderRadiusMultiplier', '0');
-              itemTemplate.setAttribute('fontSizeMultiplier', '2');
-              itemTemplate.setAttribute('paddingMultiplier', '0.2');
-              itemTemplate.setAttribute('marginBottomMultiplier', '0.2');
-              itemTemplate.setAttribute('cAnchor', '0%,0%');
-              itemTemplate.setAttribute('lockType', 'none');
-              itemTemplate.setAttribute('newly-created', 'true');
-              itemTemplate.innerHTML = '<p>Текст 123</p>';
+          itemTemplate.classList.add('text-elem-template');
+          itemTemplate.setAttribute('i-name', 'text');
+          itemTemplate.setAttribute('widthMultiplier', 'auto');
+          itemTemplate.setAttribute('heightMultiplier', 'auto');
+          itemTemplate.setAttribute('borderWidthMultiplier', '0.15');
+          itemTemplate.setAttribute('borderRadiusMultiplier', '0');
+          itemTemplate.setAttribute('fontSizeMultiplier', '2');
+          itemTemplate.setAttribute('paddingMultiplier', '0.2');
+          itemTemplate.setAttribute('marginBottomMultiplier', '0.2');
+          itemTemplate.setAttribute('cAnchor', '0%,0%');
+          itemTemplate.setAttribute('lockType', 'none');
+          itemTemplate.setAttribute('newly-created', 'true');
+          itemTemplate.innerHTML = '<p>Текст 123</p>';
 
-              itemTemplate.style.width = 'auto';
-              itemTemplate.style.height = 'auto';
+          itemTemplate.style.width = 'auto';
+          itemTemplate.style.height = 'auto';
 
-              return itemTemplate;
-         },
-         contextPanelParams: [
+          return itemTemplate;
+        },
+        contextPanelParams: [
           'fontSize', 'anchor', 'position', 'width', 'height', 'textEditor','opacity', 
           'marginBottom', 'padding', 'zIndex', 'backgroundColor', 'borderColor', 'borderWidth', 
           'borderRadius', 'backgroundLinearGradient',
@@ -97,37 +99,61 @@ let CONFIG = {
       },
       href: {
         get: () => {    
-            let itemTemplate = document.createElement('a');
+          let itemTemplate = document.createElement('a');
 
-            itemTemplate.classList.add('text-elem-template');
-            itemTemplate.setAttribute('i-name', 'href');
-            itemTemplate.setAttribute('widthMultiplier', 'auto');
-            itemTemplate.setAttribute('heightMultiplier', 'auto');
-            itemTemplate.setAttribute('borderWidthMultiplier', '0.15');
-            itemTemplate.setAttribute('borderRadiusMultiplier', '0');
-            itemTemplate.setAttribute('fontSizeMultiplier', '2');
-            itemTemplate.setAttribute('paddingMultiplier', '0.2');
-            itemTemplate.setAttribute('marginBottomMultiplier', '0.2');
-            itemTemplate.setAttribute('cAnchor', '0%,0%');
-            itemTemplate.setAttribute('lockType', 'none');
-            itemTemplate.setAttribute('newly-created', 'true');
-            itemTemplate.innerHTML = '<p>Текст посилання 123</p>';
+          itemTemplate.classList.add('text-elem-template');
+          itemTemplate.setAttribute('i-name', 'href');
+          itemTemplate.setAttribute('widthMultiplier', 'auto');
+          itemTemplate.setAttribute('heightMultiplier', 'auto');
+          itemTemplate.setAttribute('borderWidthMultiplier', '0.15');
+          itemTemplate.setAttribute('borderRadiusMultiplier', '0');
+          itemTemplate.setAttribute('fontSizeMultiplier', '2');
+          itemTemplate.setAttribute('paddingMultiplier', '0.2');
+          itemTemplate.setAttribute('marginBottomMultiplier', '0.2');
+          itemTemplate.setAttribute('cAnchor', '0%,0%');
+          itemTemplate.setAttribute('lockType', 'none');
+          itemTemplate.setAttribute('newly-created', 'true');
+          itemTemplate.innerHTML = '<p>Текст посилання 123</p>';
 
-            itemTemplate.style.outline = 'none';
-            itemTemplate.style.textDecoration = 'none';
-            itemTemplate.style.cursor = 'pointer';
-            itemTemplate.style.color = 'black';
-            itemTemplate.style.width = 'auto';
-            itemTemplate.style.height = 'auto';
+          itemTemplate.style.outline = 'none';
+          itemTemplate.style.textDecoration = 'none';
+          itemTemplate.style.cursor = 'pointer';
+          itemTemplate.style.color = 'black';
+          itemTemplate.style.width = 'auto';
+          itemTemplate.style.height = 'auto';
 
-            return itemTemplate;
-       },
-       contextPanelParams: [
-        'fontSize', 'anchor', 'position', 'width', 'height', 'href', 'textEditor', 'opacity', 
-        'marginBottom', 'padding', 'zIndex', 'backgroundColor', 'borderColor', 'borderWidth', 
-        'borderRadius', 'backgroundLinearGradient',
-      ], 
-    },
+          return itemTemplate;
+        },
+        contextPanelParams: [
+          'fontSize', 'anchor', 'position', 'width', 'height', 'href', 'textEditor', 'opacity', 
+          'marginBottom', 'padding', 'zIndex', 'backgroundColor', 'borderColor', 'borderWidth', 
+          'borderRadius', 'backgroundLinearGradient',
+        ], 
+      },
+      img: {
+        get: () => {
+          let itemTemplate = document.createElement('img');
+
+          itemTemplate.classList.add('image-elem-template');
+          itemTemplate.setAttribute('i-name', 'img');
+          itemTemplate.setAttribute('widthMultiplier', '10');
+          itemTemplate.setAttribute('paddingMultiplier', '0');
+          itemTemplate.setAttribute('heightMultiplier', '14');
+          itemTemplate.setAttribute('borderWidthMultiplier', '0');
+          itemTemplate.setAttribute('borderRadiusMultiplier', '0');
+          itemTemplate.setAttribute('cAnchor', '0%,0%');
+          itemTemplate.setAttribute('lockType', 'none');
+          itemTemplate.setAttribute('newly-created', 'true');
+
+          itemTemplate.src = CONFIG.UI.itemTemplates.imageSrcTemplate;
+
+          return itemTemplate;
+        },
+        contextPanelParams: [
+          'anchor', 'position', 'width', 'height', 'image','opacity', 'padding', 
+          'zIndex', 'borderColor', 'borderWidth', 'borderRadius',
+        ], 
+      },
     },
     zoomStep: 0.1,
     defaultWorkZoneItemBorderRadius: 3, //px

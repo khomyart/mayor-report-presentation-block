@@ -164,6 +164,13 @@ html, body {
     position: absolute;
 } 
 
+.image-elem-template {
+    background-color: #ffffff00;
+    box-sizing: border-box;
+    border: solid #000000;
+    position: absolute;
+} 
+
 .a-template {
 
 }
