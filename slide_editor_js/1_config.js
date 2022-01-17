@@ -137,9 +137,9 @@ let CONFIG = {
           itemTemplate.classList.add('image-elem-template');
           itemTemplate.setAttribute('i-name', 'img');
           itemTemplate.setAttribute('widthMultiplier', '10');
-          itemTemplate.setAttribute('paddingMultiplier', '0.2');
+          itemTemplate.setAttribute('paddingMultiplier', '0');
           itemTemplate.setAttribute('heightMultiplier', '14');
-          itemTemplate.setAttribute('borderWidthMultiplier', '0.2');
+          itemTemplate.setAttribute('borderWidthMultiplier', '0');
           itemTemplate.setAttribute('borderRadiusMultiplier', '0');
           itemTemplate.setAttribute('cAnchor', '0%,0%');
           itemTemplate.setAttribute('lockType', 'none');

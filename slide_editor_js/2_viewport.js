@@ -82,8 +82,8 @@ function calculatePositionForItems (selector) {
                     e.setAttribute('cY', selector.style.top)
                     e.setAttribute('cX', selector.style.left)
                 } else {
-                    e.setAttribute('cY', `${e.style.top}%`)
-                    e.setAttribute('cX', `${e.style.left}%`)
+                    e.setAttribute('cY', e.style.top)
+                    e.setAttribute('cX', e.style.left)
                 }
                 
             })
@@ -96,8 +96,8 @@ function calculatePositionForItems (selector) {
                 selector.setAttribute('cY', selector.style.top)
                 selector.setAttribute('cX', selector.style.left)
             } else {
-                selector.setAttribute('cY', `${selector.style.top}%`)
-                selector.setAttribute('cX', `${selector.style.left}%`)
+                selector.setAttribute('cY', selector.style.top)
+                selector.setAttribute('cX', selector.style.left)
             }
             
         }

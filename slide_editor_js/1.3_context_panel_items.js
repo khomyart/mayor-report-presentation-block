@@ -59,7 +59,8 @@ function configureContextPanel(mode) {
                 let x = document.querySelector('#panel_position_x');
                 let y = document.querySelector('#panel_position_y');
 
-                if (selectedItemForModification.style.left.match(/px/) != null) {
+                if (selectedItemForModification.style.left.match(/px/) != null &&
+                    selectedItemForModification.style.top.match(/px/) != null) {
                     x.value = (selectedItemForModification.offsetLeft / workZone.offsetWidth * 100).toFixed(4);
                     y.value = (selectedItemForModification.offsetTop / workZone.offsetHeight * 100).toFixed(4);
                 } else {
@@ -77,7 +78,7 @@ function configureContextPanel(mode) {
                     }
 
                     selectedItemForModification.style.left = `${event.target.value}%`;
-                    calculatePositionForItems(selectedItemForModification)
+                    calculatePositionForItems(selectedItemForModification, true)
                 }
                 y.oninput = function(event) {
                     if (event.target.value > maxValue) {
