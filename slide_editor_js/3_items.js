@@ -317,11 +317,6 @@ function itemDragActions(item, event) {
  */
 function itemDropActions(item) {
     item.setAttribute('newly-created', false)
-    if(selectedItemForModification) {
-        clearItemSelection();
-        selectItem(item);
-    }
-
     item.style.transition = `all ease-in-out 0s`;
     item.setAttribute('i-is-selectable', 'true');
 
@@ -340,6 +335,11 @@ function itemDropActions(item) {
 
     if (enableItemPositionCalculationMethod == true) {
         calculatePositionForItems(item)
+    }
+
+    if(selectedItemForModification) {
+        clearItemSelection();
+        selectItem(item);
     }
     
     enableItemPositionCalculationMethod = false;
