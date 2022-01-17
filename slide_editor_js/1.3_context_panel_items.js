@@ -58,8 +58,14 @@ function configureContextPanel(mode) {
                 /* context panel POSITION */
                 let x = document.querySelector('#panel_position_x');
                 let y = document.querySelector('#panel_position_y');
-                x.value = (selectedItemForModification.offsetLeft / workZone.offsetWidth * 100).toFixed(4);
-                y.value = (selectedItemForModification.offsetTop / workZone.offsetHeight * 100).toFixed(4);
+
+                if (selectedItemForModification.style.left.match(/px/) != null) {
+                    x.value = (selectedItemForModification.offsetLeft / workZone.offsetWidth * 100).toFixed(4);
+                    y.value = (selectedItemForModification.offsetTop / workZone.offsetHeight * 100).toFixed(4);
+                } else {
+                    x.value = selectedItemForModification.style.left.replace(/%/gi,'');
+                    y.value = selectedItemForModification.style.top.replace(/%/gi,'');
+                }
 
                 x.oninput = function(event) {
                     if (event.target.value > maxValue) {
@@ -148,6 +154,7 @@ function configureContextPanel(mode) {
                         selectedItemForModification.style.left = selectedItemForModification.offsetLeft + calculateItemParams(selectedItemForModification).anchorShiftX + 'px';
                         selectedItemForModification.style.top = selectedItemForModification.offsetTop + calculateItemParams(selectedItemForModification).anchorShiftY + 'px';
                     
+                        // calculatePositionForItems(selectedItemForModification)
                         assignActivatedAnchorButtonClass(anchorButtons);
                         selectItem(selectedItemForModification);
                     }
@@ -271,6 +278,21 @@ function configureContextPanel(mode) {
                         selectedItemForModification.style.height = `${calculateItemParams(selectedItemForModification).height}px`;
                     }
                 } 
+            }
+        },
+
+        href: {
+            init: function () {
+                let fieldHolder = document.querySelector('div[ci-name="href"]');
+                let itemHref = selectedItemForModification.href;
+                let hrefInput = document.querySelector('#panel_href_input');
+
+                fieldHolder.style.display = 'flex';
+                hrefInput.value = itemHref;
+
+                hrefInput.oninput = function(event) {
+                    selectedItemForModification.href = `${event.target.value}`;
+                }
             }
         },
 

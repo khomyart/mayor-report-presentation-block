@@ -69,27 +69,36 @@ function zoom(direction, step) {
  * @param {string} selector pointer on items type (class)
  */
 function calculatePositionForItems (selector, convertToAttribute = false) {
-    if (convertToAttribute) {
         if (typeof selector == 'string') {
             let allItems = document.querySelectorAll(selector);
             allItems.forEach(e => {
-                e.setAttribute('cY', `${(e.offsetTop / workZone.offsetHeight * 100).toFixed(4)}%`)
-                e.setAttribute('cX', `${(e.offsetLeft / workZone.offsetWidth * 100).toFixed(4)}%`)
+                //if item has top and left values in % we dont need to recalculate it's position,
+                //if it doesn't, we should recalculate it's position depends on it's offsetTop, offsetLeft values
+                if (e.style.left.match(/px/) != null &&
+                    e.style.top.match(/px/) != null) {
+
+                    e.style.top = `${e.offsetTop / workZone.offsetHeight * 100}%`
+                    e.style.left = `${e.offsetLeft / workZone.offsetWidth * 100}%`
+                    e.setAttribute('cY', selector.style.top)
+                    e.setAttribute('cX', selector.style.left)
+                } else {
+                    e.setAttribute('cY', `${e.style.top}%`)
+                    e.setAttribute('cX', `${e.style.left}%`)
+                }
+                
             })
         } else if (typeof selector == 'object') {
-            selector.setAttribute('cY', `${(selector.offsetTop / workZone.offsetHeight * 100).toFixed(4)}%`)
-            selector.setAttribute('cX', `${(selector.offsetLeft / workZone.offsetWidth * 100).toFixed(4)}%`)
+            if (selector.style.left.match(/px/) != null &&
+                selector.style.top.match(/px/) != null) {
+
+                selector.style.top = `${(selector.offsetTop / workZone.offsetHeight * 100).toFixed(4)}%`
+                selector.style.left = `${(selector.offsetLeft / workZone.offsetWidth * 100).toFixed(4)}%`
+                selector.setAttribute('cY', selector.style.top)
+                selector.setAttribute('cX', selector.style.left)
+            } else {
+                selector.setAttribute('cY', `${selector.style.top}%`)
+                selector.setAttribute('cX', `${selector.style.left}%`)
+            }
+            
         }
-    } else {
-        if (typeof selector == 'string') {
-            let allItems = document.querySelectorAll(selector);
-            allItems.forEach(e => {
-                e.style.top = `${e.offsetTop / workZone.offsetHeight * 100}%`
-                e.style.left = `${e.offsetLeft / workZone.offsetWidth * 100}%`
-            })
-        } else if (typeof selector == 'object') {
-            selector.style.top = `${selector.offsetTop / workZone.offsetHeight * 100}%`
-            selector.style.left = `${selector.offsetLeft / workZone.offsetWidth * 100}%`
-        }
-    }
 }

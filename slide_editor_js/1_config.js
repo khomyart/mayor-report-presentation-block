@@ -72,8 +72,8 @@ let CONFIG = {
 
               itemTemplate.classList.add('text-elem-template');
               itemTemplate.setAttribute('i-name', 'text');
-              itemTemplate.setAttribute('widthMultiplier', '10');
-              itemTemplate.setAttribute('heightMultiplier', '14');
+              itemTemplate.setAttribute('widthMultiplier', 'auto');
+              itemTemplate.setAttribute('heightMultiplier', 'auto');
               itemTemplate.setAttribute('borderWidthMultiplier', '0.15');
               itemTemplate.setAttribute('borderRadiusMultiplier', '0');
               itemTemplate.setAttribute('fontSizeMultiplier', '2');
@@ -82,6 +82,10 @@ let CONFIG = {
               itemTemplate.setAttribute('cAnchor', '0%,0%');
               itemTemplate.setAttribute('lockType', 'none');
               itemTemplate.setAttribute('newly-created', 'true');
+              itemTemplate.innerHTML = '<p>Текст 123</p>';
+
+              itemTemplate.style.width = 'auto';
+              itemTemplate.style.height = 'auto';
 
               return itemTemplate;
          },
@@ -91,6 +95,39 @@ let CONFIG = {
           'borderRadius', 'backgroundLinearGradient',
         ], 
       },
+      href: {
+        get: () => {    
+            let itemTemplate = document.createElement('a');
+
+            itemTemplate.classList.add('text-elem-template');
+            itemTemplate.setAttribute('i-name', 'href');
+            itemTemplate.setAttribute('widthMultiplier', 'auto');
+            itemTemplate.setAttribute('heightMultiplier', 'auto');
+            itemTemplate.setAttribute('borderWidthMultiplier', '0.15');
+            itemTemplate.setAttribute('borderRadiusMultiplier', '0');
+            itemTemplate.setAttribute('fontSizeMultiplier', '2');
+            itemTemplate.setAttribute('paddingMultiplier', '0.2');
+            itemTemplate.setAttribute('marginBottomMultiplier', '0.2');
+            itemTemplate.setAttribute('cAnchor', '0%,0%');
+            itemTemplate.setAttribute('lockType', 'none');
+            itemTemplate.setAttribute('newly-created', 'true');
+            itemTemplate.innerHTML = '<p>Текст посилання 123</p>';
+
+            itemTemplate.style.outline = 'none';
+            itemTemplate.style.textDecoration = 'none';
+            itemTemplate.style.cursor = 'pointer';
+            itemTemplate.style.color = 'black';
+            itemTemplate.style.width = 'auto';
+            itemTemplate.style.height = 'auto';
+
+            return itemTemplate;
+       },
+       contextPanelParams: [
+        'fontSize', 'anchor', 'position', 'width', 'height', 'href', 'textEditor', 'opacity', 
+        'marginBottom', 'padding', 'zIndex', 'backgroundColor', 'borderColor', 'borderWidth', 
+        'borderRadius', 'backgroundLinearGradient',
+      ], 
+    },
     },
     zoomStep: 0.1,
     defaultWorkZoneItemBorderRadius: 3, //px

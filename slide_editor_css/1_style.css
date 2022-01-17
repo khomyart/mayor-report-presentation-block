@@ -158,6 +158,12 @@ html, body {
     position: absolute;
 } 
 
+.href-elem-template {
+    border: solid #000000;
+    box-sizing: border-box;
+    position: absolute;
+} 
+
 .a-template {
 
 }
