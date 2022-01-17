@@ -280,7 +280,37 @@ function configureContextPanel(mode) {
                 } 
             }
         },
+        image: {
+            init: function () {
+                function optionTemplate (name, value, isSelected, isDisabled = false) {
+                    console.log(isSelected)
+                    let optionTemplate = `
+                        <option ${isDisabled ? 'disabled ' : ''} ${isSelected ? 'selected ' : ''} value="${value}">${name}</option>
+                    `
+                    return optionTemplate;
+                }
 
+                let fieldHolder = document.querySelector('div[ci-name="image"]');
+                let itemImageSrc = selectedItemForModification.src;
+                let imageSelectInput = document.querySelector('#panel_image_name_select');
+                fieldHolder.style.display = 'flex';
+
+                /* fill select input with values */
+                imageSelectInput.innerHTML = 
+                    optionTemplate('Оберіть зображення', CONFIG.UI.itemTemplates.imageSrcTemplate, CONFIG.UI.itemTemplates.imageSrcTemplate == itemImageSrc, true);
+
+                imagesConfig.getList().forEach(imageItem => {
+                    imageSelectInput.innerHTML += 
+                    optionTemplate(imageItem.name, imageItem.src, imageItem.src == itemImageSrc)
+                })               
+
+                imageSelectInput.oninput = () => {
+                    selectedItemForModification.src = imageSelectInput.value;
+                }
+
+                console.log(fieldHolder)
+            }
+        },
         href: {
             init: function () {
                 let fieldHolder = document.querySelector('div[ci-name="href"]');

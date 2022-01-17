@@ -5,15 +5,10 @@ const srpConfig = {
         displayType: 'flex',
         slideList: {
             object: document.querySelector('.slides-panel-holder'),
-            // isShow: function () {
-            //     return true ? window.getComputedStyle(this.object, null).display != 'none' : false;
-            // },
             show: function() {
                 this.object.style.display = srpConfig.panels.displayType;
             },
-            // hide: function() {
-            //     this.object.style.display = 'none';
-            // },
+            //modal panels buttons
             buttons: {
                 saveSlidesList: document.querySelector('#save_slides_list'),
                 addSlide: document.querySelector('#add_slide')
@@ -32,7 +27,7 @@ const srpConfig = {
             }
         },
         imagesList: {
-            object: document.querySelector('.images-panel'),
+            object: document.querySelector('.images-panel-holder'),
             isShow: function () {
                 return true ? window.getComputedStyle(this.object, null).display != 'none' : false;
             },
@@ -41,7 +36,11 @@ const srpConfig = {
             },
             hide: function() {
                 this.object.style.display = 'none';
-            }
+            },
+            //modal panels buttons
+            buttons: {
+                addImage: document.querySelector('#add_image')
+            },
         },
     },
     buttons: {
@@ -53,6 +52,14 @@ const srpConfig = {
 }
 
 const slidesConfig = {
+    getList: function(isRebuildNeeded = false) {
+        //use this if statemant with rebuild as a callback
+        if (isRebuildNeeded) {
+            this.rebuildSlidesList(this.slideList)
+            this.select(this.selectedSlideNumber, false);
+        }
+        return this.slideList;
+    },
     slideList: [
         {
             name: '123',
@@ -339,11 +346,20 @@ const slidesConfig = {
     },
     //send slides to backend
     save() {
+        //use it as a callback
+        this.getList(true);
         console.log('sent')
     }
 }
 
 const templatesConfig = {
+    getList: function(isRebuildNeeded = false) {
+        //use this if statemant with rebuild as a callback
+        if (isRebuildNeeded) {
+            this.rebuildList(this.templateList);
+        }
+        return this.templateList;
+    },
     templateList: [
         {
             name: 'Привіт, друже',
@@ -436,6 +452,141 @@ const templatesConfig = {
     },
 }
 
+const imagesConfig = {
+    //use this if statemant with rebuild as a callback
+    getList: function(isRebuildNeeded = false) {
+        if (isRebuildNeeded) {
+            this.rebuildList(this.imageList);
+        }
+        return this.imageList;
+    },
+    imageList: [
+        {
+            id: '12',
+            name: 'Дерево 1',
+            src: 'http://127.0.0.1:5500/images/DSC_0124.JPG'
+        },
+        {
+            id: '13',
+            name: 'Дерево 2',
+            src: 'http://127.0.0.1:5500/images/DSC_0138.JPG'
+        },
+        {
+            id: '14',
+            name: 'Дерево 3',
+            src: 'http://127.0.0.1:5500/images/DSC_0147.JPG'
+        },
+    ],
+    //buttons of image list itself
+    buttons: {
+        remove: document.querySelector('#remove_image'),
+        rename: document.querySelector('#rename_image'),
+        // ...
+    },
+    imageContainer: document.querySelector('.images-panel'),
+    selectedImageIndex: null,
+
+    rebuildList: function(imageList) {
+        this.imageContainer.innerHTML = '';
+
+        imageList.forEach((image, index) => {
+            this.imageContainer.innerHTML += 
+                this.imageTemplate(index, image.name, image.src);                    
+        });     
+
+        document.querySelectorAll('.image-control-button').forEach(button => {
+            button.onclick = () => {
+                let buttonType = button.getAttribute('button-action');
+                this.selectedImageIndex = button.getAttribute('image-list-index');
+                let deleteImageNameSpan = document.querySelector('#delete_image_name');
+                let renameImageNameInput = document.querySelector('#edited_image_name');
+                let modal;
+
+                switch (buttonType) {
+                    case 'remove':
+                        modal = new bootstrap.Modal(document.getElementById('removeImageModal'))
+                        deleteImageNameSpan.innerHTML = this.imageList[this.selectedImageIndex].name;
+                        modal.show()
+                        break;
+                    case 'rename':
+                        modal = new bootstrap.Modal(document.getElementById('renameImageModal'))
+                        renameImageNameInput.value = this.imageList[this.selectedImageIndex].name;
+                        modal.show()
+                        break;
+                }
+            }
+        })
+
+        console.log('image list rebuilded')
+    },
+    add: function() {  
+        let imageName = document.querySelector('#image_name').value;
+        let imageFile = document.querySelector('#image_file').value;
+        let isSuccess = true;
+        if (isSuccess) {
+            console.log('created')
+            console.log(imageName)
+            console.log(imageFile)
+
+            return true;
+        } else {
+            return false;
+        }
+    },
+    remove: function() {
+        let isSuccess = true;
+        let imageId = this.imageList[this.selectedImageIndex].id;
+
+        if (isSuccess) {
+            console.log('removed')
+            console.log(imageId)
+
+            return true;
+        } else {
+            return false;
+        }
+    },
+    rename: function() {
+        let isSuccess = true;
+        let imageId = this.imageList[this.selectedImageIndex].id;
+        let renameImageNameInput = document.querySelector('#edited_image_name');
+        let newImageName = renameImageNameInput.value;
+
+        if (isSuccess) {
+            console.log('renamed')
+            console.log(imageId)
+            console.log(newImageName)
+
+            return true;
+        } else {
+            return false;
+        }
+    },
+    imageTemplate: function(imageListIndex, imageName, imageSrc) {
+        let imageTemplate = `
+        <div class="image" image-list-index="${imageListIndex}">
+            <div class="image-content" image-list-index="${imageListIndex}">
+                <img style="width: 100%; height: 100%;" src="${imageSrc}">
+            </div>
+
+            <div class="slide-control-buttons">
+                <button class="image-control-button" button-action="remove" image-list-index="${imageListIndex}">
+                    ВИ
+                </button>
+                <button class="image-control-button" button-action="rename" image-list-index="${imageListIndex}">
+                    П
+                </button>
+            </div>
+        
+            <p class="image-name" image-list-index="${imageListIndex}">
+                ${imageName}
+            </p>
+        </div>
+        `;
+        return imageTemplate;
+    },
+}
+
 /* MENU PANEL BUTTONS */
 // srpConfig.buttons.slidesList.onclick = () => {
 //     if (srpConfig.panels.slideList.isShow()) {
@@ -455,7 +606,7 @@ srpConfig.buttons.templatesList.onclick = () => {
     } else {
         srpConfig.panels.templatesList.show();
         srpConfig.buttons.templatesList.classList.add(srpConfig.buttons.activeButtonClass)
-        templatesConfig.rebuildList(templatesConfig.templateList);
+        templatesConfig.rebuildList(templatesConfig.getList(true));
     } 
 }
 
@@ -466,6 +617,7 @@ srpConfig.buttons.imagesList.onclick = () => {
     } else {
         srpConfig.panels.imagesList.show();
         srpConfig.buttons.imagesList.classList.add(srpConfig.buttons.activeButtonClass)
+        imagesConfig.getList(true);
     } 
 }
 
@@ -547,4 +699,35 @@ templatesConfig.buttons.applyTemplateToSlide.onclick = () => {
         workZoneHolder.offsetHeight / 2 - everythingHolder.offsetHeight / 2;
     everythingHolder.scrollLeft =
         workZoneHolder.offsetWidth / 2 - everythingHolder.offsetWidth / 2;
+}
+
+/* IMAGE BUTTONS */
+srpConfig.panels.imagesList.buttons.addImage.onclick = function() {
+    var modalElement = document.getElementById('createImageModal')
+    var modal = bootstrap.Modal.getInstance(modalElement) // Returns a Bootstrap modal instance
+
+    if (imagesConfig.add()) {
+        modal.hide()
+        imagesConfig.getList(true);
+    }
+}
+
+imagesConfig.buttons.remove.onclick = () => {
+    var modalElement = document.getElementById('removeImageModal')
+    var modal = bootstrap.Modal.getInstance(modalElement) // Returns a Bootstrap modal instance
+
+    if (imagesConfig.remove()) {
+        modal.hide();
+        imagesConfig.getList(true);
+    }
+}
+
+imagesConfig.buttons.rename.onclick = () => {
+    var modalElement = document.getElementById('renameImageModal')
+    var modal = bootstrap.Modal.getInstance(modalElement) // Returns a Bootstrap modal instance
+
+    if (imagesConfig.rename()) {
+        modal.hide();
+        imagesConfig.getList(true);
+    }
 }
