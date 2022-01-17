@@ -68,7 +68,7 @@ function zoom(direction, step) {
  * 
  * @param {string} selector pointer on items type (class)
  */
-function calculatePositionForItems (selector, convertToAttribute = false) {
+function calculatePositionForItems (selector) {
         if (typeof selector == 'string') {
             let allItems = document.querySelectorAll(selector);
             allItems.forEach(e => {

@@ -29,7 +29,7 @@ function fillItemPanelWithItems(itemPanel, objectWithItems) {
  function moveAt(mouseEvent, movableItem, itemOffsetX, itemOffsetY) {
     movableItem.style.left = mouseEvent.clientX - itemOffsetX + 'px';
     movableItem.style.top = mouseEvent.clientY - itemOffsetY + 'px';
-    calculatePositionForItems(movableItem, true)
+    calculatePositionForItems(movableItem)
 }
 
 /**
@@ -66,6 +66,7 @@ function createNewItem(event, rootItem) {
     newElementOfSchema.ondragstart = () => false;
     newElementOfSchema.childNodes.forEach(element => {
         element.ondragstart = () => false;
+        element.onclick = () => false;
     });
 
     //Variable has been assigned in createNewItem function

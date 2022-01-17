@@ -77,7 +77,7 @@ function configureContextPanel(mode) {
                     }
 
                     selectedItemForModification.style.left = `${event.target.value}%`;
-                    calculatePositionForItems(selectedItemForModification, true)
+                    calculatePositionForItems(selectedItemForModification)
                 }
                 y.oninput = function(event) {
                     if (event.target.value > maxValue) {
@@ -286,12 +286,17 @@ function configureContextPanel(mode) {
                 let fieldHolder = document.querySelector('div[ci-name="href"]');
                 let itemHref = selectedItemForModification.href;
                 let hrefInput = document.querySelector('#panel_href_input');
+                let hrefButton = document.querySelector('#panel_href_button');
 
                 fieldHolder.style.display = 'flex';
                 hrefInput.value = itemHref;
 
                 hrefInput.oninput = function(event) {
                     selectedItemForModification.href = `${event.target.value}`;
+                }
+
+                hrefButton.onclick = function() {
+                    window.open(selectedItemForModification.href, '_blank').focus();
                 }
             }
         },
