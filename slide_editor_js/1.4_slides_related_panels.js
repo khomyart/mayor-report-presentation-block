@@ -24,7 +24,10 @@ const srpConfig = {
             },
             hide: function() {
                 this.object.style.display = 'none';
-            }
+            },
+            buttons: {
+                updateTemplateList: document.querySelector('#update_template_list'),
+            },
         },
         imagesList: {
             object: document.querySelector('.images-panel-holder'),
@@ -699,6 +702,10 @@ templatesConfig.buttons.applyTemplateToSlide.onclick = () => {
         workZoneHolder.offsetHeight / 2 - everythingHolder.offsetHeight / 2;
     everythingHolder.scrollLeft =
         workZoneHolder.offsetWidth / 2 - everythingHolder.offsetWidth / 2;
+}
+
+srpConfig.panels.templatesList.buttons.updateTemplateList.onclick = () => {
+    templatesConfig.getList(true)
 }
 
 /* IMAGE BUTTONS */
